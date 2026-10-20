@@ -11,14 +11,8 @@
     <string name="error_network">Serverə qoşulmaq mümkün olmadı. İnternet bağlantınızı yoxlayın.</string>
 
     <string name="hospital_full_name">Təbriz Beynəlxalq Vəliəsr Xəstəxanası</string>
-    <string name="home_welcome">Vəliəsr Xəstəxanası tətbiqinə xoş gəlmisiniz</string>
-    <string name="tile_units">Şöbələr və klinikalar</string>
-    <string name="tile_units_sub">Ünvan, telefon və iş saatları</string>
-    <string name="tile_faq">Tez-tez verilən suallar</string>
-    <string name="tile_faq_sub">Lazımi sənədlər, ziyarət saatları və s.</string>
     <string name="tile_news">Elanlar</string>
     <string name="tile_news_sub">Xəstəxana xəbərləri və xidmət dəyişiklikləri</string>
-    <string name="tile_feedback">Təklif və şikayətlər</string>
     <string name="tile_feedback_sub">Kodla göndərin və izləyin</string>
     <string name="tile_track">Anonim hesabatı izləmək</string>
     <string name="tile_track_sub">İzləmə kodu və şifrə ilə (yalnız işçilər)</string>
@@ -26,7 +20,6 @@
     <string name="tile_staff_logged_in">İşçilər bölməsinə keçid</string>
     <string name="tile_staff_sub">Hadisə hesabatları, sərəncamlar və s. (fars dilində)</string>
 
-    <string name="units_title">Şöbələr</string>
     <string name="units_empty">Hələ məlumat əlavə edilməyib</string>
     <string name="unit_location">Yer: %1$s</string>
     <string name="unit_phone">Telefon: %1$s</string>
@@ -40,7 +33,6 @@
     <string name="announcement_guideline">Təlimat</string>
     <string name="announcement_notice">Elan</string>
 
-    <string name="feedback_title">Təklif və şikayətlər</string>
     <string name="feedback_kind">Növ</string>
     <string name="feedback_kind_suggestion">Təklif</string>
     <string name="feedback_kind_criticism">Tənqid</string>
@@ -86,4 +78,57 @@
     <string name="otp_debug">Test kodu: %1$s</string>
     <string name="otp_invalid">Kod səhvdir və ya vaxtı bitib</string>
     <string name="error_too_many">Çox sayda sorğu. Bir az sonra yenidən cəhd edin.</string>
+
+    <!-- صفحه اول، تماس، بین‌الملل و پروفایل مراجع -->
+    <string name="nav_home">Ana səhifə</string>
+    <string name="nav_units">Şöbələr</string>
+    <string name="nav_track">Müraciətlər</string>
+    <string name="nav_profile">Profil</string>
+    <string name="home_greeting">Salam</string>
+    <string name="home_greeting_name">Salam, %1$s</string>
+    <string name="home_hero_title">Klinikaya onlayn növbə götürün</string>
+    <string name="home_book">Növbə götür</string>
+    <string name="tile_visiting">Ziyarət saatları</string>
+    <string name="tile_visiting_sub">və tez-tez verilən suallar</string>
+    <string name="tile_contact">Ünvan və əlaqə</string>
+    <string name="tile_contact_sub">Ünvan, telefon və xəritə</string>
+    <string name="tile_feedback_short">Təklif və şikayət</string>
+    <string name="international_title">Beynəlxalq pasiyentlər</string>
+    <string name="international_sub">Qəbul, tərcüməçi və qalma yeri</string>
+    <string name="contact_title">Ünvan və əlaqə</string>
+    <string name="contact_address">Təbriz, İmam küçəsi, Zəfəraniyyənin başlanğıcı, Əflaknüma meydanı</string>
+    <string name="contact_open_map">Xəritədə göstər</string>
+    <string name="contact_phone">Xəstəxananın telefonu</string>
+    <string name="contact_email">E-poçt</string>
+    <string name="intl_title">Beynəlxalq pasiyentlər</string>
+    <string name="intl_intro">Təbriz Beynəlxalq Vəliəsr Xəstəxanasının İrandan kənardan gələn pasiyentlər üçün beynəlxalq qəbul şöbəsi var.</string>
+    <string name="intl_service_admission">Səfərdən əvvəl qəbul və növbənin razılaşdırılması</string>
+    <string name="intl_service_interpreter">Azərbaycan, türk, ərəb və ingilis dillərində tərcüməçi</string>
+    <string name="intl_service_stay">Qalma yeri və müşayiətçilər üçün kömək</string>
+    <string name="intl_service_cost">Müalicədən əvvəl xərc hesablanması</string>
+    <string name="intl_contact">Beynəlxalq şöbə ilə əlaqə</string>
+    <string name="unconfirmed_note">Bu məlumat hələ xəstəxana tərəfindən təsdiqlənməyib.</string>
+    <string name="profile_title">Profil</string>
+    <string name="profile_mobile">Mobil nömrə</string>
+    <string name="profile_sign_out">Hesabdan çıx</string>
+    <string name="profile_signed_out">Müraciətlərinizi izləmək və dili hesabınızda saxlamaq üçün daxil olun.</string>
+    <string name="about_title">Xəstəxana haqqında</string>
+    <string name="about_body">Təbriz Beynəlxalq Vəliəsr Xəstəxanası İranın ən böyük özəl xəstəxanası olaraq geniş çeşiddə ixtisaslaşmış və yüksək ixtisaslaşmış diaqnostika, müalicə və reabilitasiya xidmətləri göstərir.</string>
+    <string name="about_sub">Gecə-gündüz təcili yardım, 77 ICU çarpayısı və 14 əməliyyat otağı</string>
+    <string name="about_er_n">24/7</string>
+    <string name="about_er">Təcili yardım şöbəsi</string>
+    <string name="about_er_visits">Ayda 4000-dən çox müraciət</string>
+    <string name="about_icu_n">77</string>
+    <string name="about_icu">ICU çarpayısı</string>
+    <string name="about_ccu_n">8</string>
+    <string name="about_ccu">CCU çarpayısı</string>
+    <string name="about_or_n">14</string>
+    <string name="about_or">Müasir əməliyyat otağı</string>
+    <string name="about_diag_title">Diaqnostika və müalicə</string>
+    <string name="about_diag">KT, MRT, PET-skan, nüvə təbabəti, radiologiya, kimyaterapiya və radioterapiya, endoskopiya və ambulator xidmət</string>
+    <string name="about_special_title">Xüsusi xidmətlər</string>
+    <string name="about_special">Sonsuzluğun müalicəsi, yuxu pozuntuları, xroniki ağrılar və çətin müalicə olunan xəstəliklər</string>
+    <string name="about_depts_title">İxtisaslaşmış şöbələr</string>
+    <string name="about_depts">Kardiologiya, ana və yenidoğulmuş, nevrologiya, qastroenterologiya və hepatologiya, ortopediya, urologiya, onkologiya, nefrologiya, infeksion xəstəliklər, pulmonologiya, LOR, IVF və müasir cərrahiyyə</string>
+    <string name="about_approach">Yanaşmamız tamamilə pasiyentyönümlüdür: sakitləşdirici müasir memarlıqdan ağıllı növbə sistemi və elektron tibbi qeydlərə qədər hər şey təhlükəsiz və rahat təcrübə üçün hazırlanıb.</string>
 </resources>
