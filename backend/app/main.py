@@ -41,7 +41,7 @@ def create_app() -> FastAPI:
     settings = get_settings()
     settings.check_production()
     app = FastAPI(
-        title="سامانه جامع بیمارستان رازی تبریز",
+        title="سامانه جامع بیمارستان بین‌المللی ولیعصر تبریز",
         version="0.1.0",
         docs_url=None if settings.is_exposed else "/docs",
         redoc_url=None,

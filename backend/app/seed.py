@@ -183,7 +183,7 @@ def seed_demo(db: Session) -> None:
                 sort_order=2,
             ),
             Announcement(
-                title="به نسخه آزمایشی اپ بیمارستان رازی خوش آمدید",
+                title="به نسخه آزمایشی اپ بیمارستان ولیعصر خوش آمدید",
                 body="این یک اطلاعیه نمونه است.",
                 category="news",
                 audience="public",

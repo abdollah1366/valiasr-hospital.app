@@ -1,4 +1,4 @@
-# سامانه جامع بیمارستان رازی تبریز
+# سامانه جامع بیمارستان بین‌المللی ولیعصر تبریز
 
 اپلیکیشن اندروید (Kotlin + Jetpack Compose) و بک‌اند (FastAPI + PostgreSQL)، فارسی و راست‌چین.
 طرح کامل و نقشه راه: [docs/execution-plan.md](docs/execution-plan.md)

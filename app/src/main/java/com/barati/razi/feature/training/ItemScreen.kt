@@ -545,7 +545,7 @@ private fun PdfPages(repo: TrainingRepository, file: File, tracker: ViewTracker)
         snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0 }
             .collect { tracker.report(TrainingLogic.percent(it + 1L, doc.pageCount.toLong())) }
     }
-    BoxWithConstraints(Modifier.fillMaxSize().background(Color(0xFFE9EDED))) {
+    BoxWithConstraints(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceVariant)) {
         val widthPx = with(LocalDensity.current) { maxWidth.roundToPx() }.coerceIn(1, 1600)
         LazyColumn(
             state = listState,

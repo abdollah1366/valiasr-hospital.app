@@ -1,5 +1,6 @@
 package com.barati.razi.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.barati.razi.core.network.Result
+import com.barati.razi.ui.theme.brandColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,23 +56,27 @@ fun RaziScaffold(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(title, fontWeight = FontWeight.Bold) },
-                navigationIcon = {
-                    if (onBack != null) {
-                        IconButton(onClick = onBack) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "بازگشت")
+            Column {
+                TopAppBar(
+                    title = { Text(title, fontWeight = FontWeight.Bold) },
+                    navigationIcon = {
+                        if (onBack != null) {
+                            IconButton(onClick = onBack) {
+                                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "بازگشت")
+                            }
                         }
-                    }
-                },
-                actions = { actions() },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                ),
-            )
+                    },
+                    actions = { actions() },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        titleContentColor = MaterialTheme.colorScheme.onSurface,
+                        navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    ),
+                )
+                // نوار قرمز برند، مثل نوارهای نمای ساختمان؛ تنها جای ثابت قرمز در اپ.
+                Box(Modifier.fillMaxWidth().height(4.dp).background(brandColor))
+            }
         },
         floatingActionButton = floatingActionButton,
         content = content,

@@ -176,7 +176,7 @@ fun UnreadBadge(count: Int, muted: Boolean = false) {
             .padding(horizontal = 7.dp, vertical = 2.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Text(ChatLogic.badge(count), color = Color.White, style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
+        Text(ChatLogic.badge(count), color = if (muted) Color.White else MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
     }
 }
 

@@ -1,5 +1,5 @@
 /*
- * پنل مدیریت وب سامانه بیمارستان رازی.
+ * پنل مدیریت وب سامانه بیمارستان ولیعصر.
  * بدون کتابخانه و بدون مرحله build؛ فقط از API همین سرور استفاده می‌کند.
  * همه مجوزها در سرور بررسی می‌شوند؛ این صفحه فقط منوهای بی‌فایده را پنهان می‌کند.
  * متن‌ها همیشه با textContent درج می‌شوند (نه innerHTML) تا داده کاربران اجرا نشود.
@@ -228,7 +228,7 @@ function route() {
   const main = h("main", { class: "main" });
   root().replaceChildren(layout(pages, page));
   root().firstChild.append(main);
-  document.title = page.title + " | پنل مدیریت رازی";
+  document.title = page.title + " | پنل مدیریت ولیعصر";
   main.append(h("div", { class: "loading" }, h("span", { class: "spinner" }), "در حال بارگذاری…"));
   page.render(main, sub).catch((e) => {
     main.replaceChildren(h("div", { class: "card error" }, e.message || "خطا در بارگذاری"));
@@ -243,7 +243,7 @@ function layout(pages, current) {
       "aside",
       { class: "sidebar" },
       h("div", { class: "brand" }, h("div", { class: "logo" }, icon("school")),
-        h("div", {}, h("div", {}, "بیمارستان رازی"), h("div", { class: "brand-sub" }, "پنل مدیریت"))),
+        h("div", {}, h("div", {}, "بیمارستان ولیعصر"), h("div", { class: "brand-sub" }, "پنل مدیریت"))),
       h("div", { class: "who" }, h("div", { class: "avatar" }, state.me.full_name.trim().charAt(0)),
         h("div", { class: "grow" }, h("div", {}, state.me.full_name),
           h("div", { class: "brand-sub" }, [state.me.job_title, faDigits(state.me.personnel_code)].filter(Boolean).join(" · "))),
@@ -301,7 +301,7 @@ function renderLogin(notice) {
   root().replaceChildren(
     h("div", { class: "login-page" },
       h("div", { class: "card login-box" },
-        h("h1", {}, "پنل مدیریت بیمارستان رازی"),
+        h("h1", {}, "پنل مدیریت بیمارستان ولیعصر"),
         notice && notice.startsWith("نشست") ? h("p", { class: "muted" }, notice) : null,
         form)),
   );

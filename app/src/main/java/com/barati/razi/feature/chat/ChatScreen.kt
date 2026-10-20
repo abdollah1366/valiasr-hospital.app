@@ -352,15 +352,12 @@ private fun DayChip(label: String) {
     }
 }
 
-private val mineBg = Color(0xFFDDF1EC)
-private val otherBg = Color(0xFFF1F3F4)
-
 /** پیام خود کاربر در سمت شروع سطر (راست، در چیدمان فارسی) و پیام دیگران در سمت مقابل. */
 @Composable
 private fun BubbleFrame(mine: Boolean, content: @Composable () -> Unit) {
     Box(Modifier.fillMaxWidth(), contentAlignment = if (mine) Alignment.CenterStart else Alignment.CenterEnd) {
         Surface(
-            color = if (mine) mineBg else otherBg,
+            color = if (mine) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
             shape = RoundedCornerShape(
                 topStart = 16.dp,
                 topEnd = 16.dp,
@@ -402,7 +399,7 @@ private fun MessageBubble(
                     Column(
                         Modifier
                             .clip(RoundedCornerShape(8.dp))
-                            .background(Color.White.copy(alpha = 0.6f))
+                            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.6f))
                             .padding(horizontal = 8.dp, vertical = 4.dp),
                     ) {
                         Text(r.senderName ?: "", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)

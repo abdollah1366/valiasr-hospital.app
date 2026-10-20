@@ -280,7 +280,7 @@ private fun BatteryHint(context: Context) {
         Icons.Filled.BatterySaver,
         "اعلان‌ها دیر می‌رسند؟",
         "اپ هر ۱۵ دقیقه یک بار اعلان تازه را بررسی می‌کند. اگر گوشی در حالت صرفه‌جویی باتری است، " +
-            "در تنظیمات باتری، «بیمارستان رازی» را از محدودیت خارج کنید.",
+            "در تنظیمات باتری، «بیمارستان ولیعصر» را از محدودیت خارج کنید.",
         "تنظیمات باتری",
     ) {
         context.startSafely(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
