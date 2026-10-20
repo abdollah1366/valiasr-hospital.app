@@ -105,14 +105,34 @@ object HttpFactory {
         originOverride: () -> String?,
         debug: Boolean,
         onSessionExpired: () -> Unit,
-    ): ApiService {
+    ): ApiService = retrofit(baseUrl, "auth/refresh", tokens, originOverride, debug, onSessionExpired)
+        .create(ApiService::class.java)
+
+    /** سرویس مراجعان با توکن‌های جداگانه؛ تمدید نشست از مسیر patient/auth/refresh. */
+    fun createPatient(
+        baseUrl: String,
+        tokens: TokenStorage,
+        originOverride: () -> String?,
+        debug: Boolean,
+        onSessionExpired: () -> Unit,
+    ): PatientApiService = retrofit(baseUrl, "patient/auth/refresh", tokens, originOverride, debug, onSessionExpired)
+        .create(PatientApiService::class.java)
+
+    private fun retrofit(
+        baseUrl: String,
+        refreshPath: String,
+        tokens: TokenStorage,
+        originOverride: () -> String?,
+        debug: Boolean,
+        onSessionExpired: () -> Unit,
+    ): Retrofit {
         val baseInterceptor = BaseUrlInterceptor(originOverride)
         val plain = OkHttpClient.Builder()
             .addInterceptor(baseInterceptor)
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
-        val refreshUrl = { "${baseUrl}auth/refresh".toHttpUrlOrNull()!! }
+        val refreshUrl = { "$baseUrl$refreshPath".toHttpUrlOrNull()!! }
         val builder = plain.newBuilder()
             .addInterceptor(AuthHeaderInterceptor(tokens))
             .authenticator(TokenRefreshAuthenticator(tokens, refreshUrl, plain, onSessionExpired))
@@ -130,6 +150,5 @@ object HttpFactory {
             .client(builder.build())
             .addConverterFactory(AppJson.asConverterFactory("application/json".toMediaType()))
             .build()
-            .create(ApiService::class.java)
     }
 }

@@ -64,4 +64,26 @@
     <string name="feedback_status_answered">تم الرد</string>
     <string name="feedback_created_at">تاريخ الإرسال: %1$s</string>
     <string name="feedback_response">الرد: %1$s</string>
+
+    <!-- ورود مراجعان -->
+    <string name="signin_title">دخول المراجعين</string>
+    <string name="signin_subtitle">سجّل الدخول برقم جوالك، وسنرسل لك رمز التحقق برسالة نصية.</string>
+    <string name="signin_mobile">رقم الجوال</string>
+    <string name="signin_mobile_hint">مثلًا ‎+9647701234567</string>
+    <string name="signin_language">لغة التطبيق: %1$s</string>
+    <string name="signin_change_language">تغيير اللغة</string>
+    <string name="signin_send_code">الحصول على رمز التحقق</string>
+    <string name="signin_skip">المتابعة دون تسجيل الدخول</string>
+    <string name="signin_staff">دخول الموظفين برمز الموظف</string>
+    <string name="signin_invalid_mobile">يرجى إدخال رقم جوال كامل وصحيح</string>
+    <string name="signin_action">دخول</string>
+    <string name="otp_sent_to">تم إرسال رمز من 6 أرقام إلى %1$s.</string>
+    <string name="otp_code">رمز التحقق</string>
+    <string name="otp_verify">تحقق ودخول</string>
+    <string name="otp_resend">إعادة إرسال الرمز</string>
+    <string name="otp_resend_in">إعادة الإرسال بعد %1$d ثانية</string>
+    <string name="otp_change_number">تغيير الرقم</string>
+    <string name="otp_debug">رمز الاختبار: %1$s</string>
+    <string name="otp_invalid">الرمز خاطئ أو منتهي الصلاحية</string>
+    <string name="error_too_many">طلبات كثيرة. يرجى المحاولة بعد قليل.</string>
 </resources>

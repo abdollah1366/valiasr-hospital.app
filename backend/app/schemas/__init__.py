@@ -324,3 +324,50 @@ class FeedbackOut(ORM):
 class FeedbackRespondIn(BaseModel):
     status: Literal["reviewing", "answered"]
     response: str | None = Field(default=None, max_length=4000)
+
+
+# ---------------------------------------------------------------- مراجعان
+
+PatientLanguage = Literal["fa", "az", "en", "ar", "tr"]
+
+
+class OtpRequestIn(BaseModel):
+    mobile: str = Field(min_length=8, max_length=30)
+
+
+class OtpRequestOut(BaseModel):
+    mobile: str  # شماره یکسان‌شده که کد به آن فرستاده شد
+    expires_in: int
+    resend_after: int
+    suggested_language: PatientLanguage
+    debug_code: str | None = None  # فقط در توسعه و سرور آزمایشی
+
+
+class OtpVerifyIn(BaseModel):
+    mobile: str = Field(min_length=8, max_length=30)
+    code: str = Field(min_length=4, max_length=10)
+    language: PatientLanguage | None = None
+    device: str | None = Field(default=None, max_length=200)
+
+
+class PatientOut(ORM):
+    id: uuid.UUID
+    mobile: str
+    language: str
+    full_name: str | None
+
+
+class PatientTokenOut(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str = "bearer"
+    expires_in: int
+    # برای سازگاری با پاسخ تمدید توکن کارکنان در اپ
+    must_change_password: bool = False
+    patient: PatientOut
+    is_new: bool = False
+
+
+class PatientUpdateIn(BaseModel):
+    language: PatientLanguage | None = None
+    full_name: str | None = Field(default=None, max_length=200)

@@ -14,6 +14,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.barati.razi.AppContainer
+import com.barati.razi.core.data.PatientSession
 import com.barati.razi.core.data.SessionState
 import com.barati.razi.core.data.can
 import com.barati.razi.core.i18n.AppLanguage
@@ -34,6 +35,7 @@ import com.barati.razi.feature.incident.MyIncidentsScreen
 import com.barati.razi.feature.incident.ReviewListScreen
 import com.barati.razi.feature.incident.TrackIncidentScreen
 import com.barati.razi.feature.notifications.NotificationsScreen
+import com.barati.razi.feature.patient.PatientSignInScreen
 import com.barati.razi.feature.publicinfo.FaqScreen
 import com.barati.razi.feature.publicinfo.FeedbackScreen
 import com.barati.razi.feature.publicinfo.PublicHomeScreen
@@ -59,6 +61,7 @@ import kotlinx.coroutines.launch
 object Routes {
     const val SPLASH = "splash"
     const val PUBLIC_HOME = "public"
+    const val PATIENT_SIGNIN = "patient_signin"
     const val UNITS = "units"
     const val FAQ = "faq"
     const val NEWS = "news"
@@ -125,6 +128,7 @@ object Routes {
 @Composable
 fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavController()) {
     val session by container.authRepository.session.collectAsState()
+    val patientSession by container.patientAuthRepository.session.collectAsState()
     val scope = rememberCoroutineScope()
     val back: () -> Unit = { nav.popBackStack() }
 
@@ -159,12 +163,16 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
     NavHost(navController = nav, startDestination = Routes.SPLASH) {
         composable(Routes.SPLASH) {
             LoadingBox()
-            LaunchedEffect(session) {
+            LaunchedEffect(session, patientSession) {
                 val s = session
-                if (s is SessionState.Unknown) return@LaunchedEffect
+                val p = patientSession
+                if (s is SessionState.Unknown || p is PatientSession.Unknown) return@LaunchedEffect
                 nav.navigate(Routes.PUBLIC_HOME) { popUpTo(Routes.SPLASH) { inclusive = true } }
                 if (s is SessionState.LoggedIn) {
                     nav.navigate(if (s.me.mustChangePassword) Routes.CHANGE_PASSWORD else Routes.STAFF_HOME)
+                } else if (p is PatientSession.SignedOut && !p.skipped) {
+                    // بار اول: ثبت‌نام مراجع با موبایل؛ با «ادامه بدون ورود» دیگر خودکار باز نمی‌شود.
+                    nav.navigate(Routes.PATIENT_SIGNIN)
                 }
             }
         }
@@ -173,7 +181,9 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
                 PublicHomeScreen(
                     isLoggedIn = session is SessionState.LoggedIn,
                     language = language,
-                    onLanguage = { scope.launch { container.languageRepository.set(it) } },
+                    onLanguage = { scope.launch { container.patientAuthRepository.setLanguage(it) } },
+                    patientSignedIn = patientSession is PatientSession.SignedIn,
+                    onPatientSignIn = { nav.navigate(Routes.PATIENT_SIGNIN) },
                     onUnits = { nav.navigate(Routes.UNITS) },
                     onFaq = { nav.navigate(Routes.FAQ) },
                     onNews = { nav.navigate(Routes.NEWS) },
@@ -183,6 +193,20 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
                         val s = session
                         if (s is SessionState.LoggedIn && !s.me.mustChangePassword) goStaffHome() else nav.navigate(Routes.LOGIN)
                     },
+                )
+            }
+        }
+        composable(Routes.PATIENT_SIGNIN) {
+            PatientContent(container) { language ->
+                PatientSignInScreen(
+                    container,
+                    language,
+                    onSignedIn = { nav.popBackStack(Routes.PUBLIC_HOME, inclusive = false) },
+                    onSkip = {
+                        scope.launch { container.patientAuthRepository.skip() }
+                        nav.popBackStack(Routes.PUBLIC_HOME, inclusive = false)
+                    },
+                    onStaff = { nav.navigate(Routes.LOGIN) { popUpTo(Routes.PUBLIC_HOME) } },
                 )
             }
         }

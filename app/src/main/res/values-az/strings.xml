@@ -64,4 +64,26 @@
     <string name="feedback_status_answered">Cavablandırıldı</string>
     <string name="feedback_created_at">Göndərilmə tarixi: %1$s</string>
     <string name="feedback_response">Cavab: %1$s</string>
+
+    <!-- ورود مراجعان -->
+    <string name="signin_title">Pasiyent girişi</string>
+    <string name="signin_subtitle">Mobil nömrənizlə daxil olun. Təsdiq kodu SMS ilə göndəriləcək.</string>
+    <string name="signin_mobile">Mobil nömrə</string>
+    <string name="signin_mobile_hint">məs. +994501234567</string>
+    <string name="signin_language">Tətbiqin dili: %1$s</string>
+    <string name="signin_change_language">Dili dəyiş</string>
+    <string name="signin_send_code">Təsdiq kodunu al</string>
+    <string name="signin_skip">Girişsiz davam et</string>
+    <string name="signin_staff">İşçilər üçün giriş (şəxsi kodla)</string>
+    <string name="signin_invalid_mobile">Mobil nömrəni tam və düzgün daxil edin</string>
+    <string name="signin_action">Giriş</string>
+    <string name="otp_sent_to">6 rəqəmli kod %1$s nömrəsinə göndərildi.</string>
+    <string name="otp_code">Təsdiq kodu</string>
+    <string name="otp_verify">Təsdiqlə və daxil ol</string>
+    <string name="otp_resend">Kodu yenidən göndər</string>
+    <string name="otp_resend_in">%1$d saniyədən sonra yenidən göndər</string>
+    <string name="otp_change_number">Nömrəni dəyiş</string>
+    <string name="otp_debug">Test kodu: %1$s</string>
+    <string name="otp_invalid">Kod səhvdir və ya vaxtı bitib</string>
+    <string name="error_too_many">Çox sayda sorğu. Bir az sonra yenidən cəhd edin.</string>
 </resources>

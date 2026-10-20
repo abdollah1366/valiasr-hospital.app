@@ -29,6 +29,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             container.loadServerOrigin()
             container.authRepository.restore()
+            container.patientAuthRepository.restore()
             // اگر گزارش یا درخواستی از قبل در صف مانده باشد، ارسال آن دوباره تلاش می‌شود.
             IncidentUploadWorker.schedule(applicationContext)
             RequestUploadWorker.schedule(applicationContext)

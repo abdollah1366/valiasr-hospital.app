@@ -68,4 +68,26 @@
     <string name="feedback_status_answered">پاسخ داده شد</string>
     <string name="feedback_created_at">تاریخ ثبت: %1$s</string>
     <string name="feedback_response">پاسخ: %1$s</string>
+
+    <!-- ورود مراجعان -->
+    <string name="signin_title">ورود مراجعان</string>
+    <string name="signin_subtitle">با شماره موبایل وارد شوید؛ کد تأیید برایتان پیامک می‌شود.</string>
+    <string name="signin_mobile">شماره موبایل</string>
+    <string name="signin_mobile_hint">مثلاً 09121234567 یا ‎+994501234567</string>
+    <string name="signin_language">زبان اپ: %1$s</string>
+    <string name="signin_change_language">تغییر زبان</string>
+    <string name="signin_send_code">دریافت کد تأیید</string>
+    <string name="signin_skip">ادامه بدون ورود</string>
+    <string name="signin_staff">ورود کارکنان با کد پرسنلی</string>
+    <string name="signin_invalid_mobile">شماره موبایل را کامل و درست وارد کنید</string>
+    <string name="signin_action">ورود</string>
+    <string name="otp_sent_to">کد ۶ رقمی به %1$s فرستاده شد.</string>
+    <string name="otp_code">کد تأیید</string>
+    <string name="otp_verify">تأیید و ورود</string>
+    <string name="otp_resend">ارسال دوباره کد</string>
+    <string name="otp_resend_in">ارسال دوباره تا %1$d ثانیه دیگر</string>
+    <string name="otp_change_number">تغییر شماره</string>
+    <string name="otp_debug">کد آزمایشی: %1$s</string>
+    <string name="otp_invalid">کد اشتباه یا منقضی است</string>
+    <string name="error_too_many">تعداد درخواست زیاد است؛ کمی بعد دوباره تلاش کنید</string>
 </resources>
