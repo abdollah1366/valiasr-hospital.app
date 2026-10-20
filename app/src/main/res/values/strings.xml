@@ -81,7 +81,7 @@
     <string name="signin_staff">ورود کارکنان با کد پرسنلی</string>
     <string name="signin_invalid_mobile">شماره موبایل را کامل و درست وارد کنید</string>
     <string name="signin_action">ورود</string>
-    <string name="otp_sent_to">کد ۶ رقمی به %1$s فرستاده شد.</string>
+    <string name="otp_sent_to">کد تأیید به %1$s فرستاده شد.</string>
     <string name="otp_code">کد تأیید</string>
     <string name="otp_verify">تأیید و ورود</string>
     <string name="otp_resend">ارسال دوباره کد</string>

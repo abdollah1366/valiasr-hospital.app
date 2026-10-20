@@ -18,6 +18,8 @@ services:
     build: ./backend
     environment:
       RAZI_ENV: development
+      # تا وصل شدن سامانه پیامک، کد ورود مراجعان 1234 است.
+      RAZI_OTP_FIXED_CODE: "1234"
       RAZI_DATABASE_URL: postgresql+psycopg://razi:razi@db:5432/razi
     # داده نمایشی (کاربران 1001 تا 1005 با رمز Razi1234) برای آزمایش اپ
     command: sh -c "alembic upgrade head && python -m app.seed --demo && uvicorn app.main:app --host 0.0.0.0 --port 8000"

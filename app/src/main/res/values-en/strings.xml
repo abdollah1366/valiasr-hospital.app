@@ -77,7 +77,7 @@
     <string name="signin_staff">Staff sign-in with personnel code</string>
     <string name="signin_invalid_mobile">Please enter a complete, valid mobile number</string>
     <string name="signin_action">Sign in</string>
-    <string name="otp_sent_to">A 6-digit code was sent to %1$s.</string>
+    <string name="otp_sent_to">A verification code was sent to %1$s.</string>
     <string name="otp_code">Verification code</string>
     <string name="otp_verify">Verify and sign in</string>
     <string name="otp_resend">Send the code again</string>

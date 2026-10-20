@@ -77,7 +77,7 @@
     <string name="signin_staff">Personel girişi (sicil numarası ile)</string>
     <string name="signin_invalid_mobile">Lütfen geçerli ve eksiksiz bir cep numarası girin</string>
     <string name="signin_action">Giriş</string>
-    <string name="otp_sent_to">6 haneli kod %1$s numarasına gönderildi.</string>
+    <string name="otp_sent_to">Doğrulama kodu %1$s numarasına gönderildi.</string>
     <string name="otp_code">Doğrulama kodu</string>
     <string name="otp_verify">Doğrula ve giriş yap</string>
     <string name="otp_resend">Kodu tekrar gönder</string>

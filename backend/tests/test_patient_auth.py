@@ -148,9 +148,28 @@ def test_patient_and_staff_tokens_are_not_interchangeable(client):
     assert client.get(f"{API}/me").status_code == 401
 
 
+def test_fixed_test_code_skips_sms(client, monkeypatch):
+    sent = []
+    monkeypatch.setattr("app.routers.patient.sms.send_otp", lambda m, c: sent.append(c))
+    monkeypatch.setattr("app.routers.patient.get_settings", lambda: Settings(otp_fixed_code="1234"))
+    request_otp(client)
+    assert sent == []
+    r = client.post(f"{API}/auth/verify", json={"mobile": "09121234567", "code": "۱۲۳۴"})
+    assert r.status_code == 200, r.text
+    monkeypatch.setattr(
+        "app.routers.patient.get_settings",
+        lambda: Settings(env="production", otp_fixed_code="1234", otp_resend_seconds=0),
+    )
+    assert request_otp(client)["debug_code"] is None
+    # در production کد ثابت نادیده گرفته می‌شود و کد تصادفی پیامک می‌شود.
+    assert len(sent) == 1 and len(sent[0]) == 6
+
+
 def test_production_requires_sms_provider():
     key = "ZGV2LW9ubHktZGF0YS1rZXktMzItYnl0ZXMtbG9uZyE="
     base = {"jwt_secret": "x" * 40, "data_encryption_key": key.replace("ZGV2", "cHJv")}
+    with pytest.raises(RuntimeError, match="OTP_FIXED_CODE"):
+        Settings(env="production", otp_fixed_code="1234", sms_provider="kavenegar", **base).check_production()
     with pytest.raises(RuntimeError, match="SMS_PROVIDER"):
         Settings(env="production", **base).check_production()
     with pytest.raises(RuntimeError, match="SMS_API_KEY"):

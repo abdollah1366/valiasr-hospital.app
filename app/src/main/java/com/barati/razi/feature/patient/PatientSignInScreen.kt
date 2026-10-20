@@ -129,7 +129,7 @@ class PatientSignInViewModel(
     fun verify() {
         val s = _state.value
         val sent = s.sent ?: return
-        if (s.code.length < 6) {
+        if (s.code.length < 4) {
             _state.update { it.copy(error = ApiError(400, "otp_invalid", "")) }
             return
         }

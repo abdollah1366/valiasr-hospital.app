@@ -29,8 +29,8 @@ services:
       RAZI_JWT_SECRET: ${RAZI_JWT_SECRET:?RAZI_JWT_SECRET در .env.public تنظیم نشده}
       RAZI_DATA_ENCRYPTION_KEY: ${RAZI_DATA_ENCRYPTION_KEY:?RAZI_DATA_ENCRYPTION_KEY در .env.public تنظیم نشده}
       RAZI_DEMO_PASSWORD: ${RAZI_DEMO_PASSWORD:?RAZI_DEMO_PASSWORD در .env.public تنظیم نشده}
-      # سرور آزمایشی پیامک ندارد؛ کد ورود مراجعان در پاسخ API برگردانده می‌شود.
-      RAZI_OTP_DEBUG: "true"
+      # سرور آزمایشی پیامک ندارد؛ کد ورود مراجعان همیشه 1234 است.
+      RAZI_OTP_FIXED_CODE: "1234"
     # کاربران نمایشی 1001 تا 1005 با رمز RAZI_DEMO_PASSWORD ساخته می‌شوند.
     command: sh -c "alembic upgrade head && python -m app.seed --demo && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     ports:

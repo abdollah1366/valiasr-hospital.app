@@ -85,7 +85,8 @@ def request_otp(body: OtpRequestIn, db: Session = Depends(get_db)) -> OtpRequest
     db.execute(
         update(OtpCode).where(OtpCode.mobile == mobile, OtpCode.consumed_at.is_(None)).values(consumed_at=now)
     )
-    code = new_otp_code()
+    fixed = s.otp_fixed_code if s.env != "production" else None
+    code = fixed or new_otp_code()
     db.add(
         OtpCode(
             mobile=mobile,
@@ -95,7 +96,8 @@ def request_otp(body: OtpRequestIn, db: Session = Depends(get_db)) -> OtpRequest
         )
     )
     try:
-        sms.send_otp(mobile, code)
+        if not fixed:
+            sms.send_otp(mobile, code)
     except sms.SmsError:
         db.rollback()
         raise api_error(503, "sms_failed", "ارسال پیامک ممکن نشد؛ کمی بعد دوباره تلاش کنید") from None

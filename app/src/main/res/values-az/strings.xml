@@ -77,7 +77,7 @@
     <string name="signin_staff">İşçilər üçün giriş (şəxsi kodla)</string>
     <string name="signin_invalid_mobile">Mobil nömrəni tam və düzgün daxil edin</string>
     <string name="signin_action">Giriş</string>
-    <string name="otp_sent_to">6 rəqəmli kod %1$s nömrəsinə göndərildi.</string>
+    <string name="otp_sent_to">Təsdiq kodu %1$s nömrəsinə göndərildi.</string>
     <string name="otp_code">Təsdiq kodu</string>
     <string name="otp_verify">Təsdiqlə və daxil ol</string>
     <string name="otp_resend">Kodu yenidən göndər</string>

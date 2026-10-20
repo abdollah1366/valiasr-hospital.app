@@ -77,7 +77,7 @@
     <string name="signin_staff">دخول الموظفين برمز الموظف</string>
     <string name="signin_invalid_mobile">يرجى إدخال رقم جوال كامل وصحيح</string>
     <string name="signin_action">دخول</string>
-    <string name="otp_sent_to">تم إرسال رمز من 6 أرقام إلى %1$s.</string>
+    <string name="otp_sent_to">تم إرسال رمز التحقق إلى %1$s.</string>
     <string name="otp_code">رمز التحقق</string>
     <string name="otp_verify">تحقق ودخول</string>
     <string name="otp_resend">إعادة إرسال الرمز</string>
