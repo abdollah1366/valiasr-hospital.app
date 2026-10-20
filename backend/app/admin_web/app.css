@@ -10,17 +10,17 @@
 }
 
 :root {
-  /* رنگ‌های بیمارستان ولیعصر؛ قرمز برند فقط برای هویت، هرگز دکمه یا خطا */
-  --primary: #1f7a72;
-  --primary-dark: #194d48;
-  --primary-hover: #19665f;
-  --primary-soft: #e6f3f1;
+  /* رنگ‌های بیمارستان ولیعصر (کیت رسمی برند)؛ رنگ برند فقط برای هویت، هرگز متن، دکمه یا خطا */
+  --primary: #01687f;
+  --primary-dark: #014354;
+  --primary-hover: #015569;
+  --primary-soft: #e0f2f0;
   --primary-tint: #f2f8f7;
   --focus: #64d8ce;
-  --brand: #b3262e;
-  --brand-soft: #fbedee;
-  --gold: #8c6a2b;
-  --gold-deco: #c9a15a;
+  --brand: #019681;
+  --brand-soft: #e0f2f0;
+  --gold: #361e58;
+  --gold-deco: #ffdc6f;
   --cream: #fbf6ec;
   --bg: #f6f8f7;
   --surface: #ffffff;
@@ -66,7 +66,7 @@ a { color: var(--primary); }
 .sidebar {
   width: 248px;
   flex-shrink: 0;
-  background: linear-gradient(180deg, #1d6a63 0%, var(--primary-dark) 100%);
+  background: linear-gradient(180deg, #02586d 0%, var(--primary-dark) 100%);
   box-shadow: inset 0 4px 0 var(--brand);
   color: #fff;
   padding: 18px 12px;
@@ -270,7 +270,7 @@ label.inline { display: inline-flex; gap: 6px; align-items: center; color: var(-
 .bar-row { display: grid; grid-template-columns: minmax(90px, 140px) 1fr auto; gap: 10px; align-items: center; margin: 8px 0; font-size: 14px; }
 .bar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bar { height: 12px; background: var(--gray-soft); border-radius: 6px; overflow: hidden; }
-.bar > div { height: 100%; background: linear-gradient(90deg, var(--primary), #2db3a7); border-radius: 6px; }
+.bar > div { height: 100%; background: linear-gradient(90deg, var(--primary), var(--brand)); border-radius: 6px; }
 .pbar { height: 8px; background: var(--gray-soft); border-radius: 4px; overflow: hidden; min-width: 60px; }
 .pfill { height: 100%; background: var(--primary); border-radius: 4px; transition: width .2s; }
 .pfill.green { background: var(--ok); }

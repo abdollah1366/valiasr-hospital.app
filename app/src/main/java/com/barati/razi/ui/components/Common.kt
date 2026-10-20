@@ -80,7 +80,7 @@ fun RaziScaffold(
                         actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     ),
                 )
-                // نوار قرمز برند، مثل نوارهای نمای ساختمان؛ تنها جای ثابت قرمز در اپ.
+                // نوار رنگ برند، مثل نوارهای نمای ساختمان؛ تنها جای ثابت برند در اپ.
                 Box(Modifier.fillMaxWidth().height(4.dp).background(brandColor))
             }
         },
