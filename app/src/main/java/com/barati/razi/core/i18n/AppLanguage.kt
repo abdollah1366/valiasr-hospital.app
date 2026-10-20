@@ -12,7 +12,7 @@ enum class AppLanguage(val code: String, val isRtl: Boolean, val nativeName: Str
     TR("tr", false, "Türkçe"),
     ;
 
-    /** فونت وزیرمتن برای فارسی و عربی؛ زبان‌های لاتین با فونت سیستم (حروف ə، ş، ğ، ı کامل‌اند). */
+    /** فونت وزیرمتن برای فارسی و عربی؛ زبان‌های لاتین با Raleway (حروف ə، ş، ğ، ı در آن موجود است). */
     val usesPersianFont: Boolean get() = isRtl
 
     companion object {

@@ -22,6 +22,13 @@ val Vazirmatn = FontFamily(
     Font(R.font.vazirmatn_bold, FontWeight.Bold),
 )
 
+/** فونت Raleway برای زبان‌های لاتین مراجعان (آذربایجانی، انگلیسی، ترکی). */
+val Raleway = FontFamily(
+    Font(R.font.raleway_regular, FontWeight.Normal),
+    Font(R.font.raleway_medium, FontWeight.Medium),
+    Font(R.font.raleway_bold, FontWeight.Bold),
+)
+
 private val LightColors = lightColorScheme(
     primary = ValiasrColors.Primary,
     onPrimary = Color.White,
@@ -90,8 +97,24 @@ private fun TextStyle.withFont() = copy(fontFamily = Vazirmatn)
 
 private val Base = Typography()
 
-/** تایپوگرافی با فونت سیستم برای زبان‌های لاتین بخش مراجعان. */
-val SystemTypography: Typography = Base
+/** تایپوگرافی Raleway برای زبان‌های لاتین بخش مراجعان. */
+val LatinTypography: Typography = Typography(
+    displayLarge = Base.displayLarge.copy(fontFamily = Raleway),
+    displayMedium = Base.displayMedium.copy(fontFamily = Raleway),
+    displaySmall = Base.displaySmall.copy(fontFamily = Raleway),
+    headlineLarge = Base.headlineLarge.copy(fontFamily = Raleway),
+    headlineMedium = Base.headlineMedium.copy(fontFamily = Raleway),
+    headlineSmall = Base.headlineSmall.copy(fontFamily = Raleway),
+    titleLarge = Base.titleLarge.copy(fontFamily = Raleway),
+    titleMedium = Base.titleMedium.copy(fontFamily = Raleway),
+    titleSmall = Base.titleSmall.copy(fontFamily = Raleway),
+    bodyLarge = Base.bodyLarge.copy(fontFamily = Raleway),
+    bodyMedium = Base.bodyMedium.copy(fontFamily = Raleway),
+    bodySmall = Base.bodySmall.copy(fontFamily = Raleway),
+    labelLarge = Base.labelLarge.copy(fontFamily = Raleway),
+    labelMedium = Base.labelMedium.copy(fontFamily = Raleway),
+    labelSmall = Base.labelSmall.copy(fontFamily = Raleway),
+)
 private val RaziTypography = Typography(
     displayLarge = Base.displayLarge.withFont(),
     displayMedium = Base.displayMedium.withFont(),
