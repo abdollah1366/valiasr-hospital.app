@@ -8,6 +8,7 @@ import com.barati.razi.core.data.DataStoreKeyValueStore
 import com.barati.razi.core.data.DefaultAuthRepository
 import com.barati.razi.core.data.IncidentRepository
 import com.barati.razi.core.data.Keys
+import com.barati.razi.core.data.LanguageRepository
 import com.barati.razi.core.data.NotificationRepository
 import com.barati.razi.core.data.ScheduleRepository
 import com.barati.razi.core.data.ServiceRequestRepository
@@ -46,6 +47,7 @@ class AppContainer(context: Context) {
 
     val authRepository = DefaultAuthRepository(api, tokens, store, "${Build.MANUFACTURER} ${Build.MODEL}").also { authRef = it }
     val contentRepository = ContentRepository(api)
+    val languageRepository = LanguageRepository(store, scope)
     val incidentRepository = IncidentRepository(
         api = api,
         store = store,

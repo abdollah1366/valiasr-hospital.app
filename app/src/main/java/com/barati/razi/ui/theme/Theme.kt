@@ -89,6 +89,9 @@ private val DarkColors = darkColorScheme(
 private fun TextStyle.withFont() = copy(fontFamily = Vazirmatn)
 
 private val Base = Typography()
+
+/** تایپوگرافی با فونت سیستم برای زبان‌های لاتین بخش مراجعان. */
+val SystemTypography: Typography = Base
 private val RaziTypography = Typography(
     displayLarge = Base.displayLarge.withFont(),
     displayMedium = Base.displayMedium.withFont(),

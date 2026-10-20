@@ -1,0 +1,67 @@
+<resources>
+    <!-- Yayından önce hastane tarafından onaylanmalıdır. -->
+    <string name="app_name">Veliasr Hastanesi</string>
+
+    <string name="back">Geri</string>
+    <string name="close">Kapat</string>
+    <string name="retry">Tekrar dene</string>
+    <string name="language">Dil</string>
+    <string name="none_option">— Hiçbiri —</string>
+    <string name="error_generic">Bir sorun oluştu. Lütfen tekrar deneyin.</string>
+    <string name="error_network">Sunucuya bağlanılamadı. İnternet bağlantınızı kontrol edin.</string>
+
+    <string name="hospital_full_name">Tebriz Uluslararası Veliasr Hastanesi</string>
+    <string name="home_welcome">Veliasr Hastanesi uygulamasına hoş geldiniz</string>
+    <string name="tile_units">Bölümler ve poliklinikler</string>
+    <string name="tile_units_sub">Konum, telefon ve çalışma saatleri</string>
+    <string name="tile_faq">Sıkça sorulan sorular</string>
+    <string name="tile_faq_sub">Gerekli belgeler, ziyaret saatleri ve diğerleri</string>
+    <string name="tile_news">Duyurular</string>
+    <string name="tile_news_sub">Hastane haberleri ve hizmet değişiklikleri</string>
+    <string name="tile_feedback">Öneri ve şikâyetler</string>
+    <string name="tile_feedback_sub">Kod ile gönderin ve takip edin</string>
+    <string name="tile_track">Anonim bildirimi takip et</string>
+    <string name="tile_track_sub">Takip kodu ve şifre ile (yalnızca personel)</string>
+    <string name="tile_staff">Personel girişi</string>
+    <string name="tile_staff_logged_in">Personel bölümüne git</string>
+    <string name="tile_staff_sub">Olay bildirimleri, genelgeler ve diğerleri (Farsça)</string>
+
+    <string name="units_title">Bölümler</string>
+    <string name="units_empty">Henüz bilgi eklenmedi</string>
+    <string name="unit_location">Konum: %1$s</string>
+    <string name="unit_phone">Telefon: %1$s</string>
+    <string name="unit_hours">Çalışma saatleri: %1$s</string>
+
+    <string name="faq_title">Sıkça sorulan sorular</string>
+    <string name="news_title">Duyurular</string>
+    <string name="news_empty">Duyuru yok</string>
+    <string name="announcement_news">Haber</string>
+    <string name="announcement_circular">Genelge</string>
+    <string name="announcement_guideline">Talimat</string>
+    <string name="announcement_notice">Duyuru</string>
+
+    <string name="feedback_title">Öneri ve şikâyetler</string>
+    <string name="feedback_kind">Tür</string>
+    <string name="feedback_kind_suggestion">Öneri</string>
+    <string name="feedback_kind_criticism">Eleştiri</string>
+    <string name="feedback_kind_complaint">Şikâyet</string>
+    <string name="feedback_kind_praise">Teşekkür</string>
+    <string name="feedback_unit">İlgili bölüm (isteğe bağlı)</string>
+    <string name="feedback_body">Metin *</string>
+    <string name="feedback_name">Ad (isteğe bağlı)</string>
+    <string name="feedback_mobile">İran cep telefonu numarası (isteğe bağlı)</string>
+    <string name="feedback_send">Gönder</string>
+    <string name="feedback_error_body">Lütfen biraz daha ayrıntılı yazın</string>
+    <string name="feedback_error_mobile">Cep telefonu numarası 11 haneli olmalı ve 09 ile başlamalıdır</string>
+    <string name="feedback_created">Gönderildi. Takip kodunuz:</string>
+    <string name="feedback_created_note">Yanıtı daha sonra görmek için bu kodu not edin.</string>
+    <string name="feedback_track_title">Kod ile takip</string>
+    <string name="feedback_track_code">Takip kodu (ör. FB-…)</string>
+    <string name="feedback_track_button">Takip et</string>
+    <string name="feedback_status">Durum: %1$s</string>
+    <string name="feedback_status_received">Alındı</string>
+    <string name="feedback_status_reviewing">İnceleniyor</string>
+    <string name="feedback_status_answered">Yanıtlandı</string>
+    <string name="feedback_created_at">Gönderim tarihi: %1$s</string>
+    <string name="feedback_response">Yanıt: %1$s</string>
+</resources>

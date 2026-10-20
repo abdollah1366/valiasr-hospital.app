@@ -39,10 +39,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.barati.razi.R
+import com.barati.razi.core.i18n.AppLanguage
+import com.barati.razi.core.network.ApiError
 import com.barati.razi.core.network.Result
+import com.barati.razi.ui.i18n.LocalAppLanguage
 import com.barati.razi.ui.theme.brandColor
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,7 +67,7 @@ fun RaziScaffold(
                     navigationIcon = {
                         if (onBack != null) {
                             IconButton(onClick = onBack) {
-                                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "بازگشت")
+                                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
                             }
                         }
                     },
@@ -163,7 +168,29 @@ fun <T> rememberLoader(vararg keys: Any?, block: suspend () -> Result<T>): Loade
 fun <T> LoadContent(loader: Loader<T>, modifier: Modifier = Modifier, content: @Composable (T) -> Unit) {
     when (val s = loader.state) {
         Load.Loading -> LoadingBox(modifier)
-        is Load.Error -> MessageBox(s.message, modifier, "تلاش دوباره", loader.reload)
+        is Load.Error -> MessageBox(localizedError(s.message), modifier, stringResource(R.string.retry), loader.reload)
         is Load.Data -> content(s.value)
+    }
+}
+
+/**
+ * پیام خطای سرور فارسی است؛ در زبان‌های دیگر بخش مراجعان یک پیام عمومی به همان زبان نشان داده می‌شود.
+ */
+@Composable
+fun localizedError(message: String): String =
+    if (LocalAppLanguage.current == AppLanguage.FA) message else stringResource(R.string.error_generic)
+
+/** مثل localizedError برای خطای کامل؛ خطای شبکه پیام جداگانه دارد. */
+@Composable
+fun rememberErrorText(): (ApiError) -> String {
+    val persian = LocalAppLanguage.current == AppLanguage.FA
+    val generic = stringResource(R.string.error_generic)
+    val network = stringResource(R.string.error_network)
+    return { e ->
+        when {
+            persian -> e.message
+            e.code == "network" -> network
+            else -> generic
+        }
     }
 }

@@ -1,0 +1,67 @@
+<resources>
+    <!-- Buraxılışdan əvvəl xəstəxana tərəfindən yoxlanılmalıdır. -->
+    <string name="app_name">Vəliəsr Xəstəxanası</string>
+
+    <string name="back">Geri</string>
+    <string name="close">Bağla</string>
+    <string name="retry">Yenidən cəhd edin</string>
+    <string name="language">Dil</string>
+    <string name="none_option">— Heç biri —</string>
+    <string name="error_generic">Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.</string>
+    <string name="error_network">Serverə qoşulmaq mümkün olmadı. İnternet bağlantınızı yoxlayın.</string>
+
+    <string name="hospital_full_name">Təbriz Beynəlxalq Vəliəsr Xəstəxanası</string>
+    <string name="home_welcome">Vəliəsr Xəstəxanası tətbiqinə xoş gəlmisiniz</string>
+    <string name="tile_units">Şöbələr və klinikalar</string>
+    <string name="tile_units_sub">Ünvan, telefon və iş saatları</string>
+    <string name="tile_faq">Tez-tez verilən suallar</string>
+    <string name="tile_faq_sub">Lazımi sənədlər, ziyarət saatları və s.</string>
+    <string name="tile_news">Elanlar</string>
+    <string name="tile_news_sub">Xəstəxana xəbərləri və xidmət dəyişiklikləri</string>
+    <string name="tile_feedback">Təklif və şikayətlər</string>
+    <string name="tile_feedback_sub">Kodla göndərin və izləyin</string>
+    <string name="tile_track">Anonim hesabatı izləmək</string>
+    <string name="tile_track_sub">İzləmə kodu və şifrə ilə (yalnız işçilər)</string>
+    <string name="tile_staff">İşçilər üçün giriş</string>
+    <string name="tile_staff_logged_in">İşçilər bölməsinə keçid</string>
+    <string name="tile_staff_sub">Hadisə hesabatları, sərəncamlar və s. (fars dilində)</string>
+
+    <string name="units_title">Şöbələr</string>
+    <string name="units_empty">Hələ məlumat əlavə edilməyib</string>
+    <string name="unit_location">Yer: %1$s</string>
+    <string name="unit_phone">Telefon: %1$s</string>
+    <string name="unit_hours">İş saatları: %1$s</string>
+
+    <string name="faq_title">Tez-tez verilən suallar</string>
+    <string name="news_title">Elanlar</string>
+    <string name="news_empty">Elan yoxdur</string>
+    <string name="announcement_news">Xəbər</string>
+    <string name="announcement_circular">Sərəncam</string>
+    <string name="announcement_guideline">Təlimat</string>
+    <string name="announcement_notice">Elan</string>
+
+    <string name="feedback_title">Təklif və şikayətlər</string>
+    <string name="feedback_kind">Növ</string>
+    <string name="feedback_kind_suggestion">Təklif</string>
+    <string name="feedback_kind_criticism">Tənqid</string>
+    <string name="feedback_kind_complaint">Şikayət</string>
+    <string name="feedback_kind_praise">Təşəkkür</string>
+    <string name="feedback_unit">Aid olan şöbə (istəyə görə)</string>
+    <string name="feedback_body">Mətn *</string>
+    <string name="feedback_name">Ad (istəyə görə)</string>
+    <string name="feedback_mobile">İran mobil nömrəsi (istəyə görə)</string>
+    <string name="feedback_send">Göndər</string>
+    <string name="feedback_error_body">Zəhmət olmasa bir az ətraflı yazın</string>
+    <string name="feedback_error_mobile">Mobil nömrə 11 rəqəmli olmalı və 09 ilə başlamalıdır</string>
+    <string name="feedback_created">Göndərildi. İzləmə kodunuz:</string>
+    <string name="feedback_created_note">Cavabı sonra görmək üçün bu kodu qeyd edin.</string>
+    <string name="feedback_track_title">Kodla izləmək</string>
+    <string name="feedback_track_code">İzləmə kodu (məs. FB-…)</string>
+    <string name="feedback_track_button">İzlə</string>
+    <string name="feedback_status">Vəziyyət: %1$s</string>
+    <string name="feedback_status_received">Qəbul edildi</string>
+    <string name="feedback_status_reviewing">Baxılır</string>
+    <string name="feedback_status_answered">Cavablandırıldı</string>
+    <string name="feedback_created_at">Göndərilmə tarixi: %1$s</string>
+    <string name="feedback_response">Cavab: %1$s</string>
+</resources>

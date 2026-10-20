@@ -19,4 +19,5 @@ object Keys {
     const val NOTIFICATION_PERMISSION_ASKED = "notification_permission_asked"
     const val CHAT_OUTBOX = "chat_outbox"
     const val MY_SCHEDULE = "my_schedule_cache"
+    const val PATIENT_LANGUAGE = "patient_language"
 }

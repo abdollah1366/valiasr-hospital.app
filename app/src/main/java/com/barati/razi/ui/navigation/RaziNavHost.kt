@@ -16,6 +16,7 @@ import androidx.navigation.navArgument
 import com.barati.razi.AppContainer
 import com.barati.razi.core.data.SessionState
 import com.barati.razi.core.data.can
+import com.barati.razi.core.i18n.AppLanguage
 import com.barati.razi.core.notifications.NotificationLogic
 import com.barati.razi.core.notifications.NotificationTarget
 import com.barati.razi.feature.announcements.AnnouncementsScreen
@@ -52,6 +53,7 @@ import com.barati.razi.feature.schedule.ScheduleSwapsScreen
 import com.barati.razi.feature.schedule.ScheduleUnitsScreen
 import com.barati.razi.feature.training.TrainingHomeScreen
 import com.barati.razi.ui.components.LoadingBox
+import com.barati.razi.ui.i18n.LocalizedContent
 import kotlinx.coroutines.launch
 
 object Routes {
@@ -167,23 +169,27 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
             }
         }
         composable(Routes.PUBLIC_HOME) {
-            PublicHomeScreen(
-                isLoggedIn = session is SessionState.LoggedIn,
-                onUnits = { nav.navigate(Routes.UNITS) },
-                onFaq = { nav.navigate(Routes.FAQ) },
-                onNews = { nav.navigate(Routes.NEWS) },
-                onFeedback = { nav.navigate(Routes.FEEDBACK) },
-                onTrack = { nav.navigate(Routes.track()) },
-                onStaff = {
-                    val s = session
-                    if (s is SessionState.LoggedIn && !s.me.mustChangePassword) goStaffHome() else nav.navigate(Routes.LOGIN)
-                },
-            )
+            PatientContent(container) { language ->
+                PublicHomeScreen(
+                    isLoggedIn = session is SessionState.LoggedIn,
+                    language = language,
+                    onLanguage = { scope.launch { container.languageRepository.set(it) } },
+                    onUnits = { nav.navigate(Routes.UNITS) },
+                    onFaq = { nav.navigate(Routes.FAQ) },
+                    onNews = { nav.navigate(Routes.NEWS) },
+                    onFeedback = { nav.navigate(Routes.FEEDBACK) },
+                    onTrack = { nav.navigate(Routes.track()) },
+                    onStaff = {
+                        val s = session
+                        if (s is SessionState.LoggedIn && !s.me.mustChangePassword) goStaffHome() else nav.navigate(Routes.LOGIN)
+                    },
+                )
+            }
         }
-        composable(Routes.UNITS) { UnitsScreen(container, back) }
-        composable(Routes.FAQ) { FaqScreen(container, back) }
-        composable(Routes.NEWS) { PublicNewsScreen(container, back) }
-        composable(Routes.FEEDBACK) { FeedbackScreen(container, back) }
+        composable(Routes.UNITS) { PatientContent(container) { UnitsScreen(container, back) } }
+        composable(Routes.FAQ) { PatientContent(container) { FaqScreen(container, back) } }
+        composable(Routes.NEWS) { PatientContent(container) { PublicNewsScreen(container, back) } }
+        composable(Routes.FEEDBACK) { PatientContent(container) { FeedbackScreen(container, back) } }
         composable(
             Routes.TRACK,
             arguments = listOf(
@@ -390,4 +396,11 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
             AttemptScreen(container, entry.arguments?.getString("id").orEmpty(), back)
         }
     }
+}
+
+/** صفحه‌های مراجعان به زبان انتخابی کاربر نمایش داده می‌شوند؛ بقیه اپ فارسی است. */
+@Composable
+private fun PatientContent(container: AppContainer, content: @Composable (AppLanguage) -> Unit) {
+    val language by container.languageRepository.language.collectAsState()
+    LocalizedContent(language) { content(language) }
 }
