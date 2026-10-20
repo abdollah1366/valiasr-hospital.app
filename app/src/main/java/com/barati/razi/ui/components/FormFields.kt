@@ -27,9 +27,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.barati.razi.R
 import com.barati.razi.core.form.Answer
 import com.barati.razi.core.form.FieldType
 import com.barati.razi.core.form.FormField
@@ -196,7 +198,7 @@ fun <T> SelectField(
         Box(Modifier.matchParentSize().clickable { expanded = true })
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             if (allowNone) {
-                DropdownMenuItem(text = { Text("— هیچ —") }, onClick = {
+                DropdownMenuItem(text = { Text(stringResource(R.string.none_option)) }, onClick = {
                     onSelect(null)
                     expanded = false
                 })

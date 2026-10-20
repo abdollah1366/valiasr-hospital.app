@@ -9,7 +9,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import com.barati.razi.core.data.SessionState
+import com.barati.razi.core.i18n.AppLanguage
 import com.barati.razi.notify.SystemNotifier
+import com.barati.razi.ui.i18n.LocalizedContent
 import com.barati.razi.ui.navigation.RaziNavHost
 import com.barati.razi.ui.theme.RaziTheme
 import com.barati.razi.work.ChatSendWorker
@@ -55,7 +57,10 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             RaziTheme {
-                Surface(Modifier.fillMaxSize()) { RaziNavHost(container) }
+                // زبان گوشی اثری ندارد: اپ فارسی است و فقط صفحه‌های مراجعان زبان خودشان را می‌گیرند.
+                LocalizedContent(AppLanguage.FA) {
+                    Surface(Modifier.fillMaxSize()) { RaziNavHost(container) }
+                }
             }
         }
     }

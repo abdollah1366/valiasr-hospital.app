@@ -34,16 +34,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.barati.razi.AppContainer
+import com.barati.razi.R
+import com.barati.razi.core.i18n.AppLanguage
 import com.barati.razi.core.network.AnnouncementDto
 import com.barati.razi.core.network.FeedbackRequest
 import com.barati.razi.core.network.FeedbackStatusDto
-import com.barati.razi.core.network.Labels
 import com.barati.razi.core.network.Result
 import com.barati.razi.core.network.UnitDto
-import com.barati.razi.core.util.Jalali
 import com.barati.razi.core.util.toLatinDigits
 import com.barati.razi.ui.components.ErrorText
 import com.barati.razi.ui.components.LoadContent
@@ -52,12 +53,17 @@ import com.barati.razi.ui.components.MessageBox
 import com.barati.razi.ui.components.PrimaryButton
 import com.barati.razi.ui.components.RaziScaffold
 import com.barati.razi.ui.components.SelectField
+import com.barati.razi.ui.components.rememberErrorText
 import com.barati.razi.ui.components.rememberLoader
+import com.barati.razi.ui.i18n.LanguageAction
+import com.barati.razi.ui.i18n.PatientLabels
 import kotlinx.coroutines.launch
 
 @Composable
 fun PublicHomeScreen(
     isLoggedIn: Boolean,
+    language: AppLanguage,
+    onLanguage: (AppLanguage) -> Unit,
     onUnits: () -> Unit,
     onFaq: () -> Unit,
     onNews: () -> Unit,
@@ -65,21 +71,24 @@ fun PublicHomeScreen(
     onTrack: () -> Unit,
     onStaff: () -> Unit,
 ) {
-    RaziScaffold(title = "بیمارستان بین‌المللی ولیعصر تبریز") { padding ->
+    RaziScaffold(
+        title = stringResource(R.string.hospital_full_name),
+        actions = { LanguageAction(language, onLanguage) },
+    ) { padding ->
         Column(
             Modifier.fillMaxSize().padding(padding).padding(16.dp).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text("به اپلیکیشن بیمارستان ولیعصر خوش آمدید", style = MaterialTheme.typography.titleLarge)
-            MenuTile("راهنمای بخش‌ها و درمانگاه‌ها", "محل، تلفن و ساعات کار", Icons.Filled.LocalHospital, onUnits)
-            MenuTile("پرسش‌های متداول", "مدارک لازم، ساعات ملاقات و ...", Icons.Filled.QuestionAnswer, onFaq)
-            MenuTile("اطلاعیه‌ها", "اخبار و تغییرات خدمات بیمارستان", Icons.Filled.Campaign, onNews)
-            MenuTile("پیشنهاد، انتقاد و شکایت", "ثبت و پیگیری با کد", Icons.Filled.Feedback, onFeedback)
-            MenuTile("پیگیری گزارش ناشناس", "با کد و رمز پیگیری", Icons.Filled.Search, onTrack)
+            Text(stringResource(R.string.home_welcome), style = MaterialTheme.typography.titleLarge)
+            MenuTile(stringResource(R.string.tile_units), stringResource(R.string.tile_units_sub), Icons.Filled.LocalHospital, onUnits)
+            MenuTile(stringResource(R.string.tile_faq), stringResource(R.string.tile_faq_sub), Icons.Filled.QuestionAnswer, onFaq)
+            MenuTile(stringResource(R.string.tile_news), stringResource(R.string.tile_news_sub), Icons.Filled.Campaign, onNews)
+            MenuTile(stringResource(R.string.tile_feedback), stringResource(R.string.tile_feedback_sub), Icons.Filled.Feedback, onFeedback)
+            MenuTile(stringResource(R.string.tile_track), stringResource(R.string.tile_track_sub), Icons.Filled.Search, onTrack)
             Spacer(Modifier.height(8.dp))
             MenuTile(
-                if (isLoggedIn) "ورود به بخش کارکنان" else "ورود کارکنان",
-                "ثبت گزارش خطا، بخشنامه‌ها و ...",
+                stringResource(if (isLoggedIn) R.string.tile_staff_logged_in else R.string.tile_staff),
+                stringResource(R.string.tile_staff_sub),
                 Icons.Filled.Badge,
                 onStaff,
             )
@@ -90,10 +99,10 @@ fun PublicHomeScreen(
 @Composable
 fun UnitsScreen(container: AppContainer, onBack: () -> Unit) {
     val loader = rememberLoader { container.contentRepository.publicUnits() }
-    RaziScaffold(title = "راهنمای بخش‌ها", onBack = onBack) { padding ->
+    RaziScaffold(title = stringResource(R.string.units_title), onBack = onBack) { padding ->
         LoadContent(loader, Modifier.padding(padding)) { units ->
             if (units.isEmpty()) {
-                MessageBox("هنوز اطلاعاتی ثبت نشده است", Modifier.padding(padding))
+                MessageBox(stringResource(R.string.units_empty), Modifier.padding(padding))
             } else {
                 LazyColumn(
                     Modifier.padding(padding),
@@ -112,9 +121,9 @@ private fun UnitCard(u: UnitDto) {
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(u.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            u.location?.let { Text("محل: $it") }
-            u.phone?.let { Text("تلفن: $it") }
-            u.hours?.let { Text("ساعات کار: $it") }
+            u.location?.let { Text(stringResource(R.string.unit_location, it)) }
+            u.phone?.let { Text(stringResource(R.string.unit_phone, it)) }
+            u.hours?.let { Text(stringResource(R.string.unit_hours, it)) }
             u.description?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
         }
     }
@@ -124,7 +133,7 @@ private fun UnitCard(u: UnitDto) {
 fun FaqScreen(container: AppContainer, onBack: () -> Unit) {
     val loader = rememberLoader { container.contentRepository.faqs() }
     var expanded by remember { mutableStateOf<String?>(null) }
-    RaziScaffold(title = "پرسش‌های متداول", onBack = onBack) { padding ->
+    RaziScaffold(title = stringResource(R.string.faq_title), onBack = onBack) { padding ->
         LoadContent(loader, Modifier.padding(padding)) { faqs ->
             LazyColumn(
                 Modifier.padding(padding),
@@ -153,7 +162,7 @@ fun AnnouncementCard(a: AnnouncementDto, expandedInitially: Boolean = false, foo
     Card(Modifier.fillMaxWidth().clickable { expanded = !expanded }) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(
-                (Labels.announcementCategories[a.category] ?: a.category) + " · " + Jalali.formatIso(a.publishedAt),
+                PatientLabels.announcementCategory(a.category) + " · " + PatientLabels.date(a.publishedAt),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
             )
@@ -167,10 +176,10 @@ fun AnnouncementCard(a: AnnouncementDto, expandedInitially: Boolean = false, foo
 @Composable
 fun PublicNewsScreen(container: AppContainer, onBack: () -> Unit) {
     val loader = rememberLoader { container.contentRepository.publicAnnouncements() }
-    RaziScaffold(title = "اطلاعیه‌ها", onBack = onBack) { padding ->
+    RaziScaffold(title = stringResource(R.string.news_title), onBack = onBack) { padding ->
         LoadContent(loader, Modifier.padding(padding)) { list ->
             if (list.isEmpty()) {
-                MessageBox("اطلاعیه‌ای وجود ندارد", Modifier.padding(padding))
+                MessageBox(stringResource(R.string.news_empty), Modifier.padding(padding))
             } else {
                 LazyColumn(
                     Modifier.padding(padding),
@@ -198,8 +207,9 @@ fun FeedbackScreen(container: AppContainer, onBack: () -> Unit) {
     var tracked by remember { mutableStateOf<FeedbackStatusDto?>(null) }
     var trackError by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
+    val errorText = rememberErrorText()
 
-    RaziScaffold(title = "پیشنهاد، انتقاد و شکایت", onBack = onBack) { padding ->
+    RaziScaffold(title = stringResource(R.string.feedback_title), onBack = onBack) { padding ->
         Column(
             Modifier.fillMaxSize().padding(padding).padding(16.dp).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -207,34 +217,36 @@ fun FeedbackScreen(container: AppContainer, onBack: () -> Unit) {
             if (created != null) {
                 Card(Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text("ثبت شد. کد پیگیری شما:", fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.feedback_created), fontWeight = FontWeight.Bold)
                         Text(created!!, style = MaterialTheme.typography.headlineSmall)
-                        Text("این کد را یادداشت کنید تا بعداً پاسخ را ببینید.")
+                        Text(stringResource(R.string.feedback_created_note))
                     }
                 }
             } else {
-                Text("نوع", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.feedback_kind), fontWeight = FontWeight.Bold)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Labels.feedbackKinds.forEach { (k, label) ->
-                        FilterChip(selected = kind == k, onClick = { kind = k }, label = { Text(label) })
+                    PatientLabels.feedbackKinds.forEach { k ->
+                        FilterChip(selected = kind == k, onClick = { kind = k }, label = { Text(PatientLabels.feedbackKind(k)) })
                     }
                 }
                 val unitList = (units.state as? com.barati.razi.ui.components.Load.Data<List<UnitDto>>)?.value.orEmpty()
-                SelectField("بخش مربوط (اختیاری)", unit, unitList, { it.name }, { unit = it }, allowNone = true)
-                OutlinedTextField(body, { body = it; error = null }, Modifier.fillMaxWidth(), label = { Text("متن *") }, minLines = 4)
-                OutlinedTextField(name, { name = it }, Modifier.fillMaxWidth(), label = { Text("نام (اختیاری)") }, singleLine = true)
+                SelectField(stringResource(R.string.feedback_unit), unit, unitList, { it.name }, { unit = it }, allowNone = true)
+                OutlinedTextField(body, { body = it; error = null }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.feedback_body)) }, minLines = 4)
+                OutlinedTextField(name, { name = it }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.feedback_name)) }, singleLine = true)
                 OutlinedTextField(
                     mobile,
                     { mobile = toLatinDigits(it).filter(Char::isDigit).take(11); error = null },
                     Modifier.fillMaxWidth(),
-                    label = { Text("شماره موبایل (اختیاری)") },
+                    label = { Text(stringResource(R.string.feedback_mobile)) },
                     singleLine = true,
                 )
                 ErrorText(error)
-                PrimaryButton("ارسال", loading = loading, onClick = {
+                val errorBody = stringResource(R.string.feedback_error_body)
+                val errorMobile = stringResource(R.string.feedback_error_mobile)
+                PrimaryButton(stringResource(R.string.feedback_send), loading = loading, onClick = {
                     error = when {
-                        body.trim().length < 5 -> "متن را کامل‌تر بنویسید"
-                        mobile.isNotEmpty() && !Regex("^09\\d{9}$").matches(mobile) -> "شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود"
+                        body.trim().length < 5 -> errorBody
+                        mobile.isNotEmpty() && !Regex("^09\\d{9}$").matches(mobile) -> errorMobile
                         else -> null
                     }
                     if (error == null) {
@@ -249,7 +261,7 @@ fun FeedbackScreen(container: AppContainer, onBack: () -> Unit) {
                             )
                             when (val r = container.contentRepository.submitFeedback(req)) {
                                 is Result.Ok -> created = r.value.trackingCode
-                                is Result.Err -> error = r.error.message
+                                is Result.Err -> error = errorText(r.error)
                             }
                             loading = false
                         }
@@ -258,23 +270,23 @@ fun FeedbackScreen(container: AppContainer, onBack: () -> Unit) {
             }
 
             Spacer(Modifier.height(16.dp))
-            Text("پیگیری با کد", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            OutlinedTextField(trackCode, { trackCode = it; trackError = null }, Modifier.fillMaxWidth(), label = { Text("کد پیگیری (مثلاً FB-…)") }, singleLine = true)
+            Text(stringResource(R.string.feedback_track_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            OutlinedTextField(trackCode, { trackCode = it; trackError = null }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.feedback_track_code)) }, singleLine = true)
             ErrorText(trackError)
-            PrimaryButton("پیگیری", onClick = {
+            PrimaryButton(stringResource(R.string.feedback_track_button), onClick = {
                 scope.launch {
                     when (val r = container.contentRepository.feedbackStatus(toLatinDigits(trackCode))) {
                         is Result.Ok -> tracked = r.value
-                        is Result.Err -> { tracked = null; trackError = r.error.message }
+                        is Result.Err -> { tracked = null; trackError = errorText(r.error) }
                     }
                 }
             })
             tracked?.let { t ->
                 Card(Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text("وضعیت: " + (Labels.feedbackStatus[t.status] ?: t.status), fontWeight = FontWeight.Bold)
-                        Text("تاریخ ثبت: " + Jalali.formatIso(t.createdAt))
-                        t.response?.let { Text("پاسخ: $it") }
+                        Text(stringResource(R.string.feedback_status, PatientLabels.feedbackStatus(t.status)), fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.feedback_created_at, PatientLabels.date(t.createdAt)))
+                        t.response?.let { Text(stringResource(R.string.feedback_response, it)) }
                     }
                 }
             }

@@ -1,0 +1,67 @@
+<resources>
+    <!-- Pending review by the hospital before release. -->
+    <string name="app_name">Valiasr Hospital</string>
+
+    <string name="back">Back</string>
+    <string name="close">Close</string>
+    <string name="retry">Try again</string>
+    <string name="language">Language</string>
+    <string name="none_option">— None —</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="error_network">Could not reach the server. Please check your internet connection.</string>
+
+    <string name="hospital_full_name">Valiasr International Hospital, Tabriz</string>
+    <string name="home_welcome">Welcome to the Valiasr Hospital app</string>
+    <string name="tile_units">Departments and clinics</string>
+    <string name="tile_units_sub">Location, phone and opening hours</string>
+    <string name="tile_faq">Frequently asked questions</string>
+    <string name="tile_faq_sub">Required documents, visiting hours and more</string>
+    <string name="tile_news">Announcements</string>
+    <string name="tile_news_sub">Hospital news and service changes</string>
+    <string name="tile_feedback">Suggestions and complaints</string>
+    <string name="tile_feedback_sub">Submit and track with a code</string>
+    <string name="tile_track">Track an anonymous report</string>
+    <string name="tile_track_sub">With tracking code and secret (staff only)</string>
+    <string name="tile_staff">Staff sign-in</string>
+    <string name="tile_staff_logged_in">Go to the staff area</string>
+    <string name="tile_staff_sub">Incident reports, circulars and more (in Persian)</string>
+
+    <string name="units_title">Departments</string>
+    <string name="units_empty">No information has been added yet</string>
+    <string name="unit_location">Location: %1$s</string>
+    <string name="unit_phone">Phone: %1$s</string>
+    <string name="unit_hours">Hours: %1$s</string>
+
+    <string name="faq_title">Frequently asked questions</string>
+    <string name="news_title">Announcements</string>
+    <string name="news_empty">There are no announcements</string>
+    <string name="announcement_news">News</string>
+    <string name="announcement_circular">Circular</string>
+    <string name="announcement_guideline">Guideline</string>
+    <string name="announcement_notice">Notice</string>
+
+    <string name="feedback_title">Suggestions and complaints</string>
+    <string name="feedback_kind">Type</string>
+    <string name="feedback_kind_suggestion">Suggestion</string>
+    <string name="feedback_kind_criticism">Criticism</string>
+    <string name="feedback_kind_complaint">Complaint</string>
+    <string name="feedback_kind_praise">Thanks</string>
+    <string name="feedback_unit">Related department (optional)</string>
+    <string name="feedback_body">Message *</string>
+    <string name="feedback_name">Name (optional)</string>
+    <string name="feedback_mobile">Iranian mobile number (optional)</string>
+    <string name="feedback_send">Send</string>
+    <string name="feedback_error_body">Please write a little more</string>
+    <string name="feedback_error_mobile">The mobile number must have 11 digits and start with 09</string>
+    <string name="feedback_created">Sent. Your tracking code:</string>
+    <string name="feedback_created_note">Write this code down to check the reply later.</string>
+    <string name="feedback_track_title">Track with a code</string>
+    <string name="feedback_track_code">Tracking code (e.g. FB-…)</string>
+    <string name="feedback_track_button">Track</string>
+    <string name="feedback_status">Status: %1$s</string>
+    <string name="feedback_status_received">Received</string>
+    <string name="feedback_status_reviewing">Under review</string>
+    <string name="feedback_status_answered">Answered</string>
+    <string name="feedback_created_at">Submitted: %1$s</string>
+    <string name="feedback_response">Reply: %1$s</string>
+</resources>

@@ -1,3 +1,71 @@
 <resources>
     <string name="app_name">بیمارستان ولیعصر</string>
+
+    <!-- عمومی -->
+    <string name="back">بازگشت</string>
+    <string name="close">بستن</string>
+    <string name="retry">تلاش دوباره</string>
+    <string name="language">زبان</string>
+    <string name="none_option">— هیچ —</string>
+    <string name="error_generic">مشکلی پیش آمد. لطفاً دوباره تلاش کنید.</string>
+    <string name="error_network">اتصال به سرور برقرار نشد. اینترنت خود را بررسی کنید.</string>
+
+    <!-- صفحه اول مراجعان -->
+    <string name="hospital_full_name">بیمارستان بین‌المللی ولیعصر تبریز</string>
+    <string name="home_welcome">به اپلیکیشن بیمارستان ولیعصر خوش آمدید</string>
+    <string name="tile_units">راهنمای بخش‌ها و درمانگاه‌ها</string>
+    <string name="tile_units_sub">محل، تلفن و ساعات کار</string>
+    <string name="tile_faq">پرسش‌های متداول</string>
+    <string name="tile_faq_sub">مدارک لازم، ساعات ملاقات و …</string>
+    <string name="tile_news">اطلاعیه‌ها</string>
+    <string name="tile_news_sub">اخبار و تغییرات خدمات بیمارستان</string>
+    <string name="tile_feedback">پیشنهاد، انتقاد و شکایت</string>
+    <string name="tile_feedback_sub">ثبت و پیگیری با کد</string>
+    <string name="tile_track">پیگیری گزارش ناشناس</string>
+    <string name="tile_track_sub">با کد و رمز پیگیری (ویژه کارکنان)</string>
+    <string name="tile_staff">ورود کارکنان</string>
+    <string name="tile_staff_logged_in">ورود به بخش کارکنان</string>
+    <string name="tile_staff_sub">ثبت گزارش خطا، بخشنامه‌ها و …</string>
+
+    <!-- بخش‌ها -->
+    <string name="units_title">راهنمای بخش‌ها</string>
+    <string name="units_empty">هنوز اطلاعاتی ثبت نشده است</string>
+    <string name="unit_location">محل: %1$s</string>
+    <string name="unit_phone">تلفن: %1$s</string>
+    <string name="unit_hours">ساعات کار: %1$s</string>
+
+    <!-- پرسش‌ها و اطلاعیه‌ها -->
+    <string name="faq_title">پرسش‌های متداول</string>
+    <string name="news_title">اطلاعیه‌ها</string>
+    <string name="news_empty">اطلاعیه‌ای وجود ندارد</string>
+    <string name="announcement_news">خبر</string>
+    <string name="announcement_circular">بخشنامه</string>
+    <string name="announcement_guideline">دستورالعمل</string>
+    <string name="announcement_notice">اطلاعیه</string>
+
+    <!-- پیشنهاد و شکایت -->
+    <string name="feedback_title">پیشنهاد، انتقاد و شکایت</string>
+    <string name="feedback_kind">نوع</string>
+    <string name="feedback_kind_suggestion">پیشنهاد</string>
+    <string name="feedback_kind_criticism">انتقاد</string>
+    <string name="feedback_kind_complaint">شکایت</string>
+    <string name="feedback_kind_praise">قدردانی</string>
+    <string name="feedback_unit">بخش مربوط (اختیاری)</string>
+    <string name="feedback_body">متن *</string>
+    <string name="feedback_name">نام (اختیاری)</string>
+    <string name="feedback_mobile">شماره موبایل ایران (اختیاری)</string>
+    <string name="feedback_send">ارسال</string>
+    <string name="feedback_error_body">متن را کامل‌تر بنویسید</string>
+    <string name="feedback_error_mobile">شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود</string>
+    <string name="feedback_created">ثبت شد. کد پیگیری شما:</string>
+    <string name="feedback_created_note">این کد را یادداشت کنید تا بعداً پاسخ را ببینید.</string>
+    <string name="feedback_track_title">پیگیری با کد</string>
+    <string name="feedback_track_code">کد پیگیری (مثلاً FB-…)</string>
+    <string name="feedback_track_button">پیگیری</string>
+    <string name="feedback_status">وضعیت: %1$s</string>
+    <string name="feedback_status_received">دریافت شد</string>
+    <string name="feedback_status_reviewing">در حال بررسی</string>
+    <string name="feedback_status_answered">پاسخ داده شد</string>
+    <string name="feedback_created_at">تاریخ ثبت: %1$s</string>
+    <string name="feedback_response">پاسخ: %1$s</string>
 </resources>

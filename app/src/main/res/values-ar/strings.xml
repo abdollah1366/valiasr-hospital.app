@@ -1,0 +1,67 @@
+<resources>
+    <!-- يجب أن يراجعها المستشفى قبل النشر. -->
+    <string name="app_name">مستشفى ولي العصر</string>
+
+    <string name="back">رجوع</string>
+    <string name="close">إغلاق</string>
+    <string name="retry">إعادة المحاولة</string>
+    <string name="language">اللغة</string>
+    <string name="none_option">— لا شيء —</string>
+    <string name="error_generic">حدث خطأ. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_network">تعذّر الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت.</string>
+
+    <string name="hospital_full_name">مستشفى ولي العصر الدولي في تبريز</string>
+    <string name="home_welcome">مرحبًا بكم في تطبيق مستشفى ولي العصر</string>
+    <string name="tile_units">الأقسام والعيادات</string>
+    <string name="tile_units_sub">الموقع والهاتف وساعات العمل</string>
+    <string name="tile_faq">الأسئلة الشائعة</string>
+    <string name="tile_faq_sub">المستندات المطلوبة وأوقات الزيارة وغيرها</string>
+    <string name="tile_news">الإعلانات</string>
+    <string name="tile_news_sub">أخبار المستشفى وتغييرات الخدمات</string>
+    <string name="tile_feedback">الاقتراحات والشكاوى</string>
+    <string name="tile_feedback_sub">الإرسال والمتابعة برمز</string>
+    <string name="tile_track">متابعة بلاغ مجهول</string>
+    <string name="tile_track_sub">برمز المتابعة وكلمة السر (للموظفين فقط)</string>
+    <string name="tile_staff">دخول الموظفين</string>
+    <string name="tile_staff_logged_in">الانتقال إلى قسم الموظفين</string>
+    <string name="tile_staff_sub">بلاغات الأخطاء والتعاميم وغيرها (بالفارسية)</string>
+
+    <string name="units_title">الأقسام</string>
+    <string name="units_empty">لم تُضف أي معلومات بعد</string>
+    <string name="unit_location">الموقع: %1$s</string>
+    <string name="unit_phone">الهاتف: %1$s</string>
+    <string name="unit_hours">ساعات العمل: %1$s</string>
+
+    <string name="faq_title">الأسئلة الشائعة</string>
+    <string name="news_title">الإعلانات</string>
+    <string name="news_empty">لا توجد إعلانات</string>
+    <string name="announcement_news">خبر</string>
+    <string name="announcement_circular">تعميم</string>
+    <string name="announcement_guideline">تعليمات</string>
+    <string name="announcement_notice">إعلان</string>
+
+    <string name="feedback_title">الاقتراحات والشكاوى</string>
+    <string name="feedback_kind">النوع</string>
+    <string name="feedback_kind_suggestion">اقتراح</string>
+    <string name="feedback_kind_criticism">انتقاد</string>
+    <string name="feedback_kind_complaint">شكوى</string>
+    <string name="feedback_kind_praise">شكر وتقدير</string>
+    <string name="feedback_unit">القسم المعني (اختياري)</string>
+    <string name="feedback_body">النص *</string>
+    <string name="feedback_name">الاسم (اختياري)</string>
+    <string name="feedback_mobile">رقم جوال إيراني (اختياري)</string>
+    <string name="feedback_send">إرسال</string>
+    <string name="feedback_error_body">يرجى كتابة المزيد من التفاصيل</string>
+    <string name="feedback_error_mobile">يجب أن يتكون رقم الجوال من 11 رقمًا ويبدأ بـ 09</string>
+    <string name="feedback_created">تم الإرسال. رمز المتابعة الخاص بك:</string>
+    <string name="feedback_created_note">احتفظ بهذا الرمز لمشاهدة الرد لاحقًا.</string>
+    <string name="feedback_track_title">المتابعة بالرمز</string>
+    <string name="feedback_track_code">رمز المتابعة (مثلًا FB-…)</string>
+    <string name="feedback_track_button">متابعة</string>
+    <string name="feedback_status">الحالة: %1$s</string>
+    <string name="feedback_status_received">تم الاستلام</string>
+    <string name="feedback_status_reviewing">قيد المراجعة</string>
+    <string name="feedback_status_answered">تم الرد</string>
+    <string name="feedback_created_at">تاريخ الإرسال: %1$s</string>
+    <string name="feedback_response">الرد: %1$s</string>
+</resources>
