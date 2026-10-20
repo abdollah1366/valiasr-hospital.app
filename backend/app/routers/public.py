@@ -1,6 +1,7 @@
 import uuid
 
 from fastapi import APIRouter, Depends, Query, Request
+from fastapi.responses import FileResponse
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
@@ -8,7 +9,7 @@ from app.core.audit import audit
 from app.core.db import get_db
 from app.core.deps import CurrentUser, api_error, client_ip, require
 from app.core.security import new_tracking_code
-from app.models import ContentTranslation, Faq, Feedback, Unit
+from app.models import ContentTranslation, Faq, Feedback, MediaFile, Unit
 from app.schemas import (
     FaqIn,
     FaqOut,
@@ -19,6 +20,7 @@ from app.schemas import (
     FeedbackRespondIn,
     UnitOut,
 )
+from app.services.training import media_path
 from app.services.translations import content_language, localize
 
 router = APIRouter(tags=["public"])
@@ -28,6 +30,19 @@ router = APIRouter(tags=["public"])
 def public_units(language: str | None = Depends(content_language), db: Session = Depends(get_db)):
     units = db.scalars(select(Unit).where(Unit.is_public.is_(True)).order_by(Unit.type, Unit.name))
     return localize(db, "unit", [UnitOut.model_validate(u) for u in units], language)
+
+
+@router.get("/public/units/{unit_id}/image", include_in_schema=False)
+def public_unit_image(unit_id: uuid.UUID, db: Session = Depends(get_db)):
+    unit = db.get(Unit, unit_id)
+    m = db.get(MediaFile, unit.image_media_id) if unit and unit.is_public and unit.image_media_id else None
+    if m is None:
+        raise api_error(404, "not_found", "تصویری برای این واحد نیست")
+    return FileResponse(
+        media_path(m),
+        media_type=m.content_type,
+        headers={"X-Content-Type-Options": "nosniff", "Cache-Control": "public, max-age=3600"},
+    )
 
 
 @router.get("/units", response_model=list[UnitOut], tags=["units"])

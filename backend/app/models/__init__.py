@@ -49,6 +49,13 @@ class Unit(TimestampMixin, Base):
     phone: Mapped[str | None] = mapped_column(String(50))
     hours: Mapped[str | None] = mapped_column(String(200))
     description: Mapped[str | None] = mapped_column(Text)
+    image_media_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("media_files.id", ondelete="SET NULL")
+    )
+
+    @property
+    def has_image(self) -> bool:
+        return self.image_media_id is not None
 
 
 class User(TimestampMixin, Base):

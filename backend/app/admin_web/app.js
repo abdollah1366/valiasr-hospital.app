@@ -583,12 +583,39 @@ function unitDialog(u, reload) {
   const phone = h("input", { type: "text", dir: "ltr", value: u && u.phone ? u.phone : "" });
   const hours = h("input", { type: "text", value: u && u.hours ? u.hours : "" });
   const desc = h("textarea", {}, u && u.description ? u.description : "");
+  // تصویر به واحد موجود وصل می‌شود؛ برای واحد تازه پس از ذخیره اضافه می‌شود.
+  const imageState = h("span", { class: "tag" }, u && u.has_image ? "تصویر ثبت شده" : "بدون تصویر");
+  const imageInput = h("input", { type: "file", accept: "image/jpeg,image/png,image/webp", disabled: !u, onchange: async (ev) => {
+    const file = ev.target.files[0];
+    if (!file) return;
+    try {
+      await uploadFile(file, () => {}, "/admin/units/" + u.id + "/image");
+      imageState.textContent = "تصویر ثبت شده";
+      toast("تصویر ذخیره شد");
+      await reload();
+    } catch (e) {
+      showError(e);
+    }
+  } });
+  const deleteBtn = u ? h("button", { class: "btn secondary", type: "button", onclick: async (ev) => {
+    if (!confirm("واحد «" + u.name + "» حذف شود؟ این کار برگشت ندارد.")) return;
+    try {
+      await api("/admin/units/" + u.id, { method: "DELETE" });
+      toast("واحد حذف شد");
+      ev.target.closest("dialog").close();
+      await reload();
+    } catch (e) {
+      showError(e);
+    }
+  } }, "حذف واحد") : null;
   dialog(u ? "ویرایش واحد" : "واحد جدید", h("div", { class: "form" },
     h("div", { class: "row" }, field("نام واحد", name), field("نوع", type)),
     pub.el,
     h("div", { class: "row" }, field("مکان (طبقه/ساختمان)", location_), field("تلفن داخلی", phone)),
     field("ساعات کار", hours),
-    field("توضیح", desc)), {
+    field("توضیح", desc),
+    field("تصویر واحد (jpg، png یا webp)", h("div", { class: "row" }, imageState, imageInput))), {
+    extraButtons: [deleteBtn],
     onSave: async () => {
       const body = {
         name: name.value.trim(), type: type.value, is_public: pub.input.checked,

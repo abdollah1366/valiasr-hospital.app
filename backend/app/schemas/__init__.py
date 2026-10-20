@@ -77,6 +77,7 @@ class UnitOut(ORM):
     phone: str | None
     hours: str | None
     description: str | None
+    has_image: bool = False
 
 
 class RoleAssignment(BaseModel):

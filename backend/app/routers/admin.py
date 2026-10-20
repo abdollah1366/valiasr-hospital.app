@@ -9,7 +9,7 @@ from app.core.audit import audit
 from app.core.db import get_db
 from app.core.deps import CurrentUser, api_error, client_ip, require
 from app.core.security import hash_password
-from app.models import AuditLog, Role, Unit, User, UserRole
+from app.models import AuditLog, Base, MediaFile, Role, Unit, User, UserRole
 from app.schemas import (
     ResetPasswordIn,
     RoleAssignment,
@@ -21,6 +21,7 @@ from app.schemas import (
     UserUpdateIn,
 )
 from app.services import chat
+from app.services.media import store_upload
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -202,6 +203,69 @@ def update_unit(
     audit(db, "unit.updated", cu.id, "unit", unit.id, client_ip(request))
     db.commit()
     return unit
+
+
+UNIT_IMAGE_TYPES: dict[str, str] = {
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png": "image/png",
+    ".webp": "image/webp",
+}
+UNIT_IMAGE_MAX_MB = 5
+
+
+@router.post("/units/{unit_id}/image", response_model=UnitOut, status_code=201)
+async def upload_unit_image(
+    unit_id: uuid.UUID,
+    request: Request,
+    filename: str = Query(min_length=1, max_length=300),
+    cu: CurrentUser = Depends(require("unit.manage")),
+    db: Session = Depends(get_db),
+):
+    """تصویر معرفی واحد؛ بدنه درخواست خود فایل است. تصویر قبلی فقط از واحد جدا می‌شود."""
+    unit = db.get(Unit, unit_id)
+    if unit is None:
+        raise api_error(404, "not_found", "واحد پیدا نشد")
+    m: MediaFile = await store_upload(request, filename, UNIT_IMAGE_TYPES, UNIT_IMAGE_MAX_MB, cu.id)
+    db.add(m)
+    db.flush()
+    unit.image_media_id = m.id
+    audit(db, "unit.image_updated", cu.id, "unit", unit.id, client_ip(request))
+    db.commit()
+    return unit
+
+
+def _unit_dependents(db: Session, unit: Unit) -> bool:
+    """آیا جدولی (کاربر، درخواست، برنامه، گفتگو، والد و...) به این واحد ارجاع دارد و ردیفی دارد؟"""
+    for table in Base.metadata.tables.values():
+        for fk in table.foreign_keys:
+            if fk.column.table.name != Unit.__tablename__:
+                continue
+            if db.scalar(select(func.count()).select_from(table).where(fk.parent == unit.id)):
+                return True
+    return False
+
+
+@router.delete("/units/{unit_id}", status_code=204)
+def delete_unit(
+    unit_id: uuid.UUID,
+    request: Request,
+    cu: CurrentUser = Depends(require("unit.manage")),
+    db: Session = Depends(get_db),
+):
+    """حذف واحد فقط وقتی ممکن است که هیچ داده‌ای به آن وصل نباشد؛ حذف آبشاری داده‌های برنامه را پاک می‌کند."""
+    unit = db.get(Unit, unit_id)
+    if unit is None:
+        raise api_error(404, "not_found", "واحد پیدا نشد")
+    if _unit_dependents(db, unit):
+        raise api_error(
+            409,
+            "unit_in_use",
+            "این واحد به کاربر، درخواست، برنامه یا گفتگو وصل است و حذف نمی‌شود؛ به‌جای آن از راهنمای عمومی خارجش کنید",
+        )
+    audit(db, "unit.deleted", cu.id, "unit", unit.id, client_ip(request))
+    db.delete(unit)
+    db.commit()
 
 
 @router.get("/audit")
