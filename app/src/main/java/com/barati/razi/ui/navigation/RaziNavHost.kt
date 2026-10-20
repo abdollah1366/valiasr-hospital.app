@@ -35,12 +35,12 @@ import com.barati.razi.feature.incident.MyIncidentsScreen
 import com.barati.razi.feature.incident.ReviewListScreen
 import com.barati.razi.feature.incident.TrackIncidentScreen
 import com.barati.razi.feature.notifications.NotificationsScreen
+import com.barati.razi.feature.patient.ContactScreen
+import com.barati.razi.feature.patient.InternationalScreen
+import com.barati.razi.feature.patient.PatientHomeScreen
 import com.barati.razi.feature.patient.PatientSignInScreen
 import com.barati.razi.feature.publicinfo.FaqScreen
-import com.barati.razi.feature.publicinfo.FeedbackScreen
-import com.barati.razi.feature.publicinfo.PublicHomeScreen
 import com.barati.razi.feature.publicinfo.PublicNewsScreen
-import com.barati.razi.feature.publicinfo.UnitsScreen
 import com.barati.razi.feature.requests.NewRequestScreen
 import com.barati.razi.feature.requests.RequestDetailScreen
 import com.barati.razi.feature.requests.RequestsHomeScreen
@@ -62,10 +62,10 @@ object Routes {
     const val SPLASH = "splash"
     const val PUBLIC_HOME = "public"
     const val PATIENT_SIGNIN = "patient_signin"
-    const val UNITS = "units"
     const val FAQ = "faq"
     const val NEWS = "news"
-    const val FEEDBACK = "feedback"
+    const val CONTACT = "contact"
+    const val INTERNATIONAL = "international"
     const val TRACK = "track?code={code}&secret={secret}"
     const val LOGIN = "login"
     const val CHANGE_PASSWORD = "change_password"
@@ -178,17 +178,19 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
         }
         composable(Routes.PUBLIC_HOME) {
             PatientContent(container) { language ->
-                PublicHomeScreen(
-                    isLoggedIn = session is SessionState.LoggedIn,
+                PatientHomeScreen(
+                    container,
                     language = language,
                     onLanguage = { scope.launch { container.patientAuthRepository.setLanguage(it) } },
-                    patientSignedIn = patientSession is PatientSession.SignedIn,
-                    onPatientSignIn = { nav.navigate(Routes.PATIENT_SIGNIN) },
-                    onUnits = { nav.navigate(Routes.UNITS) },
+                    patient = (patientSession as? PatientSession.SignedIn)?.patient,
+                    staffLoggedIn = session is SessionState.LoggedIn,
+                    onSignIn = { nav.navigate(Routes.PATIENT_SIGNIN) },
+                    onSignOut = { scope.launch { container.patientAuthRepository.logout() } },
                     onFaq = { nav.navigate(Routes.FAQ) },
                     onNews = { nav.navigate(Routes.NEWS) },
-                    onFeedback = { nav.navigate(Routes.FEEDBACK) },
-                    onTrack = { nav.navigate(Routes.track()) },
+                    onContact = { nav.navigate(Routes.CONTACT) },
+                    onInternational = { nav.navigate(Routes.INTERNATIONAL) },
+                    onTrackIncident = { nav.navigate(Routes.track()) },
                     onStaff = {
                         val s = session
                         if (s is SessionState.LoggedIn && !s.me.mustChangePassword) goStaffHome() else nav.navigate(Routes.LOGIN)
@@ -210,10 +212,10 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
                 )
             }
         }
-        composable(Routes.UNITS) { PatientContent(container) { UnitsScreen(container, back) } }
         composable(Routes.FAQ) { PatientContent(container) { FaqScreen(container, back) } }
         composable(Routes.NEWS) { PatientContent(container) { PublicNewsScreen(container, back) } }
-        composable(Routes.FEEDBACK) { PatientContent(container) { FeedbackScreen(container, back) } }
+        composable(Routes.CONTACT) { PatientContent(container) { ContactScreen(back) } }
+        composable(Routes.INTERNATIONAL) { PatientContent(container) { InternationalScreen(back) } }
         composable(
             Routes.TRACK,
             arguments = listOf(

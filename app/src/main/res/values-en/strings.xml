@@ -11,14 +11,8 @@
     <string name="error_network">Could not reach the server. Please check your internet connection.</string>
 
     <string name="hospital_full_name">Valiasr International Hospital, Tabriz</string>
-    <string name="home_welcome">Welcome to the Valiasr Hospital app</string>
-    <string name="tile_units">Departments and clinics</string>
-    <string name="tile_units_sub">Location, phone and opening hours</string>
-    <string name="tile_faq">Frequently asked questions</string>
-    <string name="tile_faq_sub">Required documents, visiting hours and more</string>
     <string name="tile_news">Announcements</string>
     <string name="tile_news_sub">Hospital news and service changes</string>
-    <string name="tile_feedback">Suggestions and complaints</string>
     <string name="tile_feedback_sub">Submit and track with a code</string>
     <string name="tile_track">Track an anonymous report</string>
     <string name="tile_track_sub">With tracking code and secret (staff only)</string>
@@ -26,7 +20,6 @@
     <string name="tile_staff_logged_in">Go to the staff area</string>
     <string name="tile_staff_sub">Incident reports, circulars and more (in Persian)</string>
 
-    <string name="units_title">Departments</string>
     <string name="units_empty">No information has been added yet</string>
     <string name="unit_location">Location: %1$s</string>
     <string name="unit_phone">Phone: %1$s</string>
@@ -40,7 +33,6 @@
     <string name="announcement_guideline">Guideline</string>
     <string name="announcement_notice">Notice</string>
 
-    <string name="feedback_title">Suggestions and complaints</string>
     <string name="feedback_kind">Type</string>
     <string name="feedback_kind_suggestion">Suggestion</string>
     <string name="feedback_kind_criticism">Criticism</string>
@@ -86,4 +78,40 @@
     <string name="otp_debug">Test code: %1$s</string>
     <string name="otp_invalid">The code is wrong or has expired</string>
     <string name="error_too_many">Too many requests. Please try again a little later.</string>
+
+    <!-- صفحه اول، تماس، بین‌الملل و پروفایل مراجع -->
+    <string name="nav_home">Home</string>
+    <string name="nav_units">Departments</string>
+    <string name="nav_track">Requests</string>
+    <string name="nav_profile">Profile</string>
+    <string name="home_greeting">Hello</string>
+    <string name="home_greeting_name">Hello, %1$s</string>
+    <string name="home_hero_title">Book a clinic appointment online</string>
+    <string name="home_book">Book appointment</string>
+    <string name="tile_visiting">Visiting hours</string>
+    <string name="tile_visiting_sub">and frequently asked questions</string>
+    <string name="tile_contact">Directions and contact</string>
+    <string name="tile_contact_sub">Address, phone and map</string>
+    <string name="tile_feedback_short">Suggestions and complaints</string>
+    <string name="international_title">International patients</string>
+    <string name="international_sub">Admission, interpreter and stay</string>
+    <string name="contact_title">Directions and contact</string>
+    <string name="contact_address">Imam St, near Aflak-Nama Sq., Zafaraniyeh, Tabriz, Iran</string>
+    <string name="contact_open_map">Show on map</string>
+    <string name="contact_phone">Hospital phone</string>
+    <string name="contact_booking_phone">Appointments phone</string>
+    <string name="contact_email">Email</string>
+    <string name="contact_instagram">Instagram</string>
+    <string name="intl_title">International patients</string>
+    <string name="intl_intro">Valiasr International Hospital in Tabriz has an international patients department for visitors from outside Iran.</string>
+    <string name="intl_service_admission">Admission and appointments arranged before you travel</string>
+    <string name="intl_service_interpreter">Interpreters for Azerbaijani, Turkish, Arabic and English</string>
+    <string name="intl_service_stay">Help with accommodation and companions</string>
+    <string name="intl_service_cost">Cost estimate before treatment</string>
+    <string name="intl_contact">Contact the international department</string>
+    <string name="unconfirmed_note">This information has not yet been confirmed by the hospital.</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_mobile">Mobile number</string>
+    <string name="profile_sign_out">Sign out</string>
+    <string name="profile_signed_out">Sign in to track your requests and keep your language on your account.</string>
 </resources>

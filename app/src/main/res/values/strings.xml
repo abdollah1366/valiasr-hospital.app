@@ -12,14 +12,8 @@
 
     <!-- صفحه اول مراجعان -->
     <string name="hospital_full_name">بیمارستان بین‌المللی ولیعصر تبریز</string>
-    <string name="home_welcome">به اپلیکیشن بیمارستان ولیعصر خوش آمدید</string>
-    <string name="tile_units">راهنمای بخش‌ها و درمانگاه‌ها</string>
-    <string name="tile_units_sub">محل، تلفن و ساعات کار</string>
-    <string name="tile_faq">پرسش‌های متداول</string>
-    <string name="tile_faq_sub">مدارک لازم، ساعات ملاقات و …</string>
     <string name="tile_news">اطلاعیه‌ها</string>
     <string name="tile_news_sub">اخبار و تغییرات خدمات بیمارستان</string>
-    <string name="tile_feedback">پیشنهاد، انتقاد و شکایت</string>
     <string name="tile_feedback_sub">ثبت و پیگیری با کد</string>
     <string name="tile_track">پیگیری گزارش ناشناس</string>
     <string name="tile_track_sub">با کد و رمز پیگیری (ویژه کارکنان)</string>
@@ -28,7 +22,6 @@
     <string name="tile_staff_sub">ثبت گزارش خطا، بخشنامه‌ها و …</string>
 
     <!-- بخش‌ها -->
-    <string name="units_title">راهنمای بخش‌ها</string>
     <string name="units_empty">هنوز اطلاعاتی ثبت نشده است</string>
     <string name="unit_location">محل: %1$s</string>
     <string name="unit_phone">تلفن: %1$s</string>
@@ -44,7 +37,6 @@
     <string name="announcement_notice">اطلاعیه</string>
 
     <!-- پیشنهاد و شکایت -->
-    <string name="feedback_title">پیشنهاد، انتقاد و شکایت</string>
     <string name="feedback_kind">نوع</string>
     <string name="feedback_kind_suggestion">پیشنهاد</string>
     <string name="feedback_kind_criticism">انتقاد</string>
@@ -90,4 +82,40 @@
     <string name="otp_debug">کد آزمایشی: %1$s</string>
     <string name="otp_invalid">کد اشتباه یا منقضی است</string>
     <string name="error_too_many">تعداد درخواست زیاد است؛ کمی بعد دوباره تلاش کنید</string>
+
+    <!-- صفحه اول، تماس، بین‌الملل و پروفایل مراجع -->
+    <string name="nav_home">خانه</string>
+    <string name="nav_units">بخش‌ها</string>
+    <string name="nav_track">پیگیری</string>
+    <string name="nav_profile">پروفایل</string>
+    <string name="home_greeting">سلام</string>
+    <string name="home_greeting_name">سلام، %1$s</string>
+    <string name="home_hero_title">نوبت درمانگاه را آنلاین بگیرید</string>
+    <string name="home_book">نوبت‌دهی درمانگاه</string>
+    <string name="tile_visiting">ساعات ملاقات</string>
+    <string name="tile_visiting_sub">و پرسش‌های متداول</string>
+    <string name="tile_contact">مسیر و تماس</string>
+    <string name="tile_contact_sub">آدرس، تلفن و نقشه</string>
+    <string name="tile_feedback_short">پیشنهاد و شکایت</string>
+    <string name="international_title">بیماران بین‌الملل</string>
+    <string name="international_sub">پذیرش، مترجم و اقامت</string>
+    <string name="contact_title">مسیر و تماس</string>
+    <string name="contact_address">تبریز، زعفرانیه، خیابان امام، نزدیک میدان افلاک‌نما</string>
+    <string name="contact_open_map">نمایش روی نقشه</string>
+    <string name="contact_phone">تلفن بیمارستان</string>
+    <string name="contact_booking_phone">تلفن نوبت‌دهی</string>
+    <string name="contact_email">ایمیل</string>
+    <string name="contact_instagram">اینستاگرام</string>
+    <string name="intl_title">بیماران بین‌الملل</string>
+    <string name="intl_intro">بیمارستان بین‌المللی ولیعصر تبریز برای بیماران خارج از ایران واحد پذیرش بین‌الملل دارد.</string>
+    <string name="intl_service_admission">هماهنگی پذیرش و نوبت پیش از سفر</string>
+    <string name="intl_service_interpreter">مترجم آذربایجانی، ترکی، عربی و انگلیسی</string>
+    <string name="intl_service_stay">راهنمایی برای اقامت و همراهان</string>
+    <string name="intl_service_cost">برآورد هزینه پیش از درمان</string>
+    <string name="intl_contact">تماس با واحد بین‌الملل</string>
+    <string name="unconfirmed_note">این اطلاعات هنوز به تأیید بیمارستان نرسیده است.</string>
+    <string name="profile_title">پروفایل</string>
+    <string name="profile_mobile">شماره موبایل</string>
+    <string name="profile_sign_out">خروج از حساب</string>
+    <string name="profile_signed_out">برای پیگیری درخواست‌ها و ذخیره زبان روی حسابتان وارد شوید.</string>
 </resources>

@@ -11,14 +11,8 @@
     <string name="error_network">تعذّر الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت.</string>
 
     <string name="hospital_full_name">مستشفى ولي العصر الدولي في تبريز</string>
-    <string name="home_welcome">مرحبًا بكم في تطبيق مستشفى ولي العصر</string>
-    <string name="tile_units">الأقسام والعيادات</string>
-    <string name="tile_units_sub">الموقع والهاتف وساعات العمل</string>
-    <string name="tile_faq">الأسئلة الشائعة</string>
-    <string name="tile_faq_sub">المستندات المطلوبة وأوقات الزيارة وغيرها</string>
     <string name="tile_news">الإعلانات</string>
     <string name="tile_news_sub">أخبار المستشفى وتغييرات الخدمات</string>
-    <string name="tile_feedback">الاقتراحات والشكاوى</string>
     <string name="tile_feedback_sub">الإرسال والمتابعة برمز</string>
     <string name="tile_track">متابعة بلاغ مجهول</string>
     <string name="tile_track_sub">برمز المتابعة وكلمة السر (للموظفين فقط)</string>
@@ -26,7 +20,6 @@
     <string name="tile_staff_logged_in">الانتقال إلى قسم الموظفين</string>
     <string name="tile_staff_sub">بلاغات الأخطاء والتعاميم وغيرها (بالفارسية)</string>
 
-    <string name="units_title">الأقسام</string>
     <string name="units_empty">لم تُضف أي معلومات بعد</string>
     <string name="unit_location">الموقع: %1$s</string>
     <string name="unit_phone">الهاتف: %1$s</string>
@@ -40,7 +33,6 @@
     <string name="announcement_guideline">تعليمات</string>
     <string name="announcement_notice">إعلان</string>
 
-    <string name="feedback_title">الاقتراحات والشكاوى</string>
     <string name="feedback_kind">النوع</string>
     <string name="feedback_kind_suggestion">اقتراح</string>
     <string name="feedback_kind_criticism">انتقاد</string>
@@ -86,4 +78,40 @@
     <string name="otp_debug">رمز الاختبار: %1$s</string>
     <string name="otp_invalid">الرمز خاطئ أو منتهي الصلاحية</string>
     <string name="error_too_many">طلبات كثيرة. يرجى المحاولة بعد قليل.</string>
+
+    <!-- صفحه اول، تماس، بین‌الملل و پروفایل مراجع -->
+    <string name="nav_home">الرئيسية</string>
+    <string name="nav_units">الأقسام</string>
+    <string name="nav_track">الطلبات</string>
+    <string name="nav_profile">الملف الشخصي</string>
+    <string name="home_greeting">مرحبًا</string>
+    <string name="home_greeting_name">مرحبًا، %1$s</string>
+    <string name="home_hero_title">احجز موعدًا في العيادة عبر الإنترنت</string>
+    <string name="home_book">حجز موعد</string>
+    <string name="tile_visiting">أوقات الزيارة</string>
+    <string name="tile_visiting_sub">والأسئلة الشائعة</string>
+    <string name="tile_contact">الموقع والتواصل</string>
+    <string name="tile_contact_sub">العنوان والهاتف والخريطة</string>
+    <string name="tile_feedback_short">الاقتراحات والشكاوى</string>
+    <string name="international_title">المرضى الدوليون</string>
+    <string name="international_sub">القبول والمترجم والإقامة</string>
+    <string name="contact_title">الموقع والتواصل</string>
+    <string name="contact_address">تبريز، الزعفرانية، شارع الإمام، قرب ساحة أفلاك‌نما</string>
+    <string name="contact_open_map">عرض على الخريطة</string>
+    <string name="contact_phone">هاتف المستشفى</string>
+    <string name="contact_booking_phone">هاتف حجز المواعيد</string>
+    <string name="contact_email">البريد الإلكتروني</string>
+    <string name="contact_instagram">إنستغرام</string>
+    <string name="intl_title">المرضى الدوليون</string>
+    <string name="intl_intro">يضم مستشفى ولي العصر الدولي في تبريز قسمًا لقبول المرضى القادمين من خارج إيران.</string>
+    <string name="intl_service_admission">تنسيق القبول والموعد قبل السفر</string>
+    <string name="intl_service_interpreter">مترجمون للأذربيجانية والتركية والعربية والإنجليزية</string>
+    <string name="intl_service_stay">المساعدة في الإقامة وشؤون المرافقين</string>
+    <string name="intl_service_cost">تقدير التكلفة قبل العلاج</string>
+    <string name="intl_contact">التواصل مع القسم الدولي</string>
+    <string name="unconfirmed_note">لم يؤكد المستشفى هذه المعلومات بعد.</string>
+    <string name="profile_title">الملف الشخصي</string>
+    <string name="profile_mobile">رقم الجوال</string>
+    <string name="profile_sign_out">تسجيل الخروج</string>
+    <string name="profile_signed_out">سجّل الدخول لمتابعة طلباتك وحفظ اللغة في حسابك.</string>
 </resources>

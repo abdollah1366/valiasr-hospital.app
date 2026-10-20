@@ -15,19 +15,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Badge
-import androidx.compose.material.icons.filled.Campaign
-import androidx.compose.material.icons.filled.Feedback
-import androidx.compose.material.icons.filled.LocalHospital
-import androidx.compose.material.icons.filled.QuestionAnswer
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,7 +32,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.barati.razi.AppContainer
 import com.barati.razi.R
-import com.barati.razi.core.i18n.AppLanguage
 import com.barati.razi.core.network.AnnouncementDto
 import com.barati.razi.core.network.FeedbackRequest
 import com.barati.razi.core.network.FeedbackStatusDto
@@ -49,74 +40,29 @@ import com.barati.razi.core.network.UnitDto
 import com.barati.razi.core.util.toLatinDigits
 import com.barati.razi.ui.components.ErrorText
 import com.barati.razi.ui.components.LoadContent
-import com.barati.razi.ui.components.MenuTile
 import com.barati.razi.ui.components.MessageBox
 import com.barati.razi.ui.components.PrimaryButton
 import com.barati.razi.ui.components.RaziScaffold
 import com.barati.razi.ui.components.SelectField
 import com.barati.razi.ui.components.rememberErrorText
 import com.barati.razi.ui.components.rememberLoader
-import com.barati.razi.ui.i18n.LanguageAction
 import com.barati.razi.ui.i18n.PatientLabels
 import kotlinx.coroutines.launch
 
+/** فهرست بخش‌ها؛ زبانه «بخش‌ها» در صفحه اول مراجعان. */
 @Composable
-fun PublicHomeScreen(
-    isLoggedIn: Boolean,
-    language: AppLanguage,
-    onLanguage: (AppLanguage) -> Unit,
-    patientSignedIn: Boolean,
-    onPatientSignIn: () -> Unit,
-    onUnits: () -> Unit,
-    onFaq: () -> Unit,
-    onNews: () -> Unit,
-    onFeedback: () -> Unit,
-    onTrack: () -> Unit,
-    onStaff: () -> Unit,
-) {
-    RaziScaffold(
-        title = stringResource(R.string.hospital_full_name),
-        actions = {
-            if (!patientSignedIn) TextButton(onClick = onPatientSignIn) { Text(stringResource(R.string.signin_action)) }
-            LanguageAction(language, onLanguage)
-        },
-    ) { padding ->
-        Column(
-            Modifier.fillMaxSize().padding(padding).padding(16.dp).verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Text(stringResource(R.string.home_welcome), style = MaterialTheme.typography.titleLarge)
-            MenuTile(stringResource(R.string.tile_units), stringResource(R.string.tile_units_sub), Icons.Filled.LocalHospital, onUnits)
-            MenuTile(stringResource(R.string.tile_faq), stringResource(R.string.tile_faq_sub), Icons.Filled.QuestionAnswer, onFaq)
-            MenuTile(stringResource(R.string.tile_news), stringResource(R.string.tile_news_sub), Icons.Filled.Campaign, onNews)
-            MenuTile(stringResource(R.string.tile_feedback), stringResource(R.string.tile_feedback_sub), Icons.Filled.Feedback, onFeedback)
-            MenuTile(stringResource(R.string.tile_track), stringResource(R.string.tile_track_sub), Icons.Filled.Search, onTrack)
-            Spacer(Modifier.height(8.dp))
-            MenuTile(
-                stringResource(if (isLoggedIn) R.string.tile_staff_logged_in else R.string.tile_staff),
-                stringResource(R.string.tile_staff_sub),
-                Icons.Filled.Badge,
-                onStaff,
-            )
-        }
-    }
-}
-
-@Composable
-fun UnitsScreen(container: AppContainer, onBack: () -> Unit) {
+fun UnitsList(container: AppContainer, padding: PaddingValues) {
     val loader = rememberLoader { container.contentRepository.publicUnits() }
-    RaziScaffold(title = stringResource(R.string.units_title), onBack = onBack) { padding ->
-        LoadContent(loader, Modifier.padding(padding)) { units ->
-            if (units.isEmpty()) {
-                MessageBox(stringResource(R.string.units_empty), Modifier.padding(padding))
-            } else {
-                LazyColumn(
-                    Modifier.padding(padding),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    items(units, key = { it.id }) { u -> UnitCard(u) }
-                }
+    LoadContent(loader, Modifier.padding(padding)) { units ->
+        if (units.isEmpty()) {
+            MessageBox(stringResource(R.string.units_empty), Modifier.padding(padding))
+        } else {
+            LazyColumn(
+                Modifier.padding(padding),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                items(units, key = { it.id }) { u -> UnitCard(u) }
             }
         }
     }
@@ -197,9 +143,10 @@ fun PublicNewsScreen(container: AppContainer, onBack: () -> Unit) {
     }
 }
 
+/** ثبت و پیگیری پیشنهاد و شکایت؛ زبانه «پیگیری» در صفحه اول مراجعان. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun FeedbackScreen(container: AppContainer, onBack: () -> Unit) {
+fun FeedbackBody(container: AppContainer, padding: PaddingValues) {
     val units = rememberLoader { container.contentRepository.publicUnits() }
     var kind by remember { mutableStateOf("suggestion") }
     var unit by remember { mutableStateOf<UnitDto?>(null) }
@@ -215,85 +162,83 @@ fun FeedbackScreen(container: AppContainer, onBack: () -> Unit) {
     val scope = rememberCoroutineScope()
     val errorText = rememberErrorText()
 
-    RaziScaffold(title = stringResource(R.string.feedback_title), onBack = onBack) { padding ->
-        Column(
-            Modifier.fillMaxSize().padding(padding).padding(16.dp).verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            if (created != null) {
-                Card(Modifier.fillMaxWidth()) {
-                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text(stringResource(R.string.feedback_created), fontWeight = FontWeight.Bold)
-                        Text(created!!, style = MaterialTheme.typography.headlineSmall)
-                        Text(stringResource(R.string.feedback_created_note))
-                    }
+    Column(
+        Modifier.fillMaxSize().padding(padding).padding(16.dp).verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        if (created != null) {
+            Card(Modifier.fillMaxWidth()) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(stringResource(R.string.feedback_created), fontWeight = FontWeight.Bold)
+                    Text(created!!, style = MaterialTheme.typography.headlineSmall)
+                    Text(stringResource(R.string.feedback_created_note))
                 }
-            } else {
-                Text(stringResource(R.string.feedback_kind), fontWeight = FontWeight.Bold)
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    PatientLabels.feedbackKinds.forEach { k ->
-                        FilterChip(selected = kind == k, onClick = { kind = k }, label = { Text(PatientLabels.feedbackKind(k)) })
-                    }
-                }
-                val unitList = (units.state as? com.barati.razi.ui.components.Load.Data<List<UnitDto>>)?.value.orEmpty()
-                SelectField(stringResource(R.string.feedback_unit), unit, unitList, { it.name }, { unit = it }, allowNone = true)
-                OutlinedTextField(body, { body = it; error = null }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.feedback_body)) }, minLines = 4)
-                OutlinedTextField(name, { name = it }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.feedback_name)) }, singleLine = true)
-                OutlinedTextField(
-                    mobile,
-                    { mobile = toLatinDigits(it).filter(Char::isDigit).take(11); error = null },
-                    Modifier.fillMaxWidth(),
-                    label = { Text(stringResource(R.string.feedback_mobile)) },
-                    singleLine = true,
-                )
-                ErrorText(error)
-                val errorBody = stringResource(R.string.feedback_error_body)
-                val errorMobile = stringResource(R.string.feedback_error_mobile)
-                PrimaryButton(stringResource(R.string.feedback_send), loading = loading, onClick = {
-                    error = when {
-                        body.trim().length < 5 -> errorBody
-                        mobile.isNotEmpty() && !Regex("^09\\d{9}$").matches(mobile) -> errorMobile
-                        else -> null
-                    }
-                    if (error == null) {
-                        loading = true
-                        scope.launch {
-                            val req = FeedbackRequest(
-                                kind = kind,
-                                body = body.trim(),
-                                name = name.trim().ifEmpty { null },
-                                mobile = mobile.ifEmpty { null },
-                                unitId = unit?.id,
-                            )
-                            when (val r = container.contentRepository.submitFeedback(req)) {
-                                is Result.Ok -> created = r.value.trackingCode
-                                is Result.Err -> error = errorText(r.error)
-                            }
-                            loading = false
-                        }
-                    }
-                })
             }
-
-            Spacer(Modifier.height(16.dp))
-            Text(stringResource(R.string.feedback_track_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            OutlinedTextField(trackCode, { trackCode = it; trackError = null }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.feedback_track_code)) }, singleLine = true)
-            ErrorText(trackError)
-            PrimaryButton(stringResource(R.string.feedback_track_button), onClick = {
-                scope.launch {
-                    when (val r = container.contentRepository.feedbackStatus(toLatinDigits(trackCode))) {
-                        is Result.Ok -> tracked = r.value
-                        is Result.Err -> { tracked = null; trackError = errorText(r.error) }
+        } else {
+            Text(stringResource(R.string.feedback_kind), fontWeight = FontWeight.Bold)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                PatientLabels.feedbackKinds.forEach { k ->
+                    FilterChip(selected = kind == k, onClick = { kind = k }, label = { Text(PatientLabels.feedbackKind(k)) })
+                }
+            }
+            val unitList = (units.state as? com.barati.razi.ui.components.Load.Data<List<UnitDto>>)?.value.orEmpty()
+            SelectField(stringResource(R.string.feedback_unit), unit, unitList, { it.name }, { unit = it }, allowNone = true)
+            OutlinedTextField(body, { body = it; error = null }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.feedback_body)) }, minLines = 4)
+            OutlinedTextField(name, { name = it }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.feedback_name)) }, singleLine = true)
+            OutlinedTextField(
+                mobile,
+                { mobile = toLatinDigits(it).filter(Char::isDigit).take(11); error = null },
+                Modifier.fillMaxWidth(),
+                label = { Text(stringResource(R.string.feedback_mobile)) },
+                singleLine = true,
+            )
+            ErrorText(error)
+            val errorBody = stringResource(R.string.feedback_error_body)
+            val errorMobile = stringResource(R.string.feedback_error_mobile)
+            PrimaryButton(stringResource(R.string.feedback_send), loading = loading, onClick = {
+                error = when {
+                    body.trim().length < 5 -> errorBody
+                    mobile.isNotEmpty() && !Regex("^09\\d{9}$").matches(mobile) -> errorMobile
+                    else -> null
+                }
+                if (error == null) {
+                    loading = true
+                    scope.launch {
+                        val req = FeedbackRequest(
+                            kind = kind,
+                            body = body.trim(),
+                            name = name.trim().ifEmpty { null },
+                            mobile = mobile.ifEmpty { null },
+                            unitId = unit?.id,
+                        )
+                        when (val r = container.contentRepository.submitFeedback(req)) {
+                            is Result.Ok -> created = r.value.trackingCode
+                            is Result.Err -> error = errorText(r.error)
+                        }
+                        loading = false
                     }
                 }
             })
-            tracked?.let { t ->
-                Card(Modifier.fillMaxWidth()) {
-                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text(stringResource(R.string.feedback_status, PatientLabels.feedbackStatus(t.status)), fontWeight = FontWeight.Bold)
-                        Text(stringResource(R.string.feedback_created_at, PatientLabels.date(t.createdAt)))
-                        t.response?.let { Text(stringResource(R.string.feedback_response, it)) }
-                    }
+        }
+
+        Spacer(Modifier.height(16.dp))
+        Text(stringResource(R.string.feedback_track_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+        OutlinedTextField(trackCode, { trackCode = it; trackError = null }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.feedback_track_code)) }, singleLine = true)
+        ErrorText(trackError)
+        PrimaryButton(stringResource(R.string.feedback_track_button), onClick = {
+            scope.launch {
+                when (val r = container.contentRepository.feedbackStatus(toLatinDigits(trackCode))) {
+                    is Result.Ok -> tracked = r.value
+                    is Result.Err -> { tracked = null; trackError = errorText(r.error) }
+                }
+            }
+        })
+        tracked?.let { t ->
+            Card(Modifier.fillMaxWidth()) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(stringResource(R.string.feedback_status, PatientLabels.feedbackStatus(t.status)), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.feedback_created_at, PatientLabels.date(t.createdAt)))
+                    t.response?.let { Text(stringResource(R.string.feedback_response, it)) }
                 }
             }
         }
