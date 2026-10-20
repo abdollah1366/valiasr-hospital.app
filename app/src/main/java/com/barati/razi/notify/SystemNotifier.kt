@@ -68,7 +68,7 @@ object SystemNotifier {
     private fun base(context: Context, important: Boolean) =
         NotificationCompat.Builder(context, if (important) CHANNEL_IMPORTANT else CHANNEL_GENERAL)
             .setSmallIcon(R.drawable.ic_stat_notify)
-            .setColor(0xFF0B6E74.toInt())
+            .setColor(0xFF1F7A72.toInt())
             .setAutoCancel(true)
             // روی صفحه قفل فقط «اعلان تازه» دیده می‌شود، نه متن آن.
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)

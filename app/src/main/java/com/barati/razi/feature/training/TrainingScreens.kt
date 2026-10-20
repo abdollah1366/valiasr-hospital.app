@@ -71,6 +71,7 @@ import com.barati.razi.core.util.Jalali
 import com.barati.razi.core.util.toPersianDigits
 import com.barati.razi.ui.components.LoadContent
 import com.barati.razi.ui.components.RaziScaffold
+import com.barati.razi.ui.theme.ValiasrColors
 import java.time.LocalDate
 
 private data class TrainingOverview(val courses: List<CourseDto>, val exams: List<ExamDto>)
@@ -136,13 +137,12 @@ private fun SummaryHeader(data: TrainingOverview) {
     val mandatoryLeft = data.courses.count { it.isMandatory && !TrainingLogic.courseFinished(it) }
     val openExams = data.exams.count { TrainingLogic.examAction(it).let { a -> a is ExamAction.Start || a is ExamAction.Continue } }
     val finished = data.courses.count { TrainingLogic.courseFinished(it) }
-    val primary = MaterialTheme.colorScheme.primary
     Box(
         Modifier
             .fillMaxWidth()
             .padding(16.dp)
             .clip(RoundedCornerShape(20.dp))
-            .background(Brush.linearGradient(listOf(primary, Color(0xFF13505A))))
+            .background(Brush.linearGradient(listOf(ValiasrColors.Primary, ValiasrColors.PrimaryPressed)))
             .padding(18.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -209,9 +209,8 @@ private fun CourseCover(container: AppContainer, coverUrl: String?, modifier: Mo
             modifier = modifier.background(MaterialTheme.colorScheme.primaryContainer),
         )
     } else {
-        val primary = MaterialTheme.colorScheme.primary
         Box(
-            modifier.background(Brush.linearGradient(listOf(primary.copy(alpha = 0.85f), Color(0xFF2A8C96)))),
+            modifier.background(Brush.linearGradient(listOf(ValiasrColors.PrimaryPressed, ValiasrColors.Primary))),
             contentAlignment = Alignment.Center,
         ) {
             Icon(Icons.Filled.School, contentDescription = null, tint = Color.White.copy(alpha = 0.9f), modifier = Modifier.size(56.dp))
