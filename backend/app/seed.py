@@ -120,6 +120,7 @@ def seed_demo(db: Session) -> None:
         password = s.demo_password
     if db.scalar(select(Unit)) is not None:
         # پایگاه داده قبلاً داده نمایشی دارد؛ فقط موارد تازه (مثل بخش آموزش) افزوده می‌شوند.
+        seed_sample_departments(db)
         seed_demo_training(db, password)
         seed_demo_requests(db, password)
         seed_demo_schedules(db, password)
@@ -167,6 +168,7 @@ def seed_demo(db: Session) -> None:
     )
     _user(db, "1005", "مدیر سیستم", units["it"], [("sysadmin", None), ("auditor", None)], password)
     db.flush()
+    seed_sample_departments(db)
     seed_demo_training(db, password)
     seed_demo_requests(db, password)
     seed_demo_schedules(db, password)
@@ -227,6 +229,52 @@ def seed_demo_training(db: Session, password: str) -> None:
     for u in db.scalars(select(User).where(User.personnel_code.in_(DEMO_JOB_TITLES))):
         if not u.job_title:
             u.job_title = DEMO_JOB_TITLES[u.personnel_code]
+
+
+# بخش‌های بیمارستان از فهرست سایت (۲۲ بخش). ساعت کار و شرح نمونه‌اند و واحد ایمنی آن‌ها را ویرایش می‌کند.
+SAMPLE_DEPARTMENTS: list[tuple[str, str, bool]] = [
+    # (نام، نوع، عمومی)
+    ("خدمات بستری", "ward", True),
+    ("خدمات پاراکلینیک", "support", True),
+    ("مراقبت‌های ویژه", "ward", False),
+    ("داخلی ۱", "ward", True),
+    ("داخلی ۲", "ward", True),
+    ("داخلی ۳", "ward", True),
+    ("همودیالیز", "clinic", True),
+    ("دندانپزشکی", "clinic", True),
+    ("IVF", "clinic", True),
+    ("درمانگاه‌های تخصصی", "clinic", True),
+    ("ICU5 جنرال", "ward", False),
+    ("طب هسته‌ای", "support", True),
+    ("ICU جراحی", "ward", False),
+    ("فیزیوتراپی", "clinic", True),
+    ("کودکان", "ward", True),
+    ("جراحی ۱", "ward", True),
+    ("جراحی ۲", "ward", True),
+    ("جراحی ۴", "ward", True),
+    ("جراحی VIP", "ward", True),
+    ("اورژانس", "ward", True),
+    ("خواب", "clinic", True),
+    ("زنان", "ward", True),
+]
+SAMPLE_HOURS = "نمونه؛ ساعت کار به‌زودی ثبت می‌شود"
+SAMPLE_DESCRIPTION = "نمونه؛ شرح این بخش به‌زودی توسط واحد ایمنی و روابط عمومی تکمیل می‌شود."
+
+
+def seed_sample_departments(db: Session) -> None:
+    """بخش‌های نمونه؛ بخشی که از قبل با همین نام وجود دارد دست‌نخورده می‌ماند."""
+    for name, type_, public in SAMPLE_DEPARTMENTS:
+        if db.scalar(select(Unit).where(Unit.name == name)) is None:
+            db.add(
+                Unit(
+                    name=name,
+                    type=type_,
+                    is_public=public,
+                    hours=SAMPLE_HOURS,
+                    description=SAMPLE_DESCRIPTION,
+                )
+            )
+    db.flush()
 
 
 def _unit(db: Session, name: str, type_: str) -> Unit:

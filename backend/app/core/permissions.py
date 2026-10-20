@@ -107,6 +107,11 @@ DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
         "سوپروایزر",
         ["announcement.read", "training.read", "request.create", "schedule.read.all"],
     ),
+    # ایمنی، اعتبارسنجی و روابط عمومی: ویرایش بخش‌ها و متن‌ها و ترجمه‌های عمومی.
+    "quality_pr": (
+        "مسئول ایمنی، اعتبارسنجی و روابط عمومی",
+        ["announcement.read", "training.read", "request.create", "unit.manage", "translation.manage"],
+    ),
     "auditor": ("حسابرس", ["audit.read"]),
     # مدیر سیستم عمداً به محتوای گزارش‌های خطا دسترسی ندارد.
     "sysadmin": (
