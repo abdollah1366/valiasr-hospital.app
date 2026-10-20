@@ -243,7 +243,7 @@ function layout(pages, current) {
     h(
       "aside",
       { class: "sidebar" },
-      h("div", { class: "brand" }, h("div", { class: "logo" }, icon("school")),
+      h("div", { class: "brand" }, h("div", { class: "logo" }, h("img", { src: "logo.svg", alt: "لوگوی بیمارستان", width: "32" })),
         h("div", {}, h("div", {}, "بیمارستان ولیعصر"), h("div", { class: "brand-sub" }, "پنل مدیریت"))),
       h("div", { class: "who" }, h("div", { class: "avatar" }, state.me.full_name.trim().charAt(0)),
         h("div", { class: "grow" }, h("div", {}, state.me.full_name),
