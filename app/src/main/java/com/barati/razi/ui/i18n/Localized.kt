@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import com.barati.razi.core.i18n.AppLanguage
-import com.barati.razi.ui.theme.SystemTypography
+import com.barati.razi.ui.theme.LatinTypography
 import java.util.Locale
 
 /** زبان محتوای فعلی؛ بیرون از بخش مراجعان همیشه فارسی است. */
@@ -38,7 +38,7 @@ fun LocalizedContent(language: AppLanguage, content: @Composable () -> Unit) {
         if (language.usesPersianFont) {
             content()
         } else {
-            MaterialTheme(colorScheme = MaterialTheme.colorScheme, typography = SystemTypography, content = content)
+            MaterialTheme(colorScheme = MaterialTheme.colorScheme, typography = LatinTypography, content = content)
         }
     }
 }
