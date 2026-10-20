@@ -20,6 +20,7 @@ from app.routers import (
     requests,
     schedules,
     training,
+    translations,
 )
 
 API_PREFIX = "/api/v1"
@@ -78,6 +79,7 @@ def create_app() -> FastAPI:
         notifications.router,
         chat.router,
         schedules.router,
+        translations.router,
     ):
         app.include_router(r, prefix=API_PREFIX)
 

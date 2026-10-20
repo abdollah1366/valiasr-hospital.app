@@ -371,3 +371,34 @@ class PatientTokenOut(BaseModel):
 class PatientUpdateIn(BaseModel):
     language: PatientLanguage | None = None
     full_name: str | None = Field(default=None, max_length=200)
+
+
+# ---------------------------------------------------------------- ترجمه محتوای عمومی
+
+TranslationEntity = Literal["unit", "faq", "announcement"]
+TranslationLanguage = Literal["az", "en", "ar", "tr"]
+
+
+class TranslationKey(BaseModel):
+    entity_type: TranslationEntity
+    entity_id: uuid.UUID
+    language: TranslationLanguage
+    field: str = Field(max_length=30)
+
+
+class TranslationIn(TranslationKey):
+    text: str = Field(min_length=1, max_length=8000)
+
+
+class TranslationFieldOut(BaseModel):
+    field: str
+    source: str | None
+    text: str | None
+    status: Literal["missing", "draft", "approved", "outdated"]
+
+
+class TranslationItemOut(BaseModel):
+    entity_type: str
+    entity_id: uuid.UUID
+    label: str
+    fields: list[TranslationFieldOut]

@@ -12,6 +12,7 @@ def test_admin_page_is_served_with_strict_headers(client):
     js = client.get("/admin/app.js")
     assert js.status_code == 200 and "javascript" in js.headers["content-type"]
     assert client.get("/admin/schedules.js").status_code == 200
+    assert client.get("/admin/translations.js").status_code == 200
     assert client.get("/admin/fonts/vazirmatn_regular.ttf").status_code == 200
     # API همان رفتار قبلی را دارد و سرآیندهای پنل به آن اضافه نمی‌شود.
     assert "content-security-policy" not in client.get("/health").headers

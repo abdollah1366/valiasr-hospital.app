@@ -11,6 +11,7 @@ from app.core.deps import CurrentUser, api_error, build_current_user, client_ip,
 from app.models import Announcement, AnnouncementRead, User
 from app.schemas import AnnouncementIn, AnnouncementOut, ReadStatsOut
 from app.services import notifications as notes
+from app.services.translations import content_language, localize
 
 router = APIRouter(tags=["announcements"])
 
@@ -57,9 +58,14 @@ def _out(a: Announcement, read: AnnouncementRead | None = None, with_state: bool
 
 
 @router.get("/public/announcements", response_model=list[AnnouncementOut], tags=["public"])
-def public_announcements(limit: int = Query(30, ge=1, le=100), db: Session = Depends(get_db)):
+def public_announcements(
+    limit: int = Query(30, ge=1, le=100),
+    language: str | None = Depends(content_language),
+    db: Session = Depends(get_db),
+):
     stmt = _published(select(Announcement).where(Announcement.audience == "public"), datetime.now(UTC))
-    return [_out(a) for a in db.scalars(stmt.order_by(Announcement.published_at.desc()).limit(limit))]
+    items = [_out(a) for a in db.scalars(stmt.order_by(Announcement.published_at.desc()).limit(limit))]
+    return localize(db, "announcement", items, language)
 
 
 @router.get("/announcements", response_model=list[AnnouncementOut])
