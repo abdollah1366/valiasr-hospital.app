@@ -10,24 +10,32 @@
 }
 
 :root {
-  --primary: #0b6e74;
-  --primary-dark: #08494d;
-  --primary-soft: #e3f2f2;
-  --primary-tint: #f1f8f8;
-  --bg: #f3f5f8;
+  /* رنگ‌های بیمارستان ولیعصر؛ قرمز برند فقط برای هویت، هرگز دکمه یا خطا */
+  --primary: #1f7a72;
+  --primary-dark: #194d48;
+  --primary-hover: #19665f;
+  --primary-soft: #e6f3f1;
+  --primary-tint: #f2f8f7;
+  --focus: #64d8ce;
+  --brand: #b3262e;
+  --brand-soft: #fbedee;
+  --gold: #8c6a2b;
+  --gold-deco: #c9a15a;
+  --cream: #fbf6ec;
+  --bg: #f6f8f7;
   --surface: #ffffff;
-  --text: #17212b;
-  --muted: #5f6d7a;
-  --border: #e1e6eb;
-  --danger: #c0352b;
-  --danger-soft: #fdecea;
-  --ok: #1e7a3c;
-  --ok-soft: #e6f4ea;
-  --amber: #a15c00;
-  --amber-soft: #fff3e0;
-  --blue: #1f5fae;
-  --blue-soft: #e8f0fb;
-  --gray-soft: #eef1f4;
+  --text: #1e2a2b;
+  --muted: #5b6b6a;
+  --border: #d6dcdb;
+  --danger: #b9341c;
+  --danger-soft: #fbece8;
+  --ok: #2e7d3e;
+  --ok-soft: #e7f3ea;
+  --amber: #8a4b08;
+  --amber-soft: #fdf3e3;
+  --blue: #2f6db5;
+  --blue-soft: #e8f0fa;
+  --gray-soft: #eceeee;
   --radius: 12px;
   --shadow: 0 1px 2px rgba(16, 24, 40, .05), 0 1px 3px rgba(16, 24, 40, .06);
   --shadow-lg: 0 8px 24px rgba(16, 24, 40, .12);
@@ -58,7 +66,8 @@ a { color: var(--primary); }
 .sidebar {
   width: 248px;
   flex-shrink: 0;
-  background: linear-gradient(180deg, #0a5c61 0%, var(--primary-dark) 100%);
+  background: linear-gradient(180deg, #1d6a63 0%, var(--primary-dark) 100%);
+  box-shadow: inset 0 4px 0 var(--brand);
   color: #fff;
   padding: 18px 12px;
   display: flex;
@@ -168,7 +177,7 @@ a { color: var(--primary); }
 .btn .icon { width: 18px; height: 18px; }
 .btn:hover { background: var(--primary-dark); }
 .btn:disabled { opacity: .55; cursor: default; }
-.btn.primary { box-shadow: 0 2px 6px rgba(11, 110, 116, .25); }
+.btn.primary { box-shadow: 0 2px 6px rgba(31, 122, 114, .25); }
 .btn.secondary { background: #fff; color: var(--primary); border-color: var(--border); }
 .btn.secondary:hover { background: var(--primary-tint); border-color: var(--primary); }
 .btn.danger { background: #fff; color: var(--danger); border-color: #f0c4c0; }
@@ -261,7 +270,7 @@ label.inline { display: inline-flex; gap: 6px; align-items: center; color: var(-
 .bar-row { display: grid; grid-template-columns: minmax(90px, 140px) 1fr auto; gap: 10px; align-items: center; margin: 8px 0; font-size: 14px; }
 .bar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bar { height: 12px; background: var(--gray-soft); border-radius: 6px; overflow: hidden; }
-.bar > div { height: 100%; background: linear-gradient(90deg, var(--primary), #14a0a8); border-radius: 6px; }
+.bar > div { height: 100%; background: linear-gradient(90deg, var(--primary), #2db3a7); border-radius: 6px; }
 .pbar { height: 8px; background: var(--gray-soft); border-radius: 4px; overflow: hidden; min-width: 60px; }
 .pfill { height: 100%; background: var(--primary); border-radius: 4px; transition: width .2s; }
 .pfill.green { background: var(--ok); }
@@ -290,7 +299,7 @@ td .actions { display: flex; gap: 4px; flex-wrap: wrap; }
   text-decoration: none; color: inherit; box-shadow: var(--shadow); transition: transform .15s, box-shadow .15s;
 }
 .course-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-.cover { height: 130px; background: linear-gradient(135deg, #0b6e74, #14a0a8 60%, #7fd1c7); display: grid; place-items: center; color: rgba(255,255,255,.9); overflow: hidden; }
+.cover { height: 130px; background: linear-gradient(135deg, var(--primary-dark), var(--primary) 60%, #64d8ce); display: grid; place-items: center; color: rgba(255,255,255,.9); overflow: hidden; }
 .cover img { width: 100%; height: 100%; object-fit: cover; }
 .cover-icon { width: 56px; height: 56px; }
 .cc-body { padding: 14px 16px 16px; display: grid; gap: 6px; flex: 1; }
@@ -306,7 +315,7 @@ td .actions { display: flex; gap: 4px; flex-wrap: wrap; }
   display: flex; gap: 12px; align-items: center; padding: 10px 12px;
   border: 1px solid var(--border); border-radius: 12px; background: #fff; transition: border-color .15s, background .15s;
 }
-.item-row:hover { border-color: #c5d6d8; background: var(--primary-tint); }
+.item-row:hover { border-color: #b7c9c6; background: var(--primary-tint); }
 .link-row { text-decoration: none; color: inherit; margin-top: 8px; }
 .item-title { font-weight: 700; display: flex; gap: 8px; align-items: center; }
 .num { display: inline-grid; place-items: center; min-width: 24px; height: 24px; border-radius: 50%; background: var(--gray-soft); color: var(--muted); font-size: 12px; }
@@ -400,7 +409,7 @@ td .actions { display: flex; gap: 4px; flex-wrap: wrap; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ---------- login */
-.login-page { min-height: 100vh; display: grid; place-items: center; padding: 16px; background: linear-gradient(160deg, #e3f2f2 0%, var(--bg) 60%); }
+.login-page { min-height: 100vh; display: grid; place-items: center; padding: 16px; background: linear-gradient(160deg, var(--primary-soft) 0%, var(--bg) 60%); }
 .login-box { width: 100%; max-width: 400px; box-shadow: var(--shadow-lg); }
 .login-box h1 { text-align: center; color: var(--primary-dark); }
 
@@ -500,7 +509,7 @@ dialog .dlg-foot { padding: 12px 20px; border-top: 1px solid var(--border); disp
   background: #fff; color: var(--primary-dark); font-size: 11px; font-weight: 700; line-height: 19px; text-align: center;
   box-shadow: 0 0 0 2px var(--primary-dark);
 }
-.bell-count.important { background: #e8453c; color: #fff; }
+.bell-count.important { background: var(--brand); color: #fff; }
 .bell-count[hidden] { display: none; }
 .notif-panel {
   position: fixed; right: 262px; z-index: 50; width: 380px; max-width: calc(100vw - 24px); max-height: min(560px, calc(100vh - 24px));
