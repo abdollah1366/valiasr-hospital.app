@@ -60,7 +60,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
@@ -84,6 +83,9 @@ import com.barati.razi.feature.publicinfo.FeedbackBody
 import com.barati.razi.feature.publicinfo.UnitsList
 import com.barati.razi.ui.components.MenuTile
 import com.barati.razi.ui.components.RaziScaffold
+import com.barati.razi.ui.components.TileGrid
+import com.barati.razi.ui.components.TileItem
+import com.barati.razi.ui.components.WideCard
 import com.barati.razi.ui.i18n.LanguageAction
 import com.barati.razi.ui.theme.brandColor
 
@@ -206,10 +208,10 @@ private fun HomeTab(
         if (internationalFirst) InternationalCard(onInternational)
         TileGrid(
             listOf(
-                Tile(R.string.tile_visiting, R.string.tile_visiting_sub, Icons.Outlined.AccessTime, onFaq),
-                Tile(R.string.tile_contact, R.string.tile_contact_sub, Icons.Outlined.Place, onContact),
-                Tile(R.string.tile_news, R.string.tile_news_sub, Icons.Outlined.Campaign, onNews),
-                Tile(R.string.tile_feedback_short, R.string.tile_feedback_sub, Icons.Outlined.Feedback, onFeedback),
+                tile(R.string.tile_visiting, R.string.tile_visiting_sub, Icons.Outlined.AccessTime, onFaq),
+                tile(R.string.tile_contact, R.string.tile_contact_sub, Icons.Outlined.Place, onContact),
+                tile(R.string.tile_news, R.string.tile_news_sub, Icons.Outlined.Campaign, onNews),
+                tile(R.string.tile_feedback_short, R.string.tile_feedback_sub, Icons.Outlined.Feedback, onFeedback),
             ),
         )
         WideCard(Icons.AutoMirrored.Outlined.Assignment, stringResource(R.string.admission_title), stringResource(R.string.admission_sub), onAdmission)
@@ -246,42 +248,9 @@ private fun HeroCard(onBook: () -> Unit) {
     }
 }
 
-private class Tile(val title: Int, val subtitle: Int, val icon: ImageVector, val onClick: () -> Unit)
-
 @Composable
-private fun TileGrid(tiles: List<Tile>) {
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        tiles.chunked(2).forEach { row ->
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                row.forEach { t -> SmallTile(t, Modifier.weight(1f)) }
-                if (row.size == 1) Spacer(Modifier.weight(1f))
-            }
-        }
-    }
-}
-
-@Composable
-private fun SmallTile(t: Tile, modifier: Modifier) {
-    Card(
-        modifier.heightIn(min = 120.dp).clickable(onClick = t.onClick),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-    ) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Box(
-                Modifier.size(40.dp).background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
-                contentAlignment = Alignment.Center,
-            ) { Icon(t.icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary) }
-            Text(stringResource(t.title), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
-            Text(
-                stringResource(t.subtitle),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-    }
-}
+private fun tile(title: Int, subtitle: Int, icon: ImageVector, onClick: () -> Unit) =
+    TileItem(stringResource(title), stringResource(subtitle), icon, onClick = onClick)
 
 @Composable
 private fun InternationalCard(onClick: () -> Unit) {
@@ -293,30 +262,6 @@ private fun InternationalCard(onClick: () -> Unit) {
         container = MaterialTheme.colorScheme.secondaryContainer,
         tint = MaterialTheme.colorScheme.secondary,
     )
-}
-
-@Composable
-private fun WideCard(
-    icon: ImageVector,
-    title: String,
-    subtitle: String,
-    onClick: () -> Unit,
-    container: Color = MaterialTheme.colorScheme.surface,
-    tint: Color = MaterialTheme.colorScheme.primary,
-) {
-    Card(
-        Modifier.fillMaxWidth().clickable(onClick = onClick),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = container),
-    ) {
-        Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            Icon(icon, contentDescription = null, Modifier.size(32.dp), tint = tint)
-            Column(Modifier.weight(1f)) {
-                Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                Text(subtitle, style = MaterialTheme.typography.bodySmall)
-            }
-        }
-    }
 }
 
 @Composable

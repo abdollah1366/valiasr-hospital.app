@@ -5,27 +5,42 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material.icons.filled.Campaign
-import androidx.compose.material.icons.filled.FactCheck
-import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Forum
-import androidx.compose.material.icons.filled.ListAlt
+import androidx.compose.material.icons.automirrored.outlined.Chat
+import androidx.compose.material.icons.automirrored.outlined.ListAlt
+import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Public
-import androidx.compose.material.icons.filled.ReportProblem
-import androidx.compose.material.icons.filled.School
-import androidx.compose.material.icons.filled.SupportAgent
+import androidx.compose.material.icons.outlined.CalendarMonth
+import androidx.compose.material.icons.outlined.Campaign
+import androidx.compose.material.icons.outlined.FactCheck
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.Public
+import androidx.compose.material.icons.outlined.ReportProblem
+import androidx.compose.material.icons.outlined.School
+import androidx.compose.material.icons.outlined.SupportAgent
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -40,8 +55,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -51,8 +68,11 @@ import com.barati.razi.core.data.Keys
 import com.barati.razi.core.data.can
 import com.barati.razi.core.network.MeDto
 import com.barati.razi.core.util.toPersianDigits
-import com.barati.razi.ui.components.MenuTile
 import com.barati.razi.ui.components.RaziScaffold
+import com.barati.razi.ui.components.TileGrid
+import com.barati.razi.ui.components.TileItem
+import com.barati.razi.ui.components.WideCard
+import com.barati.razi.ui.theme.brandColor
 import kotlinx.coroutines.launch
 
 @Composable
@@ -87,6 +107,7 @@ fun StaffHomeScreen(
         if (me.can("announcement.read")) pendingAck = container.contentRepository.pendingAckCount()
         if (me.can("training.read")) pendingTraining = container.trainingRepository.pendingCount()
     }
+    val waiting = pending.size + pendingRequests.size + chatPending.size
     RaziScaffold(
         title = "بخش کارکنان",
         actions = {
@@ -95,81 +116,153 @@ fun StaffHomeScreen(
                     if (unread > 0) Badge { Text(toPersianDigits(if (unread > 99) "99+" else unread.toString())) }
                 }) {
                     Icon(
-                        Icons.Filled.Notifications,
+                        Icons.Outlined.Notifications,
                         contentDescription = if (unread > 0) toPersianDigits("اعلان‌ها، $unread خوانده‌نشده") else "اعلان‌ها",
                     )
                 }
             }
-            IconButton(onClick = onLogout) { Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "خروج") }
+            IconButton(onClick = onLogout) { Icon(Icons.AutoMirrored.Outlined.Logout, contentDescription = "خروج") }
+        },
+        floatingActionButton = {
+            // اقدام اصلی کارکنان در منطقه شست: ثبت سریع گزارش خطا
+            if (me.can("incident.create")) {
+                ExtendedFloatingActionButton(
+                    onClick = onNewIncident,
+                    icon = { Icon(Icons.Outlined.ReportProblem, contentDescription = null) },
+                    text = { Text("گزارش خطا") },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                )
+            }
         },
     ) { padding ->
         Column(
-            Modifier.fillMaxSize().padding(padding).padding(16.dp).verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Text(me.fullName, style = MaterialTheme.typography.titleLarge)
-            listOfNotNull(me.unitName, me.jobTitle).takeIf { it.isNotEmpty() }?.let {
-                Text(it.joinToString(" · "), style = MaterialTheme.typography.bodyMedium)
-            }
-            if (me.can("incident.create")) {
-                MenuTile("ثبت گزارش خطا، حادثه یا شبه‌خطا", "امکان ارسال ناشناس", Icons.Filled.ReportProblem, onNewIncident)
-                MenuTile(
-                    "گزارش‌های من",
-                    if (pending.isNotEmpty()) toPersianDigits("${pending.size} گزارش در انتظار ارسال") else "پیگیری وضعیت",
-                    Icons.Filled.ListAlt,
-                    onMyIncidents,
+            ProfileCard(me, pendingAck, onAnnouncements)
+            if (waiting > 0) {
+                Text(
+                    toPersianDigits("$waiting مورد بدون اینترنت ثبت شده و با وصل شدن خودکار ارسال می‌شود."),
+                    Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(12.dp))
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                 )
             }
-            if (me.can("incident.read")) {
-                MenuTile("بررسی گزارش‌ها", "گزارش‌های خطای واحد یا کل بیمارستان", Icons.Filled.FactCheck, onReview)
-            }
-            if (me.can("announcement.read")) {
-                MenuTile(
-                    "اخبار و بخشنامه‌ها",
-                    if (pendingAck > 0) "بخشنامه‌هایی که باید مطالعه کنید" else null,
-                    Icons.Filled.Campaign,
-                    onAnnouncements,
-                    badge = pendingAck,
-                )
-            }
-            if (me.can("training.read")) {
-                MenuTile(
-                    "آموزش",
-                    if (pendingTraining > 0) "دوره‌ها و آزمون‌هایی که در انتظار شماست" else "دوره‌ها، فیلم‌ها و آزمون‌های آموزشی",
-                    Icons.Filled.School,
-                    onTraining,
-                    badge = pendingTraining,
-                )
-            }
-            if (me.can("request.create") || me.can("request.handle") || me.can("request.read")) {
-                MenuTile(
-                    "درخواست پشتیبانی",
-                    when {
-                        pendingRequests.isNotEmpty() -> toPersianDigits("${pendingRequests.size} درخواست در انتظار ارسال")
-                        me.can("request.handle") -> "کارتابل درخواست‌های واحد شما"
-                        else -> "فناوری اطلاعات، تجهیزات پزشکی و تأسیسات"
-                    },
-                    Icons.Filled.SupportAgent,
-                    onRequests,
-                )
-            }
-            MenuTile(
-                "گفتگو",
-                when {
-                    chatPending.isNotEmpty() -> toPersianDigits("${chatPending.size} پیام در انتظار ارسال")
-                    chatUnread > 0 -> "پیام‌های تازه همکاران"
-                    else -> "پیام به همکاران، گروه‌ها و کانال واحد"
+            TileGrid(
+                buildList {
+                    if (me.can("incident.create")) {
+                        add(
+                            TileItem(
+                                "گزارش‌های من",
+                                if (pending.isNotEmpty()) toPersianDigits("${pending.size} در انتظار ارسال") else "پیگیری وضعیت",
+                                Icons.AutoMirrored.Outlined.ListAlt,
+                                onClick = onMyIncidents,
+                            ),
+                        )
+                    }
+                    if (me.can("incident.read")) {
+                        add(TileItem("بررسی گزارش‌ها", "گزارش‌های خطای واحد یا بیمارستان", Icons.Outlined.FactCheck, onClick = onReview))
+                    }
+                    if (me.can("announcement.read")) {
+                        add(
+                            TileItem(
+                                "اخبار و بخشنامه‌ها",
+                                if (pendingAck > 0) "منتظر مطالعه شما" else "اطلاعیه‌های بیمارستان",
+                                Icons.Outlined.Campaign,
+                                badge = pendingAck,
+                                onClick = onAnnouncements,
+                            ),
+                        )
+                    }
+                    if (me.can("training.read")) {
+                        add(
+                            TileItem(
+                                "آموزش",
+                                if (pendingTraining > 0) "دوره و آزمون در انتظار شما" else "دوره‌ها و آزمون‌ها",
+                                Icons.Outlined.School,
+                                badge = pendingTraining,
+                                onClick = onTraining,
+                            ),
+                        )
+                    }
+                    add(
+                        TileItem(
+                            "گفتگو",
+                            if (chatUnread > 0) "پیام‌های تازه همکاران" else "همکاران، گروه‌ها و کانال واحد",
+                            Icons.AutoMirrored.Outlined.Chat,
+                            badge = chatUnread,
+                            onClick = onChat,
+                        ),
+                    )
+                    add(TileItem("برنامه شیفت", "شیفت‌های من و جابجایی", Icons.Outlined.CalendarMonth, onClick = onSchedule))
+                    if (me.can("request.create") || me.can("request.handle") || me.can("request.read")) {
+                        add(
+                            TileItem(
+                                "درخواست پشتیبانی",
+                                if (me.can("request.handle")) "کارتابل واحد شما" else "فناوری، تجهیزات و تأسیسات",
+                                Icons.Outlined.SupportAgent,
+                                onClick = onRequests,
+                            ),
+                        )
+                    }
                 },
-                Icons.Filled.Forum,
-                onChat,
-                badge = chatUnread,
             )
-            MenuTile("برنامه شیفت", "شیفت‌های من، برنامه بخش و جابجایی", Icons.Filled.CalendarMonth, onSchedule)
-            MenuTile("خدمات عمومی بیمارستان", "راهنمای بخش‌ها، پرسش‌ها و شکایات", Icons.Filled.Public, onPublic)
-            Text(
-                "بخش پژوهش در مراحل بعدی اضافه می‌شود.",
-                style = MaterialTheme.typography.bodySmall,
-            )
+            WideCard(Icons.Outlined.Public, "خدمات عمومی بیمارستان", "راهنمای بخش‌ها، پرسش‌ها و شکایات مراجعان", onPublic)
+            // فاصله برای اینکه دکمه شناور روی کارت آخر نیفتد
+            Spacer(Modifier.height(72.dp))
+        }
+    }
+}
+
+/** کارت بالای صفحه: نام، واحد و سمت؛ اگر بخشنامه‌ای منتظر مطالعه باشد، یادآوری می‌کند. */
+@Composable
+private fun ProfileCard(me: MeDto, pendingAck: Int, onAnnouncements: () -> Unit) {
+    Card(
+        Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+    ) {
+        Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Box(
+                    Modifier.size(48.dp).background(MaterialTheme.colorScheme.onPrimary, CircleShape),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        me.fullName.trim().take(1),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+                Column(Modifier.weight(1f)) {
+                    Text(
+                        me.fullName,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                    )
+                    listOfNotNull(me.unitName, me.jobTitle).takeIf { it.isNotEmpty() }?.let {
+                        Text(it.joinToString(" · "), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onPrimary)
+                    }
+                }
+            }
+            // نوار باریک قرمز برند، مثل صفحه اول مراجعان
+            Box(Modifier.size(width = 32.dp, height = 4.dp).background(brandColor, RoundedCornerShape(2.dp)))
+            if (pendingAck > 0) {
+                Button(
+                    onClick = onAnnouncements,
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        contentColor = MaterialTheme.colorScheme.primary,
+                    ),
+                ) { Text(toPersianDigits("$pendingAck بخشنامه منتظر مطالعه شماست"), fontWeight = FontWeight.Bold) }
+            }
         }
     }
 }
