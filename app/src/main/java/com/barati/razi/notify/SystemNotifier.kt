@@ -75,7 +75,7 @@ object SystemNotifier {
             .setPublicVersion(
                 NotificationCompat.Builder(context, CHANNEL_GENERAL)
                     .setSmallIcon(R.drawable.ic_stat_notify)
-                    .setContentTitle("بیمارستان رازی")
+                    .setContentTitle("بیمارستان ولیعصر")
                     .setContentText("اعلان تازه دارید")
                     .build(),
             )

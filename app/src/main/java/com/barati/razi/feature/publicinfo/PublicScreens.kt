@@ -65,12 +65,12 @@ fun PublicHomeScreen(
     onTrack: () -> Unit,
     onStaff: () -> Unit,
 ) {
-    RaziScaffold(title = "بیمارستان رازی تبریز") { padding ->
+    RaziScaffold(title = "بیمارستان بین‌المللی ولیعصر تبریز") { padding ->
         Column(
             Modifier.fillMaxSize().padding(padding).padding(16.dp).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text("به اپلیکیشن بیمارستان رازی خوش آمدید", style = MaterialTheme.typography.titleLarge)
+            Text("به اپلیکیشن بیمارستان ولیعصر خوش آمدید", style = MaterialTheme.typography.titleLarge)
             MenuTile("راهنمای بخش‌ها و درمانگاه‌ها", "محل، تلفن و ساعات کار", Icons.Filled.LocalHospital, onUnits)
             MenuTile("پرسش‌های متداول", "مدارک لازم، ساعات ملاقات و ...", Icons.Filled.QuestionAnswer, onFaq)
             MenuTile("اطلاعیه‌ها", "اخبار و تغییرات خدمات بیمارستان", Icons.Filled.Campaign, onNews)
