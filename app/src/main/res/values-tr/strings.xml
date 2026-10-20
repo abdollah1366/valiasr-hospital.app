@@ -96,12 +96,10 @@
     <string name="international_title">Uluslararası hastalar</string>
     <string name="international_sub">Kabul, tercüman ve konaklama</string>
     <string name="contact_title">Yol tarifi ve iletişim</string>
-    <string name="contact_address">Tebriz, Zaferaniye, İmam Caddesi, Eflaknüma Meydanı yakını</string>
+    <string name="contact_address">Tebriz, İmam Caddesi, Zaferaniye girişi, Eflaknüma Meydanı</string>
     <string name="contact_open_map">Haritada göster</string>
     <string name="contact_phone">Hastane telefonu</string>
-    <string name="contact_booking_phone">Randevu telefonu</string>
     <string name="contact_email">E-posta</string>
-    <string name="contact_instagram">Instagram</string>
     <string name="intl_title">Uluslararası hastalar</string>
     <string name="intl_intro">Tebriz Uluslararası Veliasr Hastanesi, İran dışından gelen hastalar için uluslararası hasta birimine sahiptir.</string>
     <string name="intl_service_admission">Seyahatten önce kabul ve randevu ayarlanması</string>
@@ -114,4 +112,23 @@
     <string name="profile_mobile">Cep telefonu numarası</string>
     <string name="profile_sign_out">Çıkış yap</string>
     <string name="profile_signed_out">Başvurularınızı takip etmek ve dili hesabınızda saklamak için giriş yapın.</string>
+    <string name="about_title">Hastane hakkında</string>
+    <string name="about_body">Tebriz Uluslararası Veliasr Hastanesi, İran\'ın en büyük özel hastanesi olarak geniş bir yelpazede uzmanlık ve yan dal teşhis, tedavi ve rehabilitasyon hizmetleri sunar.</string>
+    <string name="about_sub">7/24 acil servis, 77 yoğun bakım yatağı ve 14 ameliyathane</string>
+    <string name="about_er_n">7/24</string>
+    <string name="about_er">Acil servis</string>
+    <string name="about_er_visits">Ayda 4.000\'den fazla başvuru</string>
+    <string name="about_icu_n">77</string>
+    <string name="about_icu">Yoğun bakım (ICU) yatağı</string>
+    <string name="about_ccu_n">8</string>
+    <string name="about_ccu">Koroner yoğun bakım (CCU) yatağı</string>
+    <string name="about_or_n">14</string>
+    <string name="about_or">Modern ameliyathane</string>
+    <string name="about_diag_title">Teşhis ve tedavi</string>
+    <string name="about_diag">BT, MR, PET-BT, nükleer tıp, radyoloji, kemoterapi ve radyoterapi, endoskopi ve ayakta tedavi</string>
+    <string name="about_special_title">Özel hizmetler</string>
+    <string name="about_special">Kısırlık tedavisi, uyku bozuklukları, kronik ağrı ve tedavisi zor hastalıklar</string>
+    <string name="about_depts_title">Uzmanlık bölümleri</string>
+    <string name="about_depts">Kardiyoloji, anne ve yenidoğan, nöroloji, gastroenteroloji ve hepatoloji, ortopedi, üroloji, onkoloji, nefroloji, enfeksiyon hastalıkları, göğüs hastalıkları, KBB, tüp bebek (IVF) ve ileri cerrahi</string>
+    <string name="about_approach">Yaklaşımımız tamamen hasta odaklıdır: huzur veren modern mimariden akıllı randevu sistemine ve elektronik kayıtlara kadar her şey güvenli ve rahat bir deneyim için tasarlandı.</string>
 </resources>

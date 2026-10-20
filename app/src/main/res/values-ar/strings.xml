@@ -96,12 +96,10 @@
     <string name="international_title">المرضى الدوليون</string>
     <string name="international_sub">القبول والمترجم والإقامة</string>
     <string name="contact_title">الموقع والتواصل</string>
-    <string name="contact_address">تبريز، الزعفرانية، شارع الإمام، قرب ساحة أفلاك‌نما</string>
+    <string name="contact_address">تبريز، شارع الإمام، بداية الزعفرانية، ساحة أفلاك‌نما</string>
     <string name="contact_open_map">عرض على الخريطة</string>
     <string name="contact_phone">هاتف المستشفى</string>
-    <string name="contact_booking_phone">هاتف حجز المواعيد</string>
     <string name="contact_email">البريد الإلكتروني</string>
-    <string name="contact_instagram">إنستغرام</string>
     <string name="intl_title">المرضى الدوليون</string>
     <string name="intl_intro">يضم مستشفى ولي العصر الدولي في تبريز قسمًا لقبول المرضى القادمين من خارج إيران.</string>
     <string name="intl_service_admission">تنسيق القبول والموعد قبل السفر</string>
@@ -114,4 +112,23 @@
     <string name="profile_mobile">رقم الجوال</string>
     <string name="profile_sign_out">تسجيل الخروج</string>
     <string name="profile_signed_out">سجّل الدخول لمتابعة طلباتك وحفظ اللغة في حسابك.</string>
+    <string name="about_title">عن المستشفى</string>
+    <string name="about_body">يقدّم مستشفى ولي العصر الدولي في تبريز، أكبر مستشفى خاص في إيران، مجموعة واسعة من الخدمات التخصصية والتخصصية الدقيقة في التشخيص والعلاج وإعادة التأهيل.</string>
+    <string name="about_sub">طوارئ على مدار الساعة و77 سرير عناية مركزة و14 غرفة عمليات</string>
+    <string name="about_er_n">24/7</string>
+    <string name="about_er">قسم الطوارئ</string>
+    <string name="about_er_visits">أكثر من 4000 مراجع شهريًا</string>
+    <string name="about_icu_n">77</string>
+    <string name="about_icu">سرير عناية مركزة</string>
+    <string name="about_ccu_n">8</string>
+    <string name="about_ccu">سرير عناية قلبية</string>
+    <string name="about_or_n">14</string>
+    <string name="about_or">غرفة عمليات حديثة</string>
+    <string name="about_diag_title">التشخيص والعلاج</string>
+    <string name="about_diag">الأشعة المقطعية، الرنين المغناطيسي، PET، الطب النووي، الأشعة، العلاج الكيميائي والإشعاعي، المناظير والرعاية الخارجية</string>
+    <string name="about_special_title">خدمات متميزة</string>
+    <string name="about_special">علاج العقم، اضطرابات النوم، الآلام المزمنة والأمراض المستعصية</string>
+    <string name="about_depts_title">الأقسام التخصصية</string>
+    <string name="about_depts">القلب والأوعية، رعاية الأم والمولود، الأعصاب، الجهاز الهضمي والكبد، العظام، المسالك البولية، الأورام، الكلى، الأمراض المعدية، الرئة، الأنف والأذن والحنجرة، أطفال الأنابيب والجراحات المتقدمة</string>
+    <string name="about_approach">نهجنا يتمحور بالكامل حول المريض: من العمارة الحديثة المريحة إلى الحجز الذكي والملف الطبي الإلكتروني، صُمّم كل شيء لتجربة آمنة ومطمئنة.</string>
 </resources>

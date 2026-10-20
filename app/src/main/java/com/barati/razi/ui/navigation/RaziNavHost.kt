@@ -35,6 +35,7 @@ import com.barati.razi.feature.incident.MyIncidentsScreen
 import com.barati.razi.feature.incident.ReviewListScreen
 import com.barati.razi.feature.incident.TrackIncidentScreen
 import com.barati.razi.feature.notifications.NotificationsScreen
+import com.barati.razi.feature.patient.AboutScreen
 import com.barati.razi.feature.patient.ContactScreen
 import com.barati.razi.feature.patient.InternationalScreen
 import com.barati.razi.feature.patient.PatientHomeScreen
@@ -66,6 +67,7 @@ object Routes {
     const val NEWS = "news"
     const val CONTACT = "contact"
     const val INTERNATIONAL = "international"
+    const val ABOUT = "about"
     const val TRACK = "track?code={code}&secret={secret}"
     const val LOGIN = "login"
     const val CHANGE_PASSWORD = "change_password"
@@ -190,6 +192,7 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
                     onNews = { nav.navigate(Routes.NEWS) },
                     onContact = { nav.navigate(Routes.CONTACT) },
                     onInternational = { nav.navigate(Routes.INTERNATIONAL) },
+                    onAbout = { nav.navigate(Routes.ABOUT) },
                     onTrackIncident = { nav.navigate(Routes.track()) },
                     onStaff = {
                         val s = session
@@ -216,6 +219,7 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
         composable(Routes.NEWS) { PatientContent(container) { PublicNewsScreen(container, back) } }
         composable(Routes.CONTACT) { PatientContent(container) { ContactScreen(back) } }
         composable(Routes.INTERNATIONAL) { PatientContent(container) { InternationalScreen(back) } }
+        composable(Routes.ABOUT) { PatientContent(container) { AboutScreen(back) } }
         composable(
             Routes.TRACK,
             arguments = listOf(

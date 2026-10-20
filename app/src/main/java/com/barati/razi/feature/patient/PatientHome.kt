@@ -30,12 +30,12 @@ import androidx.compose.material.icons.outlined.Campaign
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Feedback
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.LocalHospital
 import androidx.compose.material.icons.outlined.Map
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
-import androidx.compose.material.icons.outlined.Photo
 import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
@@ -60,11 +60,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.barati.razi.AppContainer
 import com.barati.razi.R
@@ -107,6 +109,7 @@ fun PatientHomeScreen(
     onNews: () -> Unit,
     onContact: () -> Unit,
     onInternational: () -> Unit,
+    onAbout: () -> Unit,
     onTrackIncident: () -> Unit,
     onStaff: () -> Unit,
 ) {
@@ -145,6 +148,7 @@ fun PatientHomeScreen(
                 onContact = onContact,
                 onFeedback = { tab = PatientTab.TRACK.ordinal },
                 onInternational = onInternational,
+                onAbout = onAbout,
             )
             PatientTab.UNITS -> UnitsList(container, padding)
             PatientTab.TRACK -> FeedbackBody(container, padding)
@@ -173,6 +177,7 @@ private fun HomeTab(
     onContact: () -> Unit,
     onFeedback: () -> Unit,
     onInternational: () -> Unit,
+    onAbout: () -> Unit,
 ) {
     val uri = LocalUriHandler.current
     // مراجع غیرفارسی‌زبان به احتمال زیاد بیمار بین‌الملل است؛ کارت مربوط بالاتر می‌آید.
@@ -198,6 +203,7 @@ private fun HomeTab(
             ),
         )
         if (!internationalFirst) InternationalCard(onInternational)
+        WideCard(Icons.Outlined.Info, stringResource(R.string.about_title), stringResource(R.string.about_sub), onAbout)
     }
 }
 
@@ -268,16 +274,35 @@ private fun SmallTile(t: Tile, modifier: Modifier) {
 
 @Composable
 private fun InternationalCard(onClick: () -> Unit) {
+    WideCard(
+        Icons.Outlined.Public,
+        stringResource(R.string.international_title),
+        stringResource(R.string.international_sub),
+        onClick,
+        container = MaterialTheme.colorScheme.secondaryContainer,
+        tint = MaterialTheme.colorScheme.secondary,
+    )
+}
+
+@Composable
+private fun WideCard(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit,
+    container: Color = MaterialTheme.colorScheme.surface,
+    tint: Color = MaterialTheme.colorScheme.primary,
+) {
     Card(
         Modifier.fillMaxWidth().clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+        colors = CardDefaults.cardColors(containerColor = container),
     ) {
         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            Icon(Icons.Outlined.Public, contentDescription = null, Modifier.size(32.dp), tint = MaterialTheme.colorScheme.secondary)
+            Icon(icon, contentDescription = null, Modifier.size(32.dp), tint = tint)
             Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.international_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                Text(stringResource(R.string.international_sub), style = MaterialTheme.typography.bodySmall)
+                Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text(subtitle, style = MaterialTheme.typography.bodySmall)
             }
         }
     }
@@ -362,7 +387,7 @@ private fun UnconfirmedNote() {
     )
 }
 
-/** مسیر و تماس: نشانی، نقشه، تلفن‌ها، ایمیل و اینستاگرام. */
+/** مسیر و تماس: نشانی، نقشه، تلفن و ایمیل. */
 @Composable
 fun ContactScreen(onBack: () -> Unit) {
     val uri = LocalUriHandler.current
@@ -389,20 +414,11 @@ fun ContactScreen(onBack: () -> Unit) {
                         uri.tryOpen("tel:${HospitalInfo.PHONE}")
                     }
                     HorizontalDivider()
-                    InfoRow(Icons.Outlined.Phone, stringResource(R.string.contact_booking_phone), ltr(HospitalInfo.BOOKING_PHONE_DISPLAY)) {
-                        uri.tryOpen("tel:${HospitalInfo.BOOKING_PHONE}")
-                    }
-                    HorizontalDivider()
                     InfoRow(Icons.Outlined.Email, stringResource(R.string.contact_email), ltr(HospitalInfo.EMAIL)) {
                         uri.tryOpen("mailto:${HospitalInfo.EMAIL}")
                     }
-                    HorizontalDivider()
-                    InfoRow(Icons.Outlined.Photo, stringResource(R.string.contact_instagram), ltr("@" + HospitalInfo.INSTAGRAM)) {
-                        uri.tryOpen(HospitalInfo.INSTAGRAM_URL)
-                    }
                 }
             }
-            UnconfirmedNote()
         }
     }
 }
@@ -437,6 +453,71 @@ fun InternationalScreen(onBack: () -> Unit) {
                 Text(stringResource(R.string.intl_contact), Modifier.padding(start = 8.dp))
             }
             UnconfirmedNote()
+        }
+    }
+}
+
+/** معرفی بیمارستان: آمار اصلی، خدمات و بخش‌های تخصصی (متن رسمی بیمارستان). */
+@Composable
+fun AboutScreen(onBack: () -> Unit) {
+    RaziScaffold(title = stringResource(R.string.about_title), onBack = onBack) { padding ->
+        Column(
+            Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Text(stringResource(R.string.about_body), style = MaterialTheme.typography.bodyLarge)
+            Card(
+                Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+            ) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(
+                        stringResource(R.string.about_er_n) + "  " + stringResource(R.string.about_er),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                    )
+                    Text(stringResource(R.string.about_er_visits), color = MaterialTheme.colorScheme.onPrimary)
+                }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Stat(stringResource(R.string.about_icu_n), stringResource(R.string.about_icu), Modifier.weight(1f))
+                Stat(stringResource(R.string.about_ccu_n), stringResource(R.string.about_ccu), Modifier.weight(1f))
+                Stat(stringResource(R.string.about_or_n), stringResource(R.string.about_or), Modifier.weight(1f))
+            }
+            AboutSection(R.string.about_depts_title, R.string.about_depts)
+            AboutSection(R.string.about_diag_title, R.string.about_diag)
+            AboutSection(R.string.about_special_title, R.string.about_special)
+            Text(
+                stringResource(R.string.about_approach),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+@Composable
+private fun Stat(value: String, label: String, modifier: Modifier) {
+    Card(
+        modifier.heightIn(min = 96.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+    ) {
+        Column(Modifier.fillMaxWidth().padding(12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(value, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+            Text(label, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
+        }
+    }
+}
+
+@Composable
+private fun AboutSection(title: Int, body: Int) {
+    Card(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(stringResource(title), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+            Text(stringResource(body))
         }
     }
 }

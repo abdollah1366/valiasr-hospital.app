@@ -96,12 +96,10 @@
     <string name="international_title">International patients</string>
     <string name="international_sub">Admission, interpreter and stay</string>
     <string name="contact_title">Directions and contact</string>
-    <string name="contact_address">Imam St, near Aflak-Nama Sq., Zafaraniyeh, Tabriz, Iran</string>
+    <string name="contact_address">Aflak-Nama Square, start of Zafaraniyeh, Imam Street, Tabriz, Iran</string>
     <string name="contact_open_map">Show on map</string>
     <string name="contact_phone">Hospital phone</string>
-    <string name="contact_booking_phone">Appointments phone</string>
     <string name="contact_email">Email</string>
-    <string name="contact_instagram">Instagram</string>
     <string name="intl_title">International patients</string>
     <string name="intl_intro">Valiasr International Hospital in Tabriz has an international patients department for visitors from outside Iran.</string>
     <string name="intl_service_admission">Admission and appointments arranged before you travel</string>
@@ -114,4 +112,23 @@
     <string name="profile_mobile">Mobile number</string>
     <string name="profile_sign_out">Sign out</string>
     <string name="profile_signed_out">Sign in to track your requests and keep your language on your account.</string>
+    <string name="about_title">About the hospital</string>
+    <string name="about_body">Valiasr International Hospital in Tabriz, the largest private hospital in Iran, offers a wide range of specialist and subspecialist diagnostic, treatment and rehabilitation services.</string>
+    <string name="about_sub">24/7 emergency, 77 ICU beds and 14 operating rooms</string>
+    <string name="about_er_n">24/7</string>
+    <string name="about_er">Emergency department</string>
+    <string name="about_er_visits">Over 4,000 visits a month</string>
+    <string name="about_icu_n">77</string>
+    <string name="about_icu">ICU beds</string>
+    <string name="about_ccu_n">8</string>
+    <string name="about_ccu">CCU beds</string>
+    <string name="about_or_n">14</string>
+    <string name="about_or">Modern operating rooms</string>
+    <string name="about_diag_title">Diagnosis and treatment</string>
+    <string name="about_diag">CT, MRI, PET scan, nuclear medicine, radiology, chemotherapy and radiotherapy, endoscopy and outpatient care</string>
+    <string name="about_special_title">Specialised services</string>
+    <string name="about_special">Infertility treatment, sleep disorders, chronic pain and hard-to-treat conditions</string>
+    <string name="about_depts_title">Specialist departments</string>
+    <string name="about_depts">Cardiology, maternity and newborn care, neurology, gastroenterology and hepatology, orthopaedics, urology, oncology, nephrology, infectious diseases, pulmonology, ENT, IVF and advanced surgery</string>
+    <string name="about_approach">Our approach is fully patient-centred: from calming modern architecture to smart appointments and electronic records, everything is designed for a safe and reassuring experience.</string>
 </resources>

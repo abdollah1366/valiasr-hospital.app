@@ -96,12 +96,10 @@
     <string name="international_title">Beynəlxalq pasiyentlər</string>
     <string name="international_sub">Qəbul, tərcüməçi və qalma yeri</string>
     <string name="contact_title">Ünvan və əlaqə</string>
-    <string name="contact_address">Təbriz, Zəfəraniyyə, İmam küçəsi, Əflaknüma meydanı yaxınlığı</string>
+    <string name="contact_address">Təbriz, İmam küçəsi, Zəfəraniyyənin başlanğıcı, Əflaknüma meydanı</string>
     <string name="contact_open_map">Xəritədə göstər</string>
     <string name="contact_phone">Xəstəxananın telefonu</string>
-    <string name="contact_booking_phone">Növbə telefonu</string>
     <string name="contact_email">E-poçt</string>
-    <string name="contact_instagram">Instagram</string>
     <string name="intl_title">Beynəlxalq pasiyentlər</string>
     <string name="intl_intro">Təbriz Beynəlxalq Vəliəsr Xəstəxanasının İrandan kənardan gələn pasiyentlər üçün beynəlxalq qəbul şöbəsi var.</string>
     <string name="intl_service_admission">Səfərdən əvvəl qəbul və növbənin razılaşdırılması</string>
@@ -114,4 +112,23 @@
     <string name="profile_mobile">Mobil nömrə</string>
     <string name="profile_sign_out">Hesabdan çıx</string>
     <string name="profile_signed_out">Müraciətlərinizi izləmək və dili hesabınızda saxlamaq üçün daxil olun.</string>
+    <string name="about_title">Xəstəxana haqqında</string>
+    <string name="about_body">Təbriz Beynəlxalq Vəliəsr Xəstəxanası İranın ən böyük özəl xəstəxanası olaraq geniş çeşiddə ixtisaslaşmış və yüksək ixtisaslaşmış diaqnostika, müalicə və reabilitasiya xidmətləri göstərir.</string>
+    <string name="about_sub">Gecə-gündüz təcili yardım, 77 ICU çarpayısı və 14 əməliyyat otağı</string>
+    <string name="about_er_n">24/7</string>
+    <string name="about_er">Təcili yardım şöbəsi</string>
+    <string name="about_er_visits">Ayda 4000-dən çox müraciət</string>
+    <string name="about_icu_n">77</string>
+    <string name="about_icu">ICU çarpayısı</string>
+    <string name="about_ccu_n">8</string>
+    <string name="about_ccu">CCU çarpayısı</string>
+    <string name="about_or_n">14</string>
+    <string name="about_or">Müasir əməliyyat otağı</string>
+    <string name="about_diag_title">Diaqnostika və müalicə</string>
+    <string name="about_diag">KT, MRT, PET-skan, nüvə təbabəti, radiologiya, kimyaterapiya və radioterapiya, endoskopiya və ambulator xidmət</string>
+    <string name="about_special_title">Xüsusi xidmətlər</string>
+    <string name="about_special">Sonsuzluğun müalicəsi, yuxu pozuntuları, xroniki ağrılar və çətin müalicə olunan xəstəliklər</string>
+    <string name="about_depts_title">İxtisaslaşmış şöbələr</string>
+    <string name="about_depts">Kardiologiya, ana və yenidoğulmuş, nevrologiya, qastroenterologiya və hepatologiya, ortopediya, urologiya, onkologiya, nefrologiya, infeksion xəstəliklər, pulmonologiya, LOR, IVF və müasir cərrahiyyə</string>
+    <string name="about_approach">Yanaşmamız tamamilə pasiyentyönümlüdür: sakitləşdirici müasir memarlıqdan ağıllı növbə sistemi və elektron tibbi qeydlərə qədər hər şey təhlükəsiz və rahat təcrübə üçün hazırlanıb.</string>
 </resources>

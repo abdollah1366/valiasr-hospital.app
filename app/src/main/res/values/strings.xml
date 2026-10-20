@@ -100,12 +100,10 @@
     <string name="international_title">بیماران بین‌الملل</string>
     <string name="international_sub">پذیرش، مترجم و اقامت</string>
     <string name="contact_title">مسیر و تماس</string>
-    <string name="contact_address">تبریز، زعفرانیه، خیابان امام، نزدیک میدان افلاک‌نما</string>
+    <string name="contact_address">تبریز، خیابان امام، اول زعفرانیه، میدان افلاک‌نما</string>
     <string name="contact_open_map">نمایش روی نقشه</string>
     <string name="contact_phone">تلفن بیمارستان</string>
-    <string name="contact_booking_phone">تلفن نوبت‌دهی</string>
     <string name="contact_email">ایمیل</string>
-    <string name="contact_instagram">اینستاگرام</string>
     <string name="intl_title">بیماران بین‌الملل</string>
     <string name="intl_intro">بیمارستان بین‌المللی ولیعصر تبریز برای بیماران خارج از ایران واحد پذیرش بین‌الملل دارد.</string>
     <string name="intl_service_admission">هماهنگی پذیرش و نوبت پیش از سفر</string>
@@ -118,4 +116,23 @@
     <string name="profile_mobile">شماره موبایل</string>
     <string name="profile_sign_out">خروج از حساب</string>
     <string name="profile_signed_out">برای پیگیری درخواست‌ها و ذخیره زبان روی حسابتان وارد شوید.</string>
+    <string name="about_title">درباره بیمارستان</string>
+    <string name="about_body">بیمارستان بین‌المللی ولیعصر تبریز، بزرگ‌ترین بیمارستان خصوصی کشور، طیف وسیعی از خدمات تخصصی و فوق‌تخصصی تشخیصی، درمانی و بازتوانی را ارائه می‌دهد.</string>
+    <string name="about_sub">اورژانس شبانه‌روزی، ۷۷ تخت ICU و ۱۴ اتاق عمل</string>
+    <string name="about_er_n">۲۴/۷</string>
+    <string name="about_er">اورژانس شبانه‌روزی</string>
+    <string name="about_er_visits">بیش از ۴۰۰۰ مراجعه در ماه</string>
+    <string name="about_icu_n">۷۷</string>
+    <string name="about_icu">تخت ICU</string>
+    <string name="about_ccu_n">۸</string>
+    <string name="about_ccu">تخت CCU</string>
+    <string name="about_or_n">۱۴</string>
+    <string name="about_or">اتاق عمل مدرن</string>
+    <string name="about_diag_title">تشخیص و درمان</string>
+    <string name="about_diag">CT-Scan، MRI، PET-Scan، طب هسته‌ای، رادیولوژی، شیمی‌درمانی و رادیوتراپی، آندوسکوپی و مراقبت‌های سرپایی</string>
+    <string name="about_special_title">خدمات ویژه</string>
+    <string name="about_special">درمان ناباروری، اختلالات خواب، دردهای مزمن و بیماری‌های صعب‌العلاج</string>
+    <string name="about_depts_title">بخش‌های تخصصی</string>
+    <string name="about_depts">قلب و عروق، مادر و نوزاد، مغز و اعصاب، گوارش و کبد، ارتوپدی، اورولوژی، آنکولوژی، نفرولوژی، بیماری‌های عفونی، ریه، گوش و حلق و بینی، IVF و جراحی‌های پیشرفته</string>
+    <string name="about_approach">رویکرد بیمارستان کاملاً بیمارمحور است؛ از معماری آرامش‌بخش تا نوبت‌دهی هوشمند و پرونده الکترونیک، همه برای تجربه‌ای امن و آرام طراحی شده‌اند.</string>
 </resources>
