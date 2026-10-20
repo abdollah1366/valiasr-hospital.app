@@ -1,4 +1,5 @@
 import hashlib
+import hmac
 import secrets
 import uuid
 from datetime import UTC, datetime, timedelta
@@ -32,25 +33,26 @@ def new_opaque_token() -> str:
     return secrets.token_urlsafe(48)
 
 
-def create_access_token(user_id: uuid.UUID) -> str:
+def create_access_token(user_id: uuid.UUID, token_type: str = "access") -> str:
+    """token_type برای کارکنان access و برای مراجعان patient است تا توکن یکی جای دیگری پذیرفته نشود."""
     s = get_settings()
     now = datetime.now(UTC)
     payload = {
         "sub": str(user_id),
         "iat": now,
         "exp": now + timedelta(minutes=s.access_token_minutes),
-        "type": "access",
+        "type": token_type,
     }
     return jwt.encode(payload, s.jwt_secret, algorithm=s.jwt_algorithm)
 
 
-def decode_access_token(token: str) -> uuid.UUID | None:
+def decode_access_token(token: str, token_type: str = "access") -> uuid.UUID | None:
     s = get_settings()
     try:
         payload = jwt.decode(token, s.jwt_secret, algorithms=[s.jwt_algorithm])
     except jwt.PyJWTError:
         return None
-    if payload.get("type") != "access":
+    if payload.get("type") != token_type:
         return None
     try:
         return uuid.UUID(payload["sub"])
@@ -74,3 +76,13 @@ def new_tracking_code(prefix: str) -> str:
     # بدون حروف مبهم (0/O و 1/I) برای خوانایی هنگام دیکته تلفنی
     alphabet = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"
     return prefix + "-" + "".join(secrets.choice(alphabet) for _ in range(8))
+
+
+def otp_hash(mobile: str, code: str) -> str:
+    """HMAC کد پیامکی با کلید سرور؛ با نشت پایگاه داده نمی‌توان کدها را با جستجوی ساده پیدا کرد."""
+    key = get_settings().jwt_secret.encode()
+    return hmac.new(key, f"{mobile}:{code}".encode(), hashlib.sha256).hexdigest()
+
+
+def new_otp_code() -> str:
+    return f"{secrets.randbelow(10**6):06d}"

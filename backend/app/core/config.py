@@ -28,6 +28,23 @@ class Settings(BaseSettings):
     # فایل‌های آموزشی؛ مسیر نسبی نسبت به پوشه اجرای سرور (backend)
     media_dir: str = "media"
     max_upload_mb: int = 500
+    # ورود مراجعان با کد پیامکی
+    otp_ttl_seconds: int = 120
+    otp_resend_seconds: int = 60
+    otp_max_per_hour: int = 5
+    otp_max_attempts: int = 5
+    # console: کد فقط در لاگ سرور نوشته می‌شود (توسعه). kavenegar: ارسال با سامانه کاوه‌نگار (قالب verify/lookup).
+    sms_provider: str = "console"
+    sms_api_key: str | None = None
+    sms_template: str | None = None
+    # کد در پاسخ API هم برگردانده شود؛ فقط برای سرور آزمایشی. در production نادیده گرفته می‌شود.
+    otp_debug: bool = False
+    # کد ثابت (مثلاً 1234) برای آزمایش بدون سامانه پیامک؛ پیامکی فرستاده نمی‌شود. در production مجاز نیست.
+    otp_fixed_code: str | None = None
+
+    @property
+    def otp_debug_enabled(self) -> bool:
+        return self.env in ("development", "test") or (self.otp_debug and self.env != "production")
 
     @property
     def is_exposed(self) -> bool:
@@ -45,6 +62,12 @@ class Settings(BaseSettings):
             Fernet(self.data_encryption_key.encode())
         except ValueError:
             raise RuntimeError("RAZI_DATA_ENCRYPTION_KEY کلید Fernet معتبر نیست") from None
+        if self.env == "production" and self.otp_fixed_code:
+            raise RuntimeError("RAZI_OTP_FIXED_CODE فقط برای آزمایش است و در production مجاز نیست")
+        if self.env == "production" and self.sms_provider == "console":
+            raise RuntimeError("RAZI_SMS_PROVIDER باید برای ارسال کد ورود مراجعان تنظیم شود")
+        if self.sms_provider == "kavenegar" and not (self.sms_api_key and self.sms_template):
+            raise RuntimeError("RAZI_SMS_API_KEY و RAZI_SMS_TEMPLATE برای کاوه‌نگار لازم است")
 
 
 @lru_cache

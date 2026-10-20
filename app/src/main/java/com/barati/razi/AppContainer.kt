@@ -10,6 +10,7 @@ import com.barati.razi.core.data.IncidentRepository
 import com.barati.razi.core.data.Keys
 import com.barati.razi.core.data.LanguageRepository
 import com.barati.razi.core.data.NotificationRepository
+import com.barati.razi.core.data.PatientAuthRepository
 import com.barati.razi.core.data.ScheduleRepository
 import com.barati.razi.core.data.ServiceRequestRepository
 import com.barati.razi.core.data.TrainingRepository
@@ -48,6 +49,22 @@ class AppContainer(context: Context) {
     val authRepository = DefaultAuthRepository(api, tokens, store, "${Build.MANUFACTURER} ${Build.MODEL}").also { authRef = it }
     val contentRepository = ContentRepository(api)
     val languageRepository = LanguageRepository(store, scope)
+
+    private lateinit var patientAuthRef: PatientAuthRepository
+    private val patientTokens = com.barati.razi.core.data.EncryptedTokenStorage(appContext, "valiasr_patient_tokens")
+    val patientAuthRepository = PatientAuthRepository(
+        api = HttpFactory.createPatient(
+            baseUrl = BuildConfig.API_BASE_URL,
+            tokens = patientTokens,
+            originOverride = { if (BuildConfig.ALLOW_SERVER_OVERRIDE) serverOrigin else null },
+            debug = BuildConfig.DEBUG,
+            onSessionExpired = { patientAuthRef.onSessionExpired() },
+        ),
+        tokens = patientTokens,
+        store = store,
+        languages = languageRepository,
+        deviceName = "${Build.MANUFACTURER} ${Build.MODEL}",
+    ).also { patientAuthRef = it }
     val incidentRepository = IncidentRepository(
         api = api,
         store = store,

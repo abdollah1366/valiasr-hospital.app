@@ -32,10 +32,10 @@ class DataStoreKeyValueStore(private val context: Context) : KeyValueStore {
 }
 
 /** توکن‌ها با کلید Android Keystore رمزنگاری می‌شوند. */
-class EncryptedTokenStorage(context: Context) : TokenStorage {
+class EncryptedTokenStorage(context: Context, fileName: String = "razi_tokens") : TokenStorage {
     private val prefs: SharedPreferences = EncryptedSharedPreferences.create(
         context,
-        "razi_tokens",
+        fileName,
         MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build(),
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,

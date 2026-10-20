@@ -648,3 +648,43 @@ class ShiftSwap(Base):
     decided_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
     decided_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     decision_note: Mapped[str | None] = mapped_column(String(300))
+
+
+# ---------------------------------------------------------------- مراجعان
+
+
+class Patient(TimestampMixin, Base):
+    """مراجع (بیمار یا همراه) که با موبایل و کد پیامکی وارد می‌شود؛ جدا از حساب کارکنان."""
+
+    __tablename__ = "patients"
+    id: Mapped[uuid.UUID] = pk()
+    mobile: Mapped[str] = mapped_column(String(20), unique=True, index=True)  # E.164، مثل +989121234567
+    language: Mapped[str] = mapped_column(String(5), default="fa")  # fa | az | en | ar | tr
+    full_name: Mapped[str | None] = mapped_column(String(200))
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class PatientRefreshToken(Base):
+    __tablename__ = "patient_refresh_tokens"
+    id: Mapped[uuid.UUID] = pk()
+    patient_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("patients.id", ondelete="CASCADE"), index=True)
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True)
+    family_id: Mapped[uuid.UUID] = mapped_column(index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    device: Mapped[str | None] = mapped_column(String(200))
+
+
+class OtpCode(Base):
+    """کد یک‌بارمصرف پیامکی؛ خود کد ذخیره نمی‌شود، فقط HMAC آن."""
+
+    __tablename__ = "otp_codes"
+    id: Mapped[uuid.UUID] = pk()
+    mobile: Mapped[str] = mapped_column(String(20), index=True)
+    code_hash: Mapped[str] = mapped_column(String(64))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    attempts: Mapped[int] = mapped_column(Integer, default=0)
+    consumed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

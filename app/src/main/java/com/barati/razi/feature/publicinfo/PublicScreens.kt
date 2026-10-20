@@ -27,6 +27,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -64,6 +65,8 @@ fun PublicHomeScreen(
     isLoggedIn: Boolean,
     language: AppLanguage,
     onLanguage: (AppLanguage) -> Unit,
+    patientSignedIn: Boolean,
+    onPatientSignIn: () -> Unit,
     onUnits: () -> Unit,
     onFaq: () -> Unit,
     onNews: () -> Unit,
@@ -73,7 +76,10 @@ fun PublicHomeScreen(
 ) {
     RaziScaffold(
         title = stringResource(R.string.hospital_full_name),
-        actions = { LanguageAction(language, onLanguage) },
+        actions = {
+            if (!patientSignedIn) TextButton(onClick = onPatientSignIn) { Text(stringResource(R.string.signin_action)) }
+            LanguageAction(language, onLanguage)
+        },
     ) { padding ->
         Column(
             Modifier.fillMaxSize().padding(padding).padding(16.dp).verticalScroll(rememberScrollState()),

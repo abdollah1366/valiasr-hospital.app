@@ -64,4 +64,26 @@
     <string name="feedback_status_answered">Yanıtlandı</string>
     <string name="feedback_created_at">Gönderim tarihi: %1$s</string>
     <string name="feedback_response">Yanıt: %1$s</string>
+
+    <!-- ورود مراجعان -->
+    <string name="signin_title">Hasta girişi</string>
+    <string name="signin_subtitle">Cep telefonu numaranızla giriş yapın. Doğrulama kodu SMS ile gönderilecek.</string>
+    <string name="signin_mobile">Cep telefonu numarası</string>
+    <string name="signin_mobile_hint">ör. +905321234567</string>
+    <string name="signin_language">Uygulama dili: %1$s</string>
+    <string name="signin_change_language">Dili değiştir</string>
+    <string name="signin_send_code">Doğrulama kodunu al</string>
+    <string name="signin_skip">Giriş yapmadan devam et</string>
+    <string name="signin_staff">Personel girişi (sicil numarası ile)</string>
+    <string name="signin_invalid_mobile">Lütfen geçerli ve eksiksiz bir cep numarası girin</string>
+    <string name="signin_action">Giriş</string>
+    <string name="otp_sent_to">Doğrulama kodu %1$s numarasına gönderildi.</string>
+    <string name="otp_code">Doğrulama kodu</string>
+    <string name="otp_verify">Doğrula ve giriş yap</string>
+    <string name="otp_resend">Kodu tekrar gönder</string>
+    <string name="otp_resend_in">%1$d saniye sonra tekrar gönder</string>
+    <string name="otp_change_number">Numarayı değiştir</string>
+    <string name="otp_debug">Test kodu: %1$s</string>
+    <string name="otp_invalid">Kod yanlış veya süresi dolmuş</string>
+    <string name="error_too_many">Çok fazla istek. Lütfen biraz sonra tekrar deneyin.</string>
 </resources>
