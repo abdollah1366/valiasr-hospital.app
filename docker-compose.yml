@@ -1,0 +1,31 @@
+# فقط برای توسعه و آزمایش روی کامپیوتر خودتان (رمزها ساختگی‌اند).
+# اجرا:  docker compose up --build   سپس http://localhost:8000/docs
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: razi
+      POSTGRES_PASSWORD: razi
+      POSTGRES_DB: razi
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U razi"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: ./backend
+    environment:
+      RAZI_ENV: development
+      RAZI_DATABASE_URL: postgresql+psycopg://razi:razi@db:5432/razi
+    # داده نمایشی (کاربران 1001 تا 1005 با رمز Razi1234) برای آزمایش اپ
+    command: sh -c "alembic upgrade head && python -m app.seed --demo && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

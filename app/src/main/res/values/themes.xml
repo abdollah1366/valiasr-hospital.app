@@ -1,0 +1,6 @@
+<resources>
+    <style name="Theme.Razi" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/razi_primary</item>
+        <item name="android:windowBackground">@color/razi_background</item>
+    </style>
+</resources>

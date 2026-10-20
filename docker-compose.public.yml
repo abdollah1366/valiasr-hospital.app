@@ -1,0 +1,41 @@
+# سرور آزمایشی که از اینترنت (مثلاً گوشی با اینترنت موبایل) در دسترس است.
+# فقط داده ساختگی؛ هیچ اطلاعات واقعی بیمار یا کارکنان وارد نکنید.
+# ارتباط HTTP است و رمزنگاری نمی‌شود؛ گام بعدی HTTPS با دامنه است.
+#
+# اجرا (رمزها از فایل .env.public خوانده می‌شوند؛ نمونه: .env.public.example):
+#   docker compose -f docker-compose.public.yml --env-file .env.public up -d --build
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: razi
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD در .env.public تنظیم نشده}
+      POSTGRES_DB: razi
+    volumes:
+      - pgdata_public:/var/lib/postgresql/data
+    # عمداً هیچ پورتی از پایگاه داده بیرون داده نمی‌شود.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U razi"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      RAZI_ENV: staging
+      RAZI_DATABASE_URL: postgresql+psycopg://razi:${POSTGRES_PASSWORD}@db:5432/razi
+      RAZI_JWT_SECRET: ${RAZI_JWT_SECRET:?RAZI_JWT_SECRET در .env.public تنظیم نشده}
+      RAZI_DATA_ENCRYPTION_KEY: ${RAZI_DATA_ENCRYPTION_KEY:?RAZI_DATA_ENCRYPTION_KEY در .env.public تنظیم نشده}
+      RAZI_DEMO_PASSWORD: ${RAZI_DEMO_PASSWORD:?RAZI_DEMO_PASSWORD در .env.public تنظیم نشده}
+    # کاربران نمایشی 1001 تا 1005 با رمز RAZI_DEMO_PASSWORD ساخته می‌شوند.
+    command: sh -c "alembic upgrade head && python -m app.seed --demo && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata_public:

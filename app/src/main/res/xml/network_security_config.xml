@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- نسخه release: فقط HTTPS. نسخه debug این فایل را در src/debug بازنویسی می‌کند. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+</network-security-config>

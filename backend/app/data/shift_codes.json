@@ -1,0 +1,3460 @@
+{
+ "source": "لیست کدهای شیفتی 1404/07/28 واحدهای تابعه + جدول جایگزینی کدهای قدیمی",
+ "codes": [
+  {
+   "code": 1,
+   "title": "صبح بهره وری-7:30الی 14:30 بدون اضافه کار",
+   "label": "ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": false,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 2,
+   "title": "عصر بهره وری-13:30 الی 20:00 بدون اضافه کار",
+   "label": "ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": false,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 3,
+   "title": "شب بهره وری-19:30 الی 8:00",
+   "label": "ش",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 4,
+   "title": "ص ع بهره وری-7:30الی 20:00",
+   "label": "ص ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 5,
+   "title": "ع ش 13:30 الی 8:00",
+   "label": "ع ش",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 6,
+   "title": "ص ع ش 7:30الی 8:00",
+   "label": "ص ع ش",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 7,
+   "title": "ص ع ش ص ع 36 ساعت",
+   "label": "ص ع ش ص ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 36,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 8,
+   "title": "ع ش ص ع بهره وری-13:30 الی 20:00",
+   "label": "ع ش ص ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 9,
+   "title": "ع ش ص 13:30 الی 14:30",
+   "label": "ع ش ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 10,
+   "title": "ص ش بهره وری-7:30الی 14:30- 19:30 الی 8:00",
+   "label": "ص ش",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 11,
+   "title": "ش ص ع بهره وری-19:30 الی 20:00",
+   "label": "ش ص ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 12,
+   "title": "ش ص بهره وری- 19:30 الی 14:30",
+   "label": "ش ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 13,
+   "title": "ص ع ش ص- 7:30الی 14:30 فردا",
+   "label": "ص ع ش ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 14,
+   "title": "ص ش ص - 7:30 الی 14:30- 19:30 الی 14:30",
+   "label": "ص ش ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 15,
+   "title": "اتاق عمل - کارانه 7:30 الی 14:30",
+   "label": "ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 16,
+   "title": "عصر کارشناسان تغذیه بیمارستان -13:30 الی 21:30",
+   "label": "ع",
+   "kind": "work",
+   "group": "nutrition",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "21:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 17,
+   "title": "شیفت سحری آشپزخانه بیمارستان-22:30 الی 05:30",
+   "label": "سحری",
+   "kind": "work",
+   "group": "nutrition",
+   "segments": [
+    {
+     "start": "22:30",
+     "start_day": 0,
+     "end": "05:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 18,
+   "title": "صبح بهره وری-7:30الی 14:30 با اضافه کار",
+   "label": "ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": true,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 19,
+   "title": "صبح بهره وری-پنجشنبه 7:30تا13:30 با اضافه کار",
+   "label": "ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "13:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": true,
+   "weekday": 3,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 20,
+   "title": "مرخصی/ماموریت روزانه",
+   "label": "م",
+   "kind": "leave",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 21,
+   "title": "صبح بهره وری-7:30الی 13:30 بدون اضافه کار",
+   "label": "ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "13:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": false,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 22,
+   "title": "صبح بهره وری-7:30الی 13:30 اضافه کار تا ساعت 14:30",
+   "label": "ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": true,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 23,
+   "title": "شنبه تا چهارشنبه 07:30 الی 14:30-اداری بیمارستان",
+   "label": "اداری",
+   "kind": "work",
+   "group": "admin",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 24,
+   "title": "پنجشنبه 7:30الی 13:30-اداری بیمارستان",
+   "label": "اداری",
+   "kind": "work",
+   "group": "admin",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "13:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": 3,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 25,
+   "title": "شبکار داروخانه - 17:00 الی 00:02",
+   "label": "شبکار",
+   "kind": "work",
+   "group": "pharmacy",
+   "segments": [
+    {
+     "start": "17:00",
+     "start_day": 0,
+     "end": "00:02",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "ساعت پایان در فهرست «00:02» نوشته شده است."
+  },
+  {
+   "code": 26,
+   "title": "ع شبچه بهره وری دیالیز-13:30 الی 24:00",
+   "label": "ع شبچه",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "00:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 31,
+   "title": "صبح عادی-7:30الی 14:30",
+   "label": "ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 32,
+   "title": "عصر عادی-13:30 الی 20:00 (با اضافه کار)",
+   "label": "ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": true,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 33,
+   "title": "شب عادی-19:30 الی 8:00",
+   "label": "ش",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 34,
+   "title": "ص ع عادی-7:30 الی 20:00",
+   "label": "ص ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 35,
+   "title": "ع ش عادی-13:30 الی 8:00",
+   "label": "ع ش",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 36,
+   "title": "ص ع ش عادی-7:30الی 8:00",
+   "label": "ص ع ش",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 37,
+   "title": "ص ع ش ص ع عادی-36 ساعت",
+   "label": "ص ع ش ص ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 36,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 38,
+   "title": "ع ش ص ع عادی-13:30 الی 20:00 فردا",
+   "label": "ع ش ص ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 39,
+   "title": "ع ش ص عادی-13:30 الی 14:30 فردا",
+   "label": "ع ش ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 40,
+   "title": "ص ش عادی-7:30الی 14:30-19:30 الی 8:00(با اضافه کار)",
+   "label": "ص ش",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": true,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 41,
+   "title": "ش ص ع عادی-19:30 الی 20:00",
+   "label": "ش ص ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 42,
+   "title": "ش ص عادی-19:30 الی 14:30",
+   "label": "ش ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 43,
+   "title": "ص ع ش ص عادی-7:30الی 14:30 فردا",
+   "label": "ص ع ش ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 44,
+   "title": "ص ش ص عادی- 7:30الی 14:30 - 19:30 الی 14:30",
+   "label": "ص ش ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 45,
+   "title": "48 ساعت -07:30 الی 07:30 پس فردا",
+   "label": "۴۸ ساعت",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "07:30",
+     "end_day": 2,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 46,
+   "title": "عصر با اضافه کار اول وقت 13:30 الی 20:00",
+   "label": "ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": true,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 47,
+   "title": "ص ع ش ص ع ش غیرعادی-48ساعت-07:30 الی 07:30 پس فردا",
+   "label": "ص ع ش ص ع ش",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "07:30",
+     "end_day": 2,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 50,
+   "title": "Off",
+   "label": "OFF",
+   "kind": "off",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 51,
+   "title": "Off شبکار",
+   "label": "OFF ش",
+   "kind": "off",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 52,
+   "title": "Off خروج بعد 20",
+   "label": "OFF ۲۰",
+   "kind": "off",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 56,
+   "title": "صبح عادی-7:30الی 13:30",
+   "label": "ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "13:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 57,
+   "title": "off با اضافه کار(برای نیروهای بهره وری)",
+   "label": "OFF",
+   "kind": "off",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": true,
+   "overtime": true,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 58,
+   "title": "off با اضافه کار",
+   "label": "OFF",
+   "kind": "off",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": true,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 60,
+   "title": "شبچه عادی-19:30 الی 23:59",
+   "label": "شبچه",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "23:59",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 65,
+   "title": "عصر عادی-13:30 الی 20:00 (بدون اضافه کار)",
+   "label": "ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": false,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 67,
+   "title": "نگهبان ستاد 7:30 تا 7:30(24ساعته)",
+   "label": "۲۴ ساعت",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "07:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 68,
+   "title": "نگهبان ستاد 19:30 الی 7:30 پس فردا(36ساعته)",
+   "label": "۳۶ ساعت",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "07:30",
+     "end_day": 2,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 69,
+   "title": "نگهبان ستاد 19:30 تا 19:30(48ساعته)",
+   "label": "۴۸ ساعت",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "19:30",
+     "end_day": 2,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 70,
+   "title": "نگهبان ستاد -19:30 الی 07:30",
+   "label": "ش",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "07:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 71,
+   "title": "نگهبان ستاد -7:30 الی 19:30",
+   "label": "ص ع",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "19:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 72,
+   "title": "نگهبان ستاد -13:30 الی 07:30-18 ساعت",
+   "label": "ع ش",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "07:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 73,
+   "title": "نگهبان ستاد -19:30 الی 20:00 فردا",
+   "label": "ش ص ع",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 74,
+   "title": "نگهبان ستاد -07:30الی 19:30 - 36 ساعت",
+   "label": "۳۶ ساعت",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "19:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 75,
+   "title": "نگهبان ستاد -7:30الی 14:30-19:30 الی 07:30",
+   "label": "ص ش",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "07:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 76,
+   "title": "نگهبانان ستاد 13:30 الی 07:30 -42 ساعت",
+   "label": "۴۲ ساعت",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "07:30",
+     "end_day": 2,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 77,
+   "title": "نگهبانان ستاد-19:30 الی 14:30",
+   "label": "ش ص",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 78,
+   "title": "ص موظف -آنکال (ش) پزشکان",
+   "label": "ص آ(ش)",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 79,
+   "title": "ص ع موظف - آنکال (ش) پزشکان",
+   "label": "ص ع آ(ش)",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "کد ۷۹ در فهرست دو بار آمده است؛ عنوان دیگر: «صبح عادی-7:30الی 14:30»."
+  },
+  {
+   "code": 80,
+   "title": "ص موظف - آنکال(ع ش) پزشکان",
+   "label": "ص آ(ع ش)",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "14:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 81,
+   "title": "ع موظف - آنکال (ش) پزشکان",
+   "label": "ع آ(ش)",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 82,
+   "title": "آنکال(ش) پزشکان",
+   "label": "آ(ش)",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 83,
+   "title": "آنکال (ص ع) پزشکان",
+   "label": "آ(ص ع)",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 84,
+   "title": "آنکال (ع ش) پزشکان",
+   "label": "آ(ع ش)",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 85,
+   "title": "آنکال (ص ع ش) پزشکان",
+   "label": "آ(ص ع ش)",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 86,
+   "title": "اشعه - صبح عادی-7:30الی 14:30",
+   "label": "ص",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 87,
+   "title": "اشعه -عصر عادی-13:00 الی 20:00",
+   "label": "ع",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "13:00",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 88,
+   "title": "اشعه -شب عادی-19:30 الی 8:00",
+   "label": "ش",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 89,
+   "title": "اشعه -ص ع عادی-7:30 الی 20:00",
+   "label": "ص ع",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 90,
+   "title": "اشعه -ع ش عادی-13:30 الی 8:00",
+   "label": "ع ش",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 91,
+   "title": "اشعه - ص ع ش عادی-7:30الی 8:00",
+   "label": "ص ع ش",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 92,
+   "title": "اشعه -ص ع ش ص ع عادی-36 ساعت",
+   "label": "ص ع ش ص ع",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 36,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 93,
+   "title": "اشعه -ع ش ص ع عادی-13:30 الی 20:00",
+   "label": "ع ش ص ع",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 94,
+   "title": "اشعه - ع ش ص عادی-13:30 الی 14:30",
+   "label": "ع ش ص",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 95,
+   "title": "اشعه -ص ش عادی-7:30الی 14:30-19:30 الی 8:00",
+   "label": "ص ش",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 96,
+   "title": "اشعه -ش ص ع عادی-19:30 الی 20:00",
+   "label": "ش ص ع",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 97,
+   "title": "اشعه -ش ص عادی-19:30 الی 14:30 فردا",
+   "label": "ش ص",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 98,
+   "title": "اشعه -ص ع ش ص عادی-7:30الی 14:30",
+   "label": "ص ع ش ص",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 99,
+   "title": "اشعه -ص ش ص عادی- 7:30الی 14:30- 19:30 الی 14:30",
+   "label": "ص ش ص",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 100,
+   "title": "اشعه -13:30الی 08:00 پس فردا( 42:30 ساعت)",
+   "label": "۴۲ ساعت",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 2,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 101,
+   "title": "اشعه - شنبه تا چهارشنبه -7:30الی 14:30",
+   "label": "ص",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 102,
+   "title": "اشعه -پنجشنبه 7:30الی 13:20",
+   "label": "ص",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "13:20",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": 3,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 103,
+   "title": "شب تغذیه -1700الی 5:00",
+   "label": "ش",
+   "kind": "work",
+   "group": "nutrition",
+   "segments": [
+    {
+     "start": "17:00",
+     "start_day": 0,
+     "end": "05:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 104,
+   "title": "ص ش ص ع - 7:15 الی 14:30- 19:30 الی 20:00",
+   "label": "ص ش ص ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:15",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 105,
+   "title": "آنکال (ص) پزشکان",
+   "label": "آ(ص)",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 106,
+   "title": "آنکال (ع) پزشکان",
+   "label": "آ(ع)",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 107,
+   "title": "اشعه - صبح با اضافه کاری -7:30الی 14:30",
+   "label": "ص",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": true,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 108,
+   "title": "صبح عادی-آنکال اشعه (ع ش) پزشکان رادیولوژی",
+   "label": "ص آ(ع ش)",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "14:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 109,
+   "title": "ص و شبچه بهره وری-7:30الی 14:30- 19:30 الی 23:59",
+   "label": "ص شبچه",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "23:59",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 111,
+   "title": "شبچه بهره وری-19:30 الی 00:02 فردا",
+   "label": "شبچه",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "00:02",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 132,
+   "title": "ص موظف - آنکال (ع) پزشکان",
+   "label": "ص آ(ع)",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "14:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 133,
+   "title": "ص ش عادی-7:30الی 14:30-19:30 الی 8:00(بدون اضافه کار)",
+   "label": "ص ش",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": false,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 135,
+   "title": "عصر عادی داروخانه -12:00 الی 19:00",
+   "label": "ع",
+   "kind": "work",
+   "group": "pharmacy",
+   "segments": [
+    {
+     "start": "12:00",
+     "start_day": 0,
+     "end": "19:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 136,
+   "title": "آنکال (ص) پرستاران",
+   "label": "آ(ص)",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 137,
+   "title": "آنکال (ع) - پرستاران",
+   "label": "آ(ع)",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 138,
+   "title": "آنکال(ش) - پرستاران",
+   "label": "آ(ش)",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 139,
+   "title": "ص موظف - آنکال (ع) - پرستاران",
+   "label": "ص آ(ع)",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "14:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 140,
+   "title": "ص موظف -آنکال (ش) - پرستاران",
+   "label": "ص آ(ش)",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 141,
+   "title": "ص ع موظف - آنکال (ش) - پرستاران",
+   "label": "ص ع آ(ش)",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 142,
+   "title": "ع موظف - آنکال (ص) - پرستاران",
+   "label": "آ(ص) ع",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "13:30",
+     "end_day": 0,
+     "oncall": true
+    },
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 143,
+   "title": "ع موظف - آنکال (ش) - پرستاران",
+   "label": "ع آ(ش)",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 144,
+   "title": "آنکال (ع) -ش موظف - پرستاران",
+   "label": "آ(ع) ش",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "19:30",
+     "end_day": 0,
+     "oncall": true
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 145,
+   "title": "ش موظف - آنکال (ص) - پرستاران",
+   "label": "ش آ(ص)",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": true
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "معلوم نیست آنکال صبح، صبح همان روز است یا صبح فردا؛ صبح همان روز فرض شد."
+  },
+  {
+   "code": 146,
+   "title": "آنکال (ص ش) پرستاران",
+   "label": "آ(ص ش)",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": true
+    },
+    {
+     "start": "19:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 147,
+   "title": "صبح عادی-آنکال اشعه (ع) پزشکان رادیولوژی",
+   "label": "ص آ(ع)",
+   "kind": "work",
+   "group": "radiology",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "14:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 149,
+   "title": "ص -شبچه عادی-7:30الی 14:30-17:00 الی 23:59",
+   "label": "ص شبچه",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "17:00",
+     "start_day": 0,
+     "end": "23:59",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 150,
+   "title": "ص (موظف) ع ش (مقیم) پزشکان متخصص و بالاتر(غیراورژانس) - از ساعت 07:30 الی 08:00 فردا-18 ساعت",
+   "label": "ص ع ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 18,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 151,
+   "title": "ع ش (مقیم) پزشکان متخصص و بالاتر(غیراورژانس) - از ساعت 14:00 الی 08:00 فردا-18 ساعت",
+   "label": "ع ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "14:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 18,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 152,
+   "title": "ص ع ش (مقیم) پزشکان متخصص و بالاتر(غیراورژانس) - از ساعت 08:00 الی 08:00 فردا-24 ساعت",
+   "label": "ص ع ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "08:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 24,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 153,
+   "title": "ص ع (مقیم) پزشکان متخصص و بالاتر(اورژانس) - از ساعت 08:00 الی 20:00- همانروز 12 ساعت",
+   "label": "ص ع",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "08:00",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": 12,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 154,
+   "title": "ص ع (مقیم) ش (موظف) پزشکان متخصص و بالاتر(اورژانس) - از ساعت 08:00 الی 20:00-12 ساعت",
+   "label": "ص ع ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "08:00",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": 12,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "عنوان «ش (موظف)» دارد ولی ساعت فقط ۸ تا ۲۰ نوشته شده است."
+  },
+  {
+   "code": 155,
+   "title": "ش (مقیم) پزشکان متخصص و بالاتر(اورژانس) - از ساعت 20:00 الی 08 فردا-:12 ساعت",
+   "label": "ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 12,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 156,
+   "title": "ص (موظف) ش (مقیم) پزشکان متخصص و بالاتر(اورژانس) - از ساعت 20:00 الی 08 فردا-:12 ساعت",
+   "label": "ص ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 12,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "ساعت بخش صبح (موظف) در عنوان نیامده است."
+  },
+  {
+   "code": 157,
+   "title": "ع (موظف) ش (مقیم) پزشکان متخصص و بالاتر(اورژانس) - از ساعت 20:00 الی 08 فردا-:12 ساعت",
+   "label": "ع ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 12,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "ساعت بخش عصر (موظف) در عنوان نیامده است."
+  },
+  {
+   "code": 158,
+   "title": "ص ع (موظف) ش (مقیم) پزشکان متخصص و بالاتر(اورژانس) - از ساعت 20:00 الی 08 فردا-:12 ساعت",
+   "label": "ص ع ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 12,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "ساعت بخش صبح و عصر (موظف) در عنوان نیامده است."
+  },
+  {
+   "code": 159,
+   "title": "ص بهره وری(موظف) ع ش (مقیم) پزشکان متخصص و بالاتر(غیراورژانس) - از ساعت 07:30 الی 08:00 فردا-18 ساعت",
+   "label": "ص ع ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 18,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 160,
+   "title": "ص ع (مقیم) ش بهره وری(موظف) پزشکان متخصص و بالاتر(اورژانس) - از ساعت 08:00 الی 20:00-12 ساعت",
+   "label": "ص ع ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "08:00",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": 12,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "عنوان «ش بهره‌وری (موظف)» دارد ولی ساعت فقط ۸ تا ۲۰ نوشته شده است."
+  },
+  {
+   "code": 161,
+   "title": "ص بهره وری(موظف) ش (مقیم) پزشکان متخصص و بالاتر(اورژانس) - از ساعت 20:00 الی 08 فردا-:12 ساعت",
+   "label": "ص ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 12,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "کد ۱۶۱ در فهرست دو بار آمده است؛ عنوان دیگر: «صبح بهره وری(پنجشنبه) پزشکان-8:30 الی14:30 مصوبه 550029 هیات رئیسه»."
+  },
+  {
+   "code": 162,
+   "title": "ع بهره وری(موظف) ش (مقیم) پزشکان متخصص و بالاتر(اورژانس) - از ساعت 20:00 الی 08 فردا-:12 ساعت",
+   "label": "ع ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 12,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "ساعت بخش عصر (موظف) در عنوان نیامده است."
+  },
+  {
+   "code": 163,
+   "title": "ص ع بهره وری(موظف) ش (مقیم) پزشکان متخصص و بالاتر(اورژانس) - از ساعت 20:00 الی 08 فردا-:12 ساعت",
+   "label": "ص ع ش",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": 12,
+   "productivity": true,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "ساعت بخش صبح و عصر (موظف) در عنوان نیامده است."
+  },
+  {
+   "code": 174,
+   "title": "ص ع شبچه عادی-7:30 الی 23:59",
+   "label": "ص ع شبچه",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "23:59",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 175,
+   "title": "صبح عادی-7:30الی 14:30(اضافه کار اول وقت غیر مجاز)",
+   "label": "ص",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "14:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 176,
+   "title": "ص ع عادی-7:30 الی 20:00(اضافه کار اول وقت غیرمجاز)",
+   "label": "ص ع",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 177,
+   "title": "آنکال (ص) -ع موظف - آنکال (ش) - پرستاران",
+   "label": "آ(ص) ع آ(ش)",
+   "kind": "work",
+   "group": "nursing",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "13:30",
+     "end_day": 0,
+     "oncall": true
+    },
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "20:00",
+     "end_day": 0,
+     "oncall": false
+    },
+    {
+     "start": "20:00",
+     "start_day": 0,
+     "end": "08:00",
+     "end_day": 1,
+     "oncall": true
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 181,
+   "title": "شبچه عادی-13:30 الی 00:02",
+   "label": "ع شبچه",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "13:30",
+     "start_day": 0,
+     "end": "00:02",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 182,
+   "title": "شبچه عادی-18:00 الی 00:02",
+   "label": "شبچه",
+   "kind": "work",
+   "group": "general",
+   "segments": [
+    {
+     "start": "18:00",
+     "start_day": 0,
+     "end": "00:02",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 213,
+   "title": "نگهبان ستاد 7:30 تا 7:30(24ساعته)408",
+   "label": "۲۴ ساعت",
+   "kind": "work",
+   "group": "guard",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "07:30",
+     "end_day": 1,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": "عنوان این کد با کد ۶۷ یکی است (با «408» در انتها)."
+  },
+  {
+   "code": 242,
+   "title": "صبح(شناور+حق شیر) - پزشکان متخصص درمانی-7:30 الی 15:30 مصوبه 714694 هیات رئیسه",
+   "label": "ص",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "15:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 243,
+   "title": "صبح(شناور) - پزشکان متخصص درمانی-7:30 الی 15:30 مصوبه 714694 هیات رئیسه",
+   "label": "ص",
+   "kind": "work",
+   "group": "physician",
+   "segments": [
+    {
+     "start": "07:30",
+     "start_day": 0,
+     "end": "15:30",
+     "end_day": 0,
+     "oncall": false
+    }
+   ],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": true,
+   "replaced_by": null,
+   "review_note": null
+  },
+  {
+   "code": 61,
+   "title": "کد قدیمی؛ به جای آن کد 1",
+   "label": "61",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 1,
+   "review_note": null
+  },
+  {
+   "code": 272,
+   "title": "کد قدیمی؛ به جای آن کد 31",
+   "label": "272",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 31,
+   "review_note": null
+  },
+  {
+   "code": 275,
+   "title": "کد قدیمی؛ به جای آن کد 18",
+   "label": "275",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 18,
+   "review_note": null
+  },
+  {
+   "code": 276,
+   "title": "کد قدیمی؛ به جای آن کد 86",
+   "label": "276",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 86,
+   "review_note": "در جدول جایگزینی «۸۶ – ۱۰۱» نوشته شده است؛ کد ۸۶ در نظر گرفته شد."
+  },
+  {
+   "code": 277,
+   "title": "کد قدیمی؛ به جای آن کد 9",
+   "label": "277",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 9,
+   "review_note": null
+  },
+  {
+   "code": 278,
+   "title": "کد قدیمی؛ به جای آن کد 10",
+   "label": "278",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 10,
+   "review_note": null
+  },
+  {
+   "code": 279,
+   "title": "کد قدیمی؛ به جای آن کد 12",
+   "label": "279",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 12,
+   "review_note": null
+  },
+  {
+   "code": 280,
+   "title": "کد قدیمی؛ به جای آن کد 13",
+   "label": "280",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 13,
+   "review_note": null
+  },
+  {
+   "code": 281,
+   "title": "کد قدیمی؛ به جای آن کد 14",
+   "label": "281",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 14,
+   "review_note": null
+  },
+  {
+   "code": 282,
+   "title": "کد قدیمی؛ به جای آن کد 40",
+   "label": "282",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 40,
+   "review_note": null
+  },
+  {
+   "code": 283,
+   "title": "کد قدیمی؛ به جای آن کد 44",
+   "label": "283",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 44,
+   "review_note": null
+  },
+  {
+   "code": 284,
+   "title": "کد قدیمی؛ به جای آن کد 39",
+   "label": "284",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 39,
+   "review_note": null
+  },
+  {
+   "code": 285,
+   "title": "کد قدیمی؛ به جای آن کد 42",
+   "label": "285",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 42,
+   "review_note": null
+  },
+  {
+   "code": 286,
+   "title": "کد قدیمی؛ به جای آن کد 43",
+   "label": "286",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 43,
+   "review_note": null
+  },
+  {
+   "code": 287,
+   "title": "کد قدیمی؛ به جای آن کد 39",
+   "label": "287",
+   "kind": "work",
+   "group": "general",
+   "segments": [],
+   "hours": null,
+   "productivity": false,
+   "overtime": null,
+   "weekday": null,
+   "active": false,
+   "replaced_by": 39,
+   "review_note": null
+  }
+ ]
+}
