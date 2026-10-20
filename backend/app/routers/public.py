@@ -1,14 +1,14 @@
 import uuid
 
 from fastapi import APIRouter, Depends, Query, Request
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
 from app.core.audit import audit
 from app.core.db import get_db
 from app.core.deps import CurrentUser, api_error, client_ip, require
 from app.core.security import new_tracking_code
-from app.models import Faq, Feedback, Unit
+from app.models import ContentTranslation, Faq, Feedback, Unit
 from app.schemas import (
     FaqIn,
     FaqOut,
@@ -19,13 +19,15 @@ from app.schemas import (
     FeedbackRespondIn,
     UnitOut,
 )
+from app.services.translations import content_language, localize
 
 router = APIRouter(tags=["public"])
 
 
 @router.get("/public/units", response_model=list[UnitOut])
-def public_units(db: Session = Depends(get_db)):
-    return db.scalars(select(Unit).where(Unit.is_public.is_(True)).order_by(Unit.type, Unit.name)).all()
+def public_units(language: str | None = Depends(content_language), db: Session = Depends(get_db)):
+    units = db.scalars(select(Unit).where(Unit.is_public.is_(True)).order_by(Unit.type, Unit.name))
+    return localize(db, "unit", [UnitOut.model_validate(u) for u in units], language)
 
 
 @router.get("/units", response_model=list[UnitOut], tags=["units"])
@@ -35,8 +37,9 @@ def all_units(_: CurrentUser = Depends(require("incident.create")), db: Session 
 
 
 @router.get("/public/faqs", response_model=list[FaqOut])
-def public_faqs(db: Session = Depends(get_db)):
-    return db.scalars(select(Faq).order_by(Faq.sort_order, Faq.question)).all()
+def public_faqs(language: str | None = Depends(content_language), db: Session = Depends(get_db)):
+    faqs = db.scalars(select(Faq).order_by(Faq.sort_order, Faq.question))
+    return localize(db, "faq", [FaqOut.model_validate(f) for f in faqs], language)
 
 
 @router.post("/admin/faqs", response_model=FaqOut, status_code=201)
@@ -65,6 +68,11 @@ def delete_faq(
     if faq is None:
         raise api_error(404, "not_found", "پرسش پیدا نشد")
     db.delete(faq)
+    db.execute(
+        delete(ContentTranslation).where(
+            ContentTranslation.entity_type == "faq", ContentTranslation.entity_id == faq_id
+        )
+    )
     audit(db, "faq.deleted", cu.id, "faq", faq_id, client_ip(request))
     db.commit()
 

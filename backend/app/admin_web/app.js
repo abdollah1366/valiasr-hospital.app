@@ -37,6 +37,7 @@ const PAGES = [
   { id: "units", title: "واحدها", icon: "units", perm: "unit.manage", render: renderUnits },
   { id: "announcements", title: "اطلاعیه‌ها", icon: "bell", perm: "announcement.manage", render: renderAnnouncements },
   { id: "faqs", title: "پرسش‌های متداول", icon: "help", perm: "faq.manage", render: renderFaqs },
+  { id: "translations", title: "ترجمه محتوا", icon: "translate", perm: "translation.manage", render: renderTranslations },
   { id: "feedback", title: "پیشنهاد و شکایت", icon: "chat", perm: "feedback.manage", render: renderFeedback },
   { id: "audit", title: "لاگ حسابرسی", icon: "history", perm: "audit.read", render: renderAudit },
 ];

@@ -688,3 +688,29 @@ class OtpCode(Base):
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     attempts: Mapped[int] = mapped_column(Integer, default=0)
     consumed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+# ---------------------------------------------------------------- ترجمه محتوای عمومی
+
+
+class ContentTranslation(Base):
+    """ترجمه یک فیلد از محتوای عمومی (بخش، پرسش، اطلاعیه) به یکی از زبان‌های مراجعان.
+
+    فقط ترجمه تأییدشده‌ای به مراجع نشان داده می‌شود که متن فارسی‌اش از زمان ترجمه تغییر نکرده باشد
+    (source_hash همان هش متن فارسی هنگام ذخیره است).
+    """
+
+    __tablename__ = "content_translations"
+    __table_args__ = (UniqueConstraint("entity_type", "entity_id", "language", "field"),)
+    id: Mapped[uuid.UUID] = pk()
+    entity_type: Mapped[str] = mapped_column(String(20))  # unit | faq | announcement
+    entity_id: Mapped[uuid.UUID] = mapped_column(index=True)
+    language: Mapped[str] = mapped_column(String(5))  # az | en | ar | tr
+    field: Mapped[str] = mapped_column(String(30))
+    text: Mapped[str] = mapped_column(Text)
+    source_hash: Mapped[str] = mapped_column(String(64))
+    status: Mapped[str] = mapped_column(String(10), default="draft")  # draft | approved
+    updated_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, onupdate=utcnow)
+    approved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+    approved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

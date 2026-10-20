@@ -24,17 +24,18 @@ interface ApiService {
     @GET("auth/me")
     suspend fun me(): MeDto
 
+    /** lang: کد زبان مراجع؛ null یعنی فارسی (متن اصلی). */
     @GET("public/units")
-    suspend fun publicUnits(): List<UnitDto>
+    suspend fun publicUnits(@Query("lang") lang: String? = null): List<UnitDto>
 
     @GET("units")
     suspend fun allUnits(): List<UnitDto>
 
     @GET("public/faqs")
-    suspend fun faqs(): List<FaqDto>
+    suspend fun faqs(@Query("lang") lang: String? = null): List<FaqDto>
 
     @GET("public/announcements")
-    suspend fun publicAnnouncements(): List<AnnouncementDto>
+    suspend fun publicAnnouncements(@Query("lang") lang: String? = null): List<AnnouncementDto>
 
     @POST("public/feedback")
     suspend fun submitFeedback(@Body body: FeedbackRequest): FeedbackCreated

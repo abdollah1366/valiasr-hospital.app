@@ -46,13 +46,15 @@ import com.barati.razi.ui.components.RaziScaffold
 import com.barati.razi.ui.components.SelectField
 import com.barati.razi.ui.components.rememberErrorText
 import com.barati.razi.ui.components.rememberLoader
+import com.barati.razi.ui.i18n.LocalAppLanguage
 import com.barati.razi.ui.i18n.PatientLabels
 import kotlinx.coroutines.launch
 
 /** فهرست بخش‌ها؛ زبانه «بخش‌ها» در صفحه اول مراجعان. */
 @Composable
 fun UnitsList(container: AppContainer, padding: PaddingValues) {
-    val loader = rememberLoader { container.contentRepository.publicUnits() }
+    val language = LocalAppLanguage.current
+    val loader = rememberLoader(language) { container.contentRepository.publicUnits(language) }
     LoadContent(loader, Modifier.padding(padding)) { units ->
         if (units.isEmpty()) {
             MessageBox(stringResource(R.string.units_empty), Modifier.padding(padding))
@@ -83,7 +85,8 @@ private fun UnitCard(u: UnitDto) {
 
 @Composable
 fun FaqScreen(container: AppContainer, onBack: () -> Unit) {
-    val loader = rememberLoader { container.contentRepository.faqs() }
+    val language = LocalAppLanguage.current
+    val loader = rememberLoader(language) { container.contentRepository.faqs(language) }
     var expanded by remember { mutableStateOf<String?>(null) }
     RaziScaffold(title = stringResource(R.string.faq_title), onBack = onBack) { padding ->
         LoadContent(loader, Modifier.padding(padding)) { faqs ->
@@ -127,7 +130,8 @@ fun AnnouncementCard(a: AnnouncementDto, expandedInitially: Boolean = false, foo
 
 @Composable
 fun PublicNewsScreen(container: AppContainer, onBack: () -> Unit) {
-    val loader = rememberLoader { container.contentRepository.publicAnnouncements() }
+    val language = LocalAppLanguage.current
+    val loader = rememberLoader(language) { container.contentRepository.publicAnnouncements(language) }
     RaziScaffold(title = stringResource(R.string.news_title), onBack = onBack) { padding ->
         LoadContent(loader, Modifier.padding(padding)) { list ->
             if (list.isEmpty()) {
@@ -147,7 +151,8 @@ fun PublicNewsScreen(container: AppContainer, onBack: () -> Unit) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FeedbackBody(container: AppContainer, padding: PaddingValues) {
-    val units = rememberLoader { container.contentRepository.publicUnits() }
+    val language = LocalAppLanguage.current
+    val units = rememberLoader(language) { container.contentRepository.publicUnits(language) }
     var kind by remember { mutableStateOf("suggestion") }
     var unit by remember { mutableStateOf<UnitDto?>(null) }
     var body by remember { mutableStateOf("") }
