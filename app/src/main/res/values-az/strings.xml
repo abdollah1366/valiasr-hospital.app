@@ -131,4 +131,25 @@
     <string name="about_depts_title">İxtisaslaşmış şöbələr</string>
     <string name="about_depts">Kardiologiya, ana və yenidoğulmuş, nevrologiya, qastroenterologiya və hepatologiya, ortopediya, urologiya, onkologiya, nefrologiya, infeksion xəstəliklər, pulmonologiya, LOR, IVF və müasir cərrahiyyə</string>
     <string name="about_approach">Yanaşmamız tamamilə pasiyentyönümlüdür: sakitləşdirici müasir memarlıqdan ağıllı növbə sistemi və elektron tibbi qeydlərə qədər hər şey təhlükəsiz və rahat təcrübə üçün hazırlanıb.</string>
+    <string name="contact_instagram">Instagram</string>
+    <string name="contact_telegram">Telegram</string>
+    <string name="admission_title">Qəbul bələdçisi</string>
+    <string name="admission_sub">Yatırılma mərhələləri və özünüzlə nə gətirməli</string>
+    <string name="admission_steps_title">Yatırılma mərhələləri</string>
+    <string name="step1">Müalicə həkiminiz yatırılma göstərişi verir</string>
+    <string name="step2">Qəbul şöbəsinə müraciət</string>
+    <string name="step2_detail">Yatırılma göstərişi və şəxsiyyət vəsiqəsi yoxlanılır, təxmini xərc, depozit və əlavə sığorta izah edilir, sol qolunuza identifikasiya qolbağı taxılır və əməliyyatdan əvvəl anestezioloqa göndərilirsiniz</string>
+    <string name="step3">Pasiyentlərə dəstək şöbəsinə müraciət</string>
+    <string name="step3_detail">Qarşılanma, Sapiba maarifləndirmə sistemi ilə tanışlıq, aptekdən lazımi ləvazimatın alınmasında kömək və şöbəyə köçürülmənin təşkili</string>
+    <string name="step4">Şöbədə qəbul</string>
+    <string name="step4_detail">Şöbə katibi və ya tibb bacısı sizi qəbul edir və ilkin tibb bacısı qiymətləndirməsi aparılır</string>
+    <string name="step5">Yatırılma və müalicənin başlanması</string>
+    <string name="admission_tips_title">Vacib qeydlər</string>
+    <string name="tip1">Diaqnostik sənədlərinizi özünüzlə gətirin.</string>
+    <string name="tip2">Qəbul zamanı gigiyena vasitələri və xəstə paltarı olan xəstəxana dəsti verilir; yorğan, mələfə və qab-qacaq otaqda var, ona görə minimum əşya ilə gəlin.</string>
+    <string name="tip3">Xəstəxananın lobbisində mağazalar var.</string>
+    <string name="tip4">Qəbul zamanı təxmini məbləğ depozit kimi alınır; çıxış zamanı yekun hesab bir qədər dəyişə bilər.</string>
+    <string name="tip5">Xəstəxana bütün sığorta fondları ilə müqavilə bağlayıb; qəbul sığortanızın növünə görə aparılır.</string>
+    <string name="tip6">Hər pasiyent üçün yalnız bir parklanma yeri ayrılır; ərazidə bir avtomobildən artıq gətirməyin.</string>
+    <string name="tip7">Yatırılmanın əvvəlindən qəbul şöbəsindən xərclər haqqında tam məlumat alın və suallarınızı müalicədən əvvəl verin.</string>
 </resources>

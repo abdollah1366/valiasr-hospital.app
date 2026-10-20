@@ -131,4 +131,25 @@
     <string name="about_depts_title">Specialist departments</string>
     <string name="about_depts">Cardiology, maternity and newborn care, neurology, gastroenterology and hepatology, orthopaedics, urology, oncology, nephrology, infectious diseases, pulmonology, ENT, IVF and advanced surgery</string>
     <string name="about_approach">Our approach is fully patient-centred: from calming modern architecture to smart appointments and electronic records, everything is designed for a safe and reassuring experience.</string>
+    <string name="contact_instagram">Instagram</string>
+    <string name="contact_telegram">Telegram</string>
+    <string name="admission_title">Admission guide</string>
+    <string name="admission_sub">Admission steps and what to bring</string>
+    <string name="admission_steps_title">Admission steps</string>
+    <string name="step1">Your doctor issues the admission order</string>
+    <string name="step2">Go to the admissions office</string>
+    <string name="step2_detail">Your admission order and ID are checked, the estimated cost, deposit and supplementary insurance are explained, an ID wristband is put on your left wrist, and before surgery you are referred to the anaesthetist</string>
+    <string name="step3">Visit the patient support office</string>
+    <string name="step3_detail">Welcome, an introduction to the Sapiba patient education system, help getting supplies from the pharmacy and arranging your transfer to the ward</string>
+    <string name="step4">Arrival on the ward</string>
+    <string name="step4_detail">The ward clerk or a nurse receives you and carries out the initial nursing assessment</string>
+    <string name="step5">Your stay and treatment begin</string>
+    <string name="admission_tips_title">Good to know</string>
+    <string name="tip1">Bring your medical records and test results.</string>
+    <string name="tip2">On admission you receive a hospital pack with toiletries and patient clothing; blankets, sheets and tableware are provided, so bring as little as possible.</string>
+    <string name="tip3">There are shops in the hospital lobby for anything you need.</string>
+    <string name="tip4">An estimated amount is collected as a deposit on admission; the final bill may differ slightly at discharge.</string>
+    <string name="tip5">The hospital works with all insurance funds; admission follows your insurance type.</string>
+    <string name="tip6">Each patient has one parking space; please bring only one car onto the hospital grounds.</string>
+    <string name="tip7">Ask the admissions office for full cost information from the start and raise any questions before treatment begins.</string>
 </resources>

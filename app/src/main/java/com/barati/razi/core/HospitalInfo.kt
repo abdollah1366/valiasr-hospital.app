@@ -6,5 +6,8 @@ object HospitalInfo {
     const val PHONE = "+98413112"
     const val PHONE_DISPLAY = "041-3112"
     const val EMAIL = "info@tabrizhospital.ir"
+    const val SOCIAL_ID = "hospital_tabriz"
+    const val INSTAGRAM_URL = "https://instagram.com/hospital_tabriz"
+    const val TELEGRAM_URL = "https://t.me/hospital_tabriz"
     const val MAP_URI = "geo:0,0?q=Tabriz+International+Valiasr+Hospital"
 }

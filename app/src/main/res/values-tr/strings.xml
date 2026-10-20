@@ -131,4 +131,25 @@
     <string name="about_depts_title">Uzmanlık bölümleri</string>
     <string name="about_depts">Kardiyoloji, anne ve yenidoğan, nöroloji, gastroenteroloji ve hepatoloji, ortopedi, üroloji, onkoloji, nefroloji, enfeksiyon hastalıkları, göğüs hastalıkları, KBB, tüp bebek (IVF) ve ileri cerrahi</string>
     <string name="about_approach">Yaklaşımımız tamamen hasta odaklıdır: huzur veren modern mimariden akıllı randevu sistemine ve elektronik kayıtlara kadar her şey güvenli ve rahat bir deneyim için tasarlandı.</string>
+    <string name="contact_instagram">Instagram</string>
+    <string name="contact_telegram">Telegram</string>
+    <string name="admission_title">Yatış rehberi</string>
+    <string name="admission_sub">Yatış adımları ve yanınızda getirmeniz gerekenler</string>
+    <string name="admission_steps_title">Yatış adımları</string>
+    <string name="step1">Doktorunuz yatış talimatını verir</string>
+    <string name="step2">Hasta kabul birimine başvurun</string>
+    <string name="step2_detail">Yatış talimatı ve kimliğiniz kontrol edilir, tahmini ücret, depozito ve tamamlayıcı sigorta açıklanır, sol bileğinize kimlik bilekliği takılır ve ameliyat öncesi anestezi uzmanına yönlendirilirsiniz</string>
+    <string name="step3">Hasta destek birimine başvurun</string>
+    <string name="step3_detail">Karşılama, Sapiba hasta eğitim sistemi tanıtımı, eczaneden gerekli malzemelerin temini ve servise geçişin ayarlanması</string>
+    <string name="step4">Serviste karşılanma</string>
+    <string name="step4_detail">Servis sekreteri veya hemşire sizi karşılar ve ilk hemşirelik değerlendirmesi yapılır</string>
+    <string name="step5">Yatış ve tedavi başlar</string>
+    <string name="admission_tips_title">Önemli notlar</string>
+    <string name="tip1">Tıbbi belgelerinizi ve tetkik sonuçlarınızı yanınızda getirin.</string>
+    <string name="tip2">Kabulde hijyen malzemeleri ve hasta kıyafeti içeren bir hastane paketi verilir; battaniye, çarşaf ve yemek takımı odada vardır, bu yüzden az eşyayla gelin.</string>
+    <string name="tip3">Hastane lobisinde ihtiyaçlarınız için mağazalar bulunur.</string>
+    <string name="tip4">Kabulde tahmini tutar avans olarak alınır; taburculukta son fatura biraz değişebilir.</string>
+    <string name="tip5">Hastane tüm sigorta kurumlarıyla anlaşmalıdır; kabul sigorta türünüze göre yapılır.</string>
+    <string name="tip6">Her hasta için yalnızca bir park yeri ayrılır; lütfen hastane alanına birden fazla araç getirmeyin.</string>
+    <string name="tip7">Yatışın başından itibaren hasta kabulden ücretler hakkında tam bilgi alın ve sorularınızı tedaviden önce sorun.</string>
 </resources>
