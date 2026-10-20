@@ -1,7 +1,7 @@
 <resources>
-    <color name="valiasr_primary">#1F7A72</color>
-    <color name="valiasr_primary_dark">#194D48</color>
-    <color name="valiasr_brand">#B3262E</color>
+    <color name="valiasr_primary">#01687F</color>
+    <color name="valiasr_primary_dark">#014354</color>
+    <color name="valiasr_brand">#019681</color>
     <color name="valiasr_background">#F6F8F7</color>
     <color name="white">#FFFFFF</color>
 </resources>

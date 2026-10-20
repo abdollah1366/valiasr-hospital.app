@@ -7,20 +7,21 @@ import androidx.compose.ui.graphics.Color
 
 /**
  * رنگ‌های بیمارستان ولیعصر (docs: design-system.md).
- * سبز-آبی رنگ اقدام است؛ قرمز برند فقط برای هویت (نوار زیر هدر، لوگو، نشان «جدید») و هرگز برای دکمه یا خطا.
+ * رنگ اصلی و اقدام: آبی نفتی (برای متن و دکمه، کنتراست کافی)؛ رنگ برند سبز وردانت (نوار زیر هدر، لوگو، نشان‌ها) و هرگز برای متن یا خطا.
+ * منبع: کیت رسمی برند بیمارستان (VALIASR_BRAND_REFERENCE.md، صفحه ۲۶ و ۳۰).
  */
 object ValiasrColors {
-    val Primary = Color(0xFF1F7A72)
-    val PrimaryHover = Color(0xFF19665F)
-    val PrimaryPressed = Color(0xFF194D48)
-    val Calm = Color(0xFFE6F3F1)
+    val Primary = Color(0xFF01687F)
+    val PrimaryHover = Color(0xFF015569)
+    val PrimaryPressed = Color(0xFF014354)
+    val Calm = Color(0xFFE0F2F0)
     val Focus = Color(0xFF64D8CE)
 
-    val Brand = Color(0xFFB3262E)
-    val BrandSoft = Color(0xFFFBEDEE)
+    val Brand = Color(0xFF019681)
+    val BrandSoft = Color(0xFFE0F2F0)
 
-    val Gold = Color(0xFF8C6A2B)
-    val GoldDeco = Color(0xFFC9A15A)
+    val Gold = Color(0xFF361E58)
+    val GoldDeco = Color(0xFFFFDC6F)
     val Cream = Color(0xFFFBF6EC)
 
     val Bg = Color(0xFFF6F8F7)
@@ -47,9 +48,9 @@ object ValiasrDarkColors {
     val Primary = Color(0xFF5CC8BC)
     val OnPrimary = Color(0xFF0F1A1A)
     val Calm = Color(0xFF173130)
-    val Brand = Color(0xFFE5747A)
-    val BrandSoft = Color(0xFF3A1F22)
-    val Gold = Color(0xFFC9A15A)
+    val Brand = Color(0xFF4FC3B2)
+    val BrandSoft = Color(0xFF173130)
+    val Gold = Color(0xFFFFDC6F)
     val Cream = Color(0xFF2A2418)
     val Bg = Color(0xFF121A1B)
     val Surface = Color(0xFF1B2526)
@@ -63,7 +64,7 @@ object ValiasrDarkColors {
     val Info = Color(0xFF7FB0EA)
 }
 
-/** رنگ قرمز برند متناسب با حالت روشن یا تیره (همان tertiary در colorScheme). */
+/** رنگ برند (سبز وردانت) متناسب با حالت روشن یا تیره (همان tertiary در colorScheme). */
 val brandColor: Color
     @Composable @ReadOnlyComposable
     get() = MaterialTheme.colorScheme.tertiary

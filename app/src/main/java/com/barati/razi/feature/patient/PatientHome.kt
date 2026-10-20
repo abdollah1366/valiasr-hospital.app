@@ -228,7 +228,7 @@ private fun HeroCard(onBook: () -> Unit) {
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
     ) {
         Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            // نوار باریک قرمز برند؛ فقط برای هویت، نه برای دکمه.
+            // نوار باریک رنگ برند؛ فقط برای هویت، نه برای دکمه.
             Box(Modifier.size(width = 32.dp, height = 4.dp).background(brandColor, RoundedCornerShape(2.dp)))
             Text(
                 stringResource(R.string.home_hero_title),
