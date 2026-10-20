@@ -68,6 +68,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.outlined.PhotoCamera
+import androidx.compose.material.icons.automirrored.outlined.Send
+import androidx.compose.material.icons.automirrored.outlined.Assignment
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.width
+import com.barati.razi.core.util.toPersianDigits
+import com.barati.razi.ui.i18n.LocalAppLanguage
 import com.barati.razi.AppContainer
 import com.barati.razi.R
 import com.barati.razi.core.HospitalInfo
@@ -110,6 +117,7 @@ fun PatientHomeScreen(
     onContact: () -> Unit,
     onInternational: () -> Unit,
     onAbout: () -> Unit,
+    onAdmission: () -> Unit,
     onTrackIncident: () -> Unit,
     onStaff: () -> Unit,
 ) {
@@ -149,6 +157,7 @@ fun PatientHomeScreen(
                 onFeedback = { tab = PatientTab.TRACK.ordinal },
                 onInternational = onInternational,
                 onAbout = onAbout,
+                onAdmission = onAdmission,
             )
             PatientTab.UNITS -> UnitsList(container, padding)
             PatientTab.TRACK -> FeedbackBody(container, padding)
@@ -178,6 +187,7 @@ private fun HomeTab(
     onFeedback: () -> Unit,
     onInternational: () -> Unit,
     onAbout: () -> Unit,
+    onAdmission: () -> Unit,
 ) {
     val uri = LocalUriHandler.current
     // مراجع غیرفارسی‌زبان به احتمال زیاد بیمار بین‌الملل است؛ کارت مربوط بالاتر می‌آید.
@@ -202,6 +212,7 @@ private fun HomeTab(
                 Tile(R.string.tile_feedback_short, R.string.tile_feedback_sub, Icons.Outlined.Feedback, onFeedback),
             ),
         )
+        WideCard(Icons.AutoMirrored.Outlined.Assignment, stringResource(R.string.admission_title), stringResource(R.string.admission_sub), onAdmission)
         if (!internationalFirst) InternationalCard(onInternational)
         WideCard(Icons.Outlined.Info, stringResource(R.string.about_title), stringResource(R.string.about_sub), onAbout)
     }
@@ -387,7 +398,7 @@ private fun UnconfirmedNote() {
     )
 }
 
-/** مسیر و تماس: نشانی، نقشه، تلفن و ایمیل. */
+/** مسیر و تماس: نشانی، نقشه، تلفن، ایمیل و شبکه‌های اجتماعی. */
 @Composable
 fun ContactScreen(onBack: () -> Unit) {
     val uri = LocalUriHandler.current
@@ -416,6 +427,14 @@ fun ContactScreen(onBack: () -> Unit) {
                     HorizontalDivider()
                     InfoRow(Icons.Outlined.Email, stringResource(R.string.contact_email), ltr(HospitalInfo.EMAIL)) {
                         uri.tryOpen("mailto:${HospitalInfo.EMAIL}")
+                    }
+                    HorizontalDivider()
+                    InfoRow(Icons.Outlined.PhotoCamera, stringResource(R.string.contact_instagram), ltr("@" + HospitalInfo.SOCIAL_ID)) {
+                        uri.tryOpen(HospitalInfo.INSTAGRAM_URL)
+                    }
+                    HorizontalDivider()
+                    InfoRow(Icons.AutoMirrored.Outlined.Send, stringResource(R.string.contact_telegram), ltr("@" + HospitalInfo.SOCIAL_ID)) {
+                        uri.tryOpen(HospitalInfo.TELEGRAM_URL)
                     }
                 }
             }
@@ -521,3 +540,64 @@ private fun AboutSection(title: Int, body: Int) {
         }
     }
 }
+
+/** راهنمای پذیرش و بستری: مراحل (از نمودار رسمی بیمارستان) و نکات مهم. */
+@Composable
+fun AdmissionGuideScreen(onBack: () -> Unit) {
+    val steps = listOf(
+        R.string.step1 to null,
+        R.string.step2 to R.string.step2_detail,
+        R.string.step3 to R.string.step3_detail,
+        R.string.step4 to R.string.step4_detail,
+        R.string.step5 to null,
+    )
+    val tips = listOf(R.string.tip1, R.string.tip2, R.string.tip3, R.string.tip4, R.string.tip5, R.string.tip6, R.string.tip7)
+    RaziScaffold(title = stringResource(R.string.admission_title), onBack = onBack) { padding ->
+        Column(
+            Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Text(stringResource(R.string.admission_steps_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Column {
+                steps.forEachIndexed { i, (title, detail) -> StepRow(i + 1, title, detail, last = i == steps.lastIndex) }
+            }
+            Text(stringResource(R.string.admission_tips_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Card(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    tips.forEach { res ->
+                        Row(verticalAlignment = Alignment.Top) {
+                            Icon(Icons.Filled.CheckCircle, contentDescription = null, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
+                            Text(stringResource(res), Modifier.padding(horizontal = 12.dp))
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/** یک گام از خط زمانی: دایره شماره‌دار، خط اتصال به گام بعد، عنوان و توضیح. */
+@Composable
+private fun StepRow(number: Int, title: Int, detail: Int?, last: Boolean) {
+    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
+        Column(Modifier.width(40.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(
+                Modifier.size(32.dp).background(MaterialTheme.colorScheme.primary, CircleShape),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(localDigits(number), color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
+            }
+            if (!last) Box(Modifier.width(2.dp).weight(1f).background(MaterialTheme.colorScheme.primaryContainer))
+        }
+        Column(Modifier.weight(1f).padding(start = 12.dp, bottom = if (last) 0.dp else 16.dp, top = 4.dp)) {
+            Text(stringResource(title), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+            detail?.let {
+                Text(stringResource(it), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+    }
+}
+
+@Composable
+private fun localDigits(n: Int): String =
+    if (LocalAppLanguage.current == AppLanguage.FA) toPersianDigits(n.toString()) else n.toString()
