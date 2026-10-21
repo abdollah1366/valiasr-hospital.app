@@ -70,6 +70,7 @@ import com.barati.razi.core.data.can
 import com.barati.razi.core.network.MeDto
 import com.barati.razi.core.util.toPersianDigits
 import com.barati.razi.ui.components.RaziScaffold
+import com.barati.razi.ui.components.ThemeModePicker
 import com.barati.razi.ui.components.TileGrid
 import com.barati.razi.ui.components.TileItem
 import com.barati.razi.ui.components.WideCard
@@ -217,6 +218,9 @@ fun StaffHomeScreen(
                     }
                 },
             )
+            val themeMode by container.themeRepository.mode.collectAsState()
+            Text("حالت نمایش", style = MaterialTheme.typography.labelLarge)
+            ThemeModePicker(themeMode) { container.scope.launch { container.themeRepository.set(it) } }
             WideCard(Icons.Outlined.Public, "خدمات عمومی بیمارستان", "راهنمای بخش‌ها، پرسش‌ها و شکایات مراجعان", onPublic)
             // فاصله برای اینکه دکمه شناور روی کارت آخر نیفتد
             Spacer(Modifier.height(72.dp))

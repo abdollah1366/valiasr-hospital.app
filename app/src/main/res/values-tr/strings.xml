@@ -211,4 +211,8 @@
     <string name="free_places">%1$s boş yer</string>
     <string name="clinic_label">Klinik</string>
     <string name="booking_failed_full">Bu saat az önce doldu; başka saat seçin.</string>
+    <string name="theme_label">Görünüm</string>
+    <string name="theme_light">Açık</string>
+    <string name="theme_dark">Koyu</string>
+    <string name="theme_system">Telefona göre</string>
 </resources>

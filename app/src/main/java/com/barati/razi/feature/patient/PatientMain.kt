@@ -98,6 +98,7 @@ import com.barati.razi.feature.publicinfo.UnitsList
 import com.barati.razi.notify.SystemNotifier
 import com.barati.razi.ui.components.Load
 import com.barati.razi.ui.components.RaziScaffold
+import com.barati.razi.ui.components.ThemeModePicker
 import com.barati.razi.ui.components.TileGrid
 import com.barati.razi.ui.components.TileItem
 import com.barati.razi.ui.components.WideCard
@@ -190,6 +191,11 @@ fun PatientHomeScreen(
                     Row(Modifier.padding(horizontal = 28.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                         Text(stringResource(R.string.drawer_language), Modifier.weight(1f), style = MaterialTheme.typography.labelLarge)
                         LanguageAction(language, onLanguage)
+                    }
+                    Column(Modifier.padding(horizontal = 28.dp, vertical = 4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text(stringResource(R.string.theme_label), style = MaterialTheme.typography.labelLarge)
+                        val themeMode by container.themeRepository.mode.collectAsState()
+                        ThemeModePicker(themeMode) { scope.launch { container.themeRepository.set(it) } }
                     }
                     Text(
                         stringResource(R.string.drawer_version, BuildConfig.VERSION_NAME),

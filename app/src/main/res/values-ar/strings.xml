@@ -211,4 +211,8 @@
     <string name="free_places">%1$s أماكن متاحة</string>
     <string name="clinic_label">العيادة</string>
     <string name="booking_failed_full">تم حجز هذا الوقت للتو؛ اختر وقتاً آخر.</string>
+    <string name="theme_label">المظهر</string>
+    <string name="theme_light">فاتح</string>
+    <string name="theme_dark">داكن</string>
+    <string name="theme_system">حسب الهاتف</string>
 </resources>
