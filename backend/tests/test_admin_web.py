@@ -2,6 +2,8 @@ from tests.conftest import CONTENT, SAFETY, STAFF, SYSADMIN, auth
 
 
 def test_admin_page_is_served_with_strict_headers(client):
+    root = client.get("/", follow_redirects=False)
+    assert root.status_code in (307, 308) and root.headers["location"] == "/admin/"
     r = client.get("/admin", follow_redirects=False)
     assert r.status_code in (307, 308) and r.headers["location"] == "/admin/"
     page = client.get("/admin/")

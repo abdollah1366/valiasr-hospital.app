@@ -119,6 +119,10 @@ def create_app() -> FastAPI:
             response.headers.update(ADMIN_SECURITY_HEADERS)
         return response
 
+    @app.get("/", include_in_schema=False)
+    def site_root():
+        return RedirectResponse("/admin/")
+
     @app.get("/admin", include_in_schema=False)
     def admin_root():
         return RedirectResponse("/admin/")
