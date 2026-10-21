@@ -276,7 +276,7 @@ fun PatientHomeScreen(
                 PatientTab.PROFILE -> ProfileTab(padding, language, onLanguage, patient, staffLoggedIn, onSignIn, onSignOut, onTrackIncident, onStaff)
                 PatientTab.CLUB -> ClubTab(container, padding, signedIn = patient != null, onSignIn = onSignIn)
                 PatientTab.RESULTS -> ResultsTab(container, padding, signedIn = patient != null, onSignIn = onSignIn)
-                PatientTab.EDUCATION -> EducationTab(container, padding)
+                PatientTab.EDUCATION -> EducationTab(container, padding, signedIn = patient != null, onSignIn = onSignIn)
                 PatientTab.UNITS -> UnitsList(container, padding)
                 PatientTab.FEEDBACK -> FeedbackBody(container, padding)
             }

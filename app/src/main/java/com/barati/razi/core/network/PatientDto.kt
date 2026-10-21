@@ -4,7 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import retrofit2.http.Body
 import retrofit2.http.GET
+import okhttp3.RequestBody
 import retrofit2.http.PATCH
+import retrofit2.http.PUT
 import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.Path
@@ -46,6 +48,37 @@ interface PatientApiService {
 
     @POST("patient/appointments/{id}/review")
     suspend fun reviewAppointment(@Path("id") id: String, @Body body: ReviewRequest): MyReviewDto
+
+    @GET("patient/education/mine")
+    suspend fun myEducation(@Query("lang") lang: String? = null): List<EducationDto>
+
+    @POST("patient/education/{id}/seen")
+    suspend fun educationSeen(@Path("id") id: String)
+
+    @GET("patient/education/{id}/rating")
+    suspend fun educationRating(@Path("id") id: String): MyRatingDto
+
+    @PUT("patient/education/{id}/rating")
+    suspend fun rateEducation(@Path("id") id: String, @Body body: RatingRequest): MyRatingDto
+
+    @GET("patient/education/tickets")
+    suspend fun educationTickets(): List<TicketDto>
+
+    @POST("patient/education/tickets")
+    suspend fun createEducationTicket(@Body body: TicketCreateRequest): TicketDetailDto
+
+    @GET("patient/education/tickets/{id}")
+    suspend fun educationTicket(@Path("id") id: String): TicketDetailDto
+
+    @POST("patient/education/tickets/{id}/messages")
+    suspend fun sendEducationTicketMessage(@Path("id") id: String, @Body body: TicketMessageRequest): TicketDetailDto
+
+    @POST("patient/education/tickets/{id}/attachment")
+    suspend fun sendEducationTicketAttachment(
+        @Path("id") id: String,
+        @Query("filename") filename: String,
+        @Body body: RequestBody,
+    ): TicketDetailDto
 
     @POST("patient/appointments/{id}/cancel")
     suspend fun cancelAppointment(@Path("id") id: String): PatientAppointmentDto
