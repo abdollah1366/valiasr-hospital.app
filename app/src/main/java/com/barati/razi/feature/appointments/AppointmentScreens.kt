@@ -298,7 +298,7 @@ fun DoctorDetailScreen(
 }
 
 @Composable
-private fun DoctorHeader(doctor: DoctorDto, photoUrl: (String) -> String) {
+private fun DoctorHeader(doctor: DoctorDto, photoUrl: (DoctorDto) -> String) {
     Card(
         Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),

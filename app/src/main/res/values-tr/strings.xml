@@ -10,7 +10,7 @@
     <string name="error_generic">Bir sorun oluştu. Lütfen tekrar deneyin.</string>
     <string name="error_network">Sunucuya bağlanılamadı. İnternet bağlantınızı kontrol edin.</string>
 
-    <string name="hospital_full_name">Tebriz Uluslararası Veliasr Hastanesi</string>
+    <string name="hospital_full_name">Veliasr Tebriz</string>
     <string name="tile_news">Duyurular</string>
     <string name="tile_news_sub">Hastane haberleri ve hizmet değişiklikleri</string>
     <string name="tile_feedback_sub">Kod ile gönderin ve takip edin</string>

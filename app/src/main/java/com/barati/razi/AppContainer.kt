@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import com.barati.razi.core.data.AppointmentRepository
 import com.barati.razi.core.data.ResultsRepository
+import com.barati.razi.core.network.DoctorDto
 import com.barati.razi.core.data.TokensRepository
 import com.barati.razi.core.data.ChatRepository
 import com.barati.razi.core.data.ContentRepository
@@ -85,7 +86,8 @@ class AppContainer(context: Context) {
     val tokensRepository = TokensRepository(patientApi)
 
     /** نشانی کامل عکس پزشک (عمومی، بدون توکن). */
-    fun doctorPhotoUrl(doctorId: String): String = apiRoot() + "public/doctors/$doctorId/photo"
+    fun doctorPhotoUrl(doctor: DoctorDto): String =
+        apiRoot() + "public/doctors/${doctor.id}/photo" + (doctor.photoVersion?.let { "?v=$it" } ?: "")
 
     private fun apiRoot(): String {
         val override = if (BuildConfig.ALLOW_SERVER_OVERRIDE) serverOrigin else null

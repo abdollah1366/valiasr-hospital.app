@@ -101,11 +101,11 @@ fun specialtyTone(index: Int): Pair<Color, Color> = SPECIALTY_TONES[index % SPEC
 
 /** عکس پزشک؛ اگر عکس نداشته باشد، حرف اول نام روی شیب رنگ برند. */
 @Composable
-fun DoctorAvatar(doctor: DoctorDto, photoUrl: (String) -> String, size: Dp) {
+fun DoctorAvatar(doctor: DoctorDto, photoUrl: (DoctorDto) -> String, size: Dp) {
     val shape = CircleShape
     if (doctor.hasPhoto) {
         AsyncImage(
-            model = photoUrl(doctor.id),
+            model = photoUrl(doctor),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.size(size).clip(shape).background(ValiasrColors.BrandSoft),
@@ -123,7 +123,7 @@ fun DoctorAvatar(doctor: DoctorDto, photoUrl: (String) -> String, size: Dp) {
 
 /** کارت پزشک در فهرست: عکس، نام، تخصص و نزدیک‌ترین نوبت. */
 @Composable
-fun DoctorRowCard(doctor: DoctorDto, photoUrl: (String) -> String, onClick: () -> Unit) {
+fun DoctorRowCard(doctor: DoctorDto, photoUrl: (DoctorDto) -> String, onClick: () -> Unit) {
     Card(
         Modifier.fillMaxWidth().clickable(onClick = onClick),
         shape = RoundedCornerShape(20.dp),
@@ -174,7 +174,7 @@ fun NextFreeChip(doctor: DoctorDto) {
 
 /** کارت عمودی پزشک برگزیده در نوار افقی صفحه خانه. */
 @Composable
-fun FeaturedDoctorCard(doctor: DoctorDto, photoUrl: (String) -> String, onClick: () -> Unit) {
+fun FeaturedDoctorCard(doctor: DoctorDto, photoUrl: (DoctorDto) -> String, onClick: () -> Unit) {
     Card(
         Modifier.width(150.dp).clickable(onClick = onClick),
         shape = RoundedCornerShape(20.dp),

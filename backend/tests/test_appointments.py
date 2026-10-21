@@ -127,6 +127,12 @@ def test_doctor_admin_manages_doctors_and_secretaries(client):
     )
     assert photo.json()["has_photo"] is True
     assert client.get(f"{API}/public/doctors/{d['id']}/photo").headers["content-type"] == "image/png"
+    # با هر عکس جدید نسخه عکس عوض می‌شود تا اپ عکس قدیمی کش‌شده را نشان ندهد
+    v1 = client.get(f"{API}/public/doctors/{d['id']}").json()["photo_version"]
+    assert v1
+    client.post(f"{API}/admin/doctors/{d['id']}/photo", params={"filename": "b.png"}, content=PNG, headers=h)
+    v2 = client.get(f"{API}/public/doctors/{d['id']}").json()["photo_version"]
+    assert v2 and v2 != v1
 
     r = client.put(f"{API}/admin/doctors/{d['id']}", json={**body, "secretary_codes": []}, headers=h)
     assert r.json()["secretaries"] == []

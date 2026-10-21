@@ -3,6 +3,9 @@ package com.barati.razi.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,8 +46,9 @@ class TileItem(
 fun TileGrid(tiles: List<TileItem>) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         tiles.chunked(2).forEach { row ->
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                row.forEach { t -> ActionTile(t, Modifier.weight(1f)) }
+            // ارتفاع هر ردیف را بلندترین کاشی تعیین می‌کند تا همه هم‌اندازه باشند.
+            Row(Modifier.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                row.forEach { t -> ActionTile(t, Modifier.weight(1f).fillMaxHeight()) }
                 if (row.size == 1) Spacer(Modifier.weight(1f))
             }
         }

@@ -10,7 +10,7 @@
     <string name="error_generic">Something went wrong. Please try again.</string>
     <string name="error_network">Could not reach the server. Please check your internet connection.</string>
 
-    <string name="hospital_full_name">Valiasr International Hospital, Tabriz</string>
+    <string name="hospital_full_name">Valiasr Tabriz</string>
     <string name="tile_news">Announcements</string>
     <string name="tile_news_sub">Hospital news and service changes</string>
     <string name="tile_feedback_sub">Submit and track with a code</string>

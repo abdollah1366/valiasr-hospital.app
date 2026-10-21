@@ -108,6 +108,7 @@ class PublicDoctorOut(BaseModel):
     clinic_name: str | None
     clinic_location: str | None
     has_photo: bool
+    photo_version: str | None = None
     is_featured: bool
     booking_enabled: bool
     next_free_at: datetime | None
