@@ -16,7 +16,7 @@ from app.core.security import (
     sha256,
     verify_password,
 )
-from app.models import RefreshToken, Unit, User
+from app.models import Doctor, RefreshToken, Unit, User
 from app.schemas import ChangePasswordIn, LoginIn, MeOut, RefreshIn, TokenOut
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -157,4 +157,5 @@ def me(cu: CurrentUser = Depends(get_current_user), db: Session = Depends(get_db
         roles=sorted(cu.role_codes),
         permissions=cu.all_permissions,
         must_change_password=u.must_change_password,
+        doctor_id=db.scalar(select(Doctor.id).where(Doctor.user_id == u.id)),
     )

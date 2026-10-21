@@ -60,7 +60,14 @@ def _set_roles(db: Session, user: User, roles: list[RoleAssignment]) -> None:
 
 
 # فهرست نقش‌ها و واحدها برای فرم‌های پنل (انتساب نقش، هدف‌گذاری اطلاعیه، نمایش نام واحد) هم لازم است.
-_CATALOG_READERS = ("user.manage", "unit.manage", "announcement.manage", "feedback.manage", "training.manage")
+_CATALOG_READERS = (
+    "user.manage",
+    "unit.manage",
+    "announcement.manage",
+    "feedback.manage",
+    "training.manage",
+    "doctor.manage",
+)
 
 
 @router.get("/roles", response_model=list[RoleOut])

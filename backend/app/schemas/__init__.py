@@ -51,6 +51,8 @@ class MeOut(BaseModel):
     roles: list[str]
     permissions: list[str]
     must_change_password: bool
+    # حساب به پرونده یک پزشک وصل است (فهرست بیماران من در اپ و پنل)
+    doctor_id: uuid.UUID | None = None
 
 
 # ---------------------------------------------------------------- users / units

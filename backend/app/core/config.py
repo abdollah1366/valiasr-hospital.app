@@ -41,6 +41,12 @@ class Settings(BaseSettings):
     otp_debug: bool = False
     # کد ثابت (مثلاً 1234) برای آزمایش بدون سامانه پیامک؛ پیامکی فرستاده نمی‌شود. در production مجاز نیست.
     otp_fixed_code: str | None = None
+    # نوبت‌دهی: مراجع تا چند روز جلوتر نوبت ببیند، تا چند ساعت پیش از نوبت لغو کند، یادآور چند ساعت پیش برود.
+    appointment_booking_days: int = 60
+    appointment_cancel_hours: int = 2
+    appointment_reminder_hours: int = 24
+    # قالب پیامک یادآور نوبت در کاوه‌نگار (token=تاریخ، token2=ساعت، token10=نام پزشک). خالی: پیامک یادآور نمی‌رود.
+    sms_reminder_template: str | None = None
 
     @property
     def otp_debug_enabled(self) -> bool:

@@ -1,3 +1,6 @@
+import asyncio
+import contextlib
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, Request
@@ -10,6 +13,7 @@ from app.core.config import get_settings
 from app.routers import (
     admin,
     announcements,
+    appointments,
     auth,
     chat,
     dashboard,
@@ -22,6 +26,7 @@ from app.routers import (
     training,
     translations,
 )
+from app.services.appointments import reminder_loop
 
 API_PREFIX = "/api/v1"
 ADMIN_WEB_DIR = Path(__file__).parent / "admin_web"
@@ -39,10 +44,22 @@ ADMIN_SECURITY_HEADERS = {
 }
 
 
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    # یادآور پیامکی نوبت‌ها در پس‌زمینه همین فرایند؛ در آزمون‌ها اجرا نمی‌شود.
+    task = asyncio.create_task(reminder_loop()) if get_settings().env != "test" else None
+    yield
+    if task is not None:
+        task.cancel()
+        with contextlib.suppress(asyncio.CancelledError):
+            await task
+
+
 def create_app() -> FastAPI:
     settings = get_settings()
     settings.check_production()
     app = FastAPI(
+        lifespan=lifespan,
         title="سامانه جامع بیمارستان بین‌المللی ولیعصر تبریز",
         version="0.1.0",
         docs_url=None if settings.is_exposed else "/docs",
@@ -80,6 +97,7 @@ def create_app() -> FastAPI:
         chat.router,
         schedules.router,
         translations.router,
+        appointments.router,
     ):
         app.include_router(r, prefix=API_PREFIX)
 

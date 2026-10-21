@@ -18,11 +18,15 @@ from app.core.permissions import DEFAULT_ROLES
 from app.core.security import hash_password
 from app.models import (
     Announcement,
+    AppointmentSlot,
+    Doctor,
+    DoctorSecretary,
     Faq,
     FormTemplate,
     RequestType,
     Role,
     ShiftType,
+    Specialty,
     Unit,
     User,
     UserRole,
@@ -41,6 +45,32 @@ def seed_roles(db: Session) -> None:
             db.add(Role(code=code, name=name, permissions=perms))
         else:
             role.name, role.permissions = name, perms
+
+
+# گروه‌های تخصصی بیمارستان (معرفی رسمی بیمارستان)؛ فقط وقتی هیچ گروهی تعریف نشده افزوده می‌شوند.
+SPECIALTIES = [
+    ("قلب و عروق", "heart"),
+    ("زنان و زایمان", "female"),
+    ("مغز و اعصاب", "brain"),
+    ("گوارش و کبد", "stomach"),
+    ("ارتوپدی", "bone"),
+    ("اورولوژی", "kidney"),
+    ("نفرولوژی", "kidney"),
+    ("آنکولوژی", "ribbon"),
+    ("عفونی", "stethoscope"),
+    ("ریه", "lungs"),
+    ("گوش و حلق و بینی", "ear"),
+    ("ناباروری و IVF", "baby"),
+    ("کودکان", "child"),
+    ("جراحی عمومی", "scalpel"),
+    ("دندانپزشکی", "tooth"),
+]
+
+
+def seed_specialties(db: Session) -> None:
+    if db.scalar(select(Specialty.id).limit(1)) is not None:
+        return
+    db.add_all(Specialty(name=n, icon=i, sort_order=k) for k, (n, i) in enumerate(SPECIALTIES))
 
 
 def seed_forms(db: Session) -> None:
@@ -124,6 +154,7 @@ def seed_demo(db: Session) -> None:
         seed_demo_training(db, password)
         seed_demo_requests(db, password)
         seed_demo_schedules(db, password)
+        seed_demo_doctors(db, password)
         return
     units = {
         "emergency": Unit(
@@ -172,6 +203,7 @@ def seed_demo(db: Session) -> None:
     seed_demo_training(db, password)
     seed_demo_requests(db, password)
     seed_demo_schedules(db, password)
+    seed_demo_doctors(db, password)
     db.add_all(
         [
             Faq(
@@ -384,11 +416,58 @@ def seed_demo_schedules(db: Session, password: str) -> None:
             u.job_title = DEMO_JOB_TITLES[u.personnel_code]
 
 
+DEMO_DOCTORS = [
+    ("دکتر نمونه یکم", "قلب و عروق", "متخصص قلب و عروق (نمونه)", True),
+    ("دکتر نمونه دوم", "ارتوپدی", "جراح و متخصص ارتوپدی (نمونه)", True),
+    ("دکتر نمونه سوم", "زنان و زایمان", "متخصص زنان و زایمان (نمونه)", False),
+]
+
+
+def seed_demo_doctors(db: Session, password: str) -> None:
+    """مدیر نوبت‌دهی (1012)، منشی (1013)، پزشک با حساب کارکنان (1014) و سه پزشک نمونه با وقت‌های هفته آینده."""
+    from datetime import date, timedelta
+
+    from app.services.appointments import session_starts
+
+    if db.scalar(select(Doctor.id).limit(1)) is not None:
+        return
+    seed_specialties(db)
+    db.flush()
+    clinic = _unit(db, "درمانگاه تخصصی", "clinic")
+    _user(db, "1012", "مدیر نوبت‌دهی", clinic, [("doctor_admin", None)], password)
+    _user(db, "1013", "منشی درمانگاه", clinic, [("secretary", None)], password)
+    _user(db, "1014", "دکتر نمونه یکم", clinic, [("staff", None)], password)
+    db.flush()
+    users = {
+        u.personnel_code: u for u in db.scalars(select(User).where(User.personnel_code.in_(["1013", "1014"])))
+    }
+    by_name = {s.name: s for s in db.scalars(select(Specialty))}
+    tomorrow = date.today() + timedelta(days=1)
+    for k, (name, spec, title, featured) in enumerate(DEMO_DOCTORS):
+        d = Doctor(
+            full_name=name,
+            specialty_id=by_name[spec].id,
+            title=title,
+            bio="این متن نمونه است؛ معرفی واقعی پزشک را مدیر نوبت‌دهی در پنل وارد می‌کند.",
+            clinic_unit_id=clinic.id,
+            is_featured=featured,
+            sort_order=k,
+            user_id=users["1014"].id if k == 0 else None,
+        )
+        d.secretaries = [DoctorSecretary(user_id=users["1013"].id)]
+        db.add(d)
+        db.flush()
+        for day in range(7):
+            for t in session_starts(tomorrow + timedelta(days=day), "09:00", "12:00", d.visit_minutes):
+                db.add(AppointmentSlot(doctor_id=d.id, starts_at=t, minutes=d.visit_minutes))
+
+
 def run(demo: bool = False) -> None:
     with SessionLocal() as db:
         seed_roles(db)
         seed_forms(db)
         seed_shift_types(db)
+        seed_specialties(db)
         db.flush()
         seed_bootstrap_admin(db)
         if demo:

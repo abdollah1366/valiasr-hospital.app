@@ -721,3 +721,100 @@ class ContentTranslation(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, onupdate=utcnow)
     approved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
     approved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+# ---------------------------------------------------------------- پزشکان و نوبت‌دهی
+
+
+class Specialty(TimestampMixin, Base):
+    """گروه تخصصی (مثلاً قلب و عروق) که مراجع پزشکان را با آن پیدا می‌کند."""
+
+    __tablename__ = "specialties"
+    id: Mapped[uuid.UUID] = pk()
+    name: Mapped[str] = mapped_column(String(200), unique=True)
+    description: Mapped[str | None] = mapped_column(Text)
+    # کلید آیکون تصویری در اپ و پنل (heart, bone, brain, ...)
+    icon: Mapped[str] = mapped_column(String(40), default="stethoscope")
+    sort_order: Mapped[int] = mapped_column(Integer, default=0)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+
+
+class Doctor(TimestampMixin, Base):
+    """پزشک معرفی‌شده به مراجعان. user_id حساب کارکنان خود پزشک است تا فهرست بیمارانش را ببیند."""
+
+    __tablename__ = "doctors"
+    id: Mapped[uuid.UUID] = pk()
+    full_name: Mapped[str] = mapped_column(String(200))
+    specialty_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("specialties.id"), index=True)
+    title: Mapped[str | None] = mapped_column(String(200))  # مثلاً «فوق تخصص قلب و عروق»
+    bio: Mapped[str | None] = mapped_column(Text)
+    medical_code: Mapped[str | None] = mapped_column(String(30))  # شماره نظام پزشکی
+    clinic_unit_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("units.id", ondelete="SET NULL"))
+    user_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL"), unique=True
+    )
+    photo_media_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("media_files.id", ondelete="SET NULL")
+    )
+    visit_minutes: Mapped[int] = mapped_column(Integer, default=15)
+    is_featured: Mapped[bool] = mapped_column(Boolean, default=False)
+    booking_enabled: Mapped[bool] = mapped_column(Boolean, default=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    sort_order: Mapped[int] = mapped_column(Integer, default=0)
+
+    specialty: Mapped[Specialty] = relationship(lazy="joined")
+    secretaries: Mapped[list["DoctorSecretary"]] = relationship(cascade="all, delete-orphan")
+
+    @property
+    def has_photo(self) -> bool:
+        return self.photo_media_id is not None
+
+
+class DoctorSecretary(Base):
+    """منشی (کاربر کارکنان) که نوبت‌های این پزشک را تعریف و جابجا می‌کند."""
+
+    __tablename__ = "doctor_secretaries"
+    __table_args__ = (UniqueConstraint("doctor_id", "user_id"),)
+    id: Mapped[uuid.UUID] = pk()
+    doctor_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("doctors.id", ondelete="CASCADE"), index=True)
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+
+
+class AppointmentSlot(Base):
+    """یک وقت ویزیت. capacity بیش از یک برای نوبت‌های گروهی/بدون ساعت دقیق."""
+
+    __tablename__ = "appointment_slots"
+    __table_args__ = (UniqueConstraint("doctor_id", "starts_at"),)
+    id: Mapped[uuid.UUID] = pk()
+    doctor_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("doctors.id", ondelete="CASCADE"), index=True)
+    starts_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+    minutes: Mapped[int] = mapped_column(Integer)
+    capacity: Mapped[int] = mapped_column(Integer, default=1)
+    is_blocked: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+
+
+class Appointment(TimestampMixin, Base):
+    """نوبت یک مراجع. نام و موبایل همین‌جا ذخیره می‌شود تا منشی بتواند برای مراجع بدون اپ هم نوبت بدهد."""
+
+    __tablename__ = "appointments"
+    id: Mapped[uuid.UUID] = pk()
+    slot_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("appointment_slots.id"), index=True)
+    doctor_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("doctors.id"), index=True)
+    patient_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("patients.id", ondelete="SET NULL"), index=True
+    )
+    patient_name: Mapped[str] = mapped_column(String(200))
+    patient_mobile: Mapped[str] = mapped_column(String(20))
+    note: Mapped[str | None] = mapped_column(String(500))
+    # booked | attended | no_show | cancelled
+    status: Mapped[str] = mapped_column(String(20), default="booked", index=True)
+    tracking_code: Mapped[str] = mapped_column(String(12), unique=True)
+    source: Mapped[str] = mapped_column(String(20), default="app")  # app | secretary
+    created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+    cancelled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    cancelled_by: Mapped[str | None] = mapped_column(String(20))  # patient | staff
+    reminder_sent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+    slot: Mapped[AppointmentSlot] = relationship(lazy="joined")
+    doctor: Mapped[Doctor] = relationship(lazy="joined")

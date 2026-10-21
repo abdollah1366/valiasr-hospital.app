@@ -34,6 +34,10 @@ PERMISSIONS: dict[str, str] = {
     "schedule.approve": "تأیید یا برگرداندن برنامه شیفت واحدها",
     "schedule.read.all": "دیدن برنامه شیفت همه واحدها و کشیک امروز",
     "schedule.config": "تعریف کدهای شیفت، تعطیلات و تنظیمات برنامه واحدها",
+    # نوبت‌دهی: مدیر پزشکان همه پزشکان و نوبت‌ها را دارد؛ منشی فقط پزشکانی که به او سپرده شده‌اند.
+    # پزشکی که حسابش به پرونده پزشک وصل است، فهرست بیماران خودش را بدون مجوز جدا می‌بیند.
+    "doctor.manage": "تعریف تخصص‌ها، معرفی پزشکان و سپردن پزشک به منشی",
+    "appointment.manage": "تعریف و ویرایش وقت‌ها و نوبت‌های پزشکان سپرده‌شده (منشی)",
 }
 
 DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
@@ -111,6 +115,14 @@ DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
     "quality_pr": (
         "مسئول ایمنی، اعتبارسنجی و روابط عمومی",
         ["announcement.read", "training.read", "request.create", "unit.manage", "translation.manage"],
+    ),
+    "doctor_admin": (
+        "مدیر معرفی پزشکان و نوبت‌دهی",
+        ["announcement.read", "training.read", "request.create", "doctor.manage", "appointment.manage"],
+    ),
+    "secretary": (
+        "منشی پزشک",
+        ["announcement.read", "training.read", "request.create", "appointment.manage"],
     ),
     "auditor": ("حسابرس", ["audit.read"]),
     # مدیر سیستم عمداً به محتوای گزارش‌های خطا دسترسی ندارد.

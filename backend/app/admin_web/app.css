@@ -623,3 +623,25 @@ button.chip-code:hover { filter: brightness(.95); }
 .seg-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; border: 1px solid var(--border); border-radius: 10px; padding: 8px; background: var(--primary-tint); }
 .seg-row input[type=time] { width: 110px; }
 .code-input::-webkit-calendar-picker-indicator { display: none !important; }
+
+/* ---------------------------------------------------------------- نوبت‌دهی */
+.center { text-align: center; font-weight: 600; }
+.card.soft { background: var(--primary-tint); box-shadow: none; display: grid; gap: 10px; }
+.doc-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; display: grid; place-items: center;
+  background: var(--brand-soft); color: var(--brand); font-weight: 700; border: 2px solid var(--brand-soft); }
+.week-board { display: grid; grid-template-columns: repeat(7, minmax(132px, 1fr)); gap: 10px; overflow-x: auto; padding-bottom: 8px; }
+.day-col { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px; display: grid; gap: 6px; align-content: start; min-height: 120px; }
+.day-head { display: grid; gap: 2px; padding: 4px 4px 8px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 13px; }
+.day-head .btn { justify-self: start; margin-top: 4px; }
+.slot { border-radius: 10px; border: 1px solid var(--border); background: var(--primary-tint); overflow: hidden; }
+.slot.full { background: #fff; }
+.slot.blocked { background: var(--gray-soft); opacity: .8; }
+.slot.past { opacity: .6; }
+.slot-head { all: unset; box-sizing: border-box; cursor: pointer; display: flex; gap: 6px; align-items: center; width: 100%; padding: 6px 8px; font-size: 13px; }
+.slot-head:focus-visible { outline: 2px solid var(--focus); }
+.slot-free { margin-inline-start: auto; color: var(--brand); font-size: 12px; font-weight: 700; }
+.appt { all: unset; box-sizing: border-box; cursor: pointer; display: flex; gap: 6px; align-items: center; width: 100%; padding: 5px 8px;
+  border-top: 1px dashed var(--border); background: #fff; font-size: 13px; }
+.appt:hover { background: var(--blue-soft); }
+.appt.cancelled { text-decoration: line-through; color: var(--muted); }
+.appt .badge { font-size: 11px; }
