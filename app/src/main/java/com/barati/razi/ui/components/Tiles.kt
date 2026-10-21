@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.barati.razi.core.util.toPersianDigits
+import com.barati.razi.ui.theme.brandColor
 
 /** یک کاشی صفحه اول: آیکون در دایره، عنوان، توضیح کوتاه و شمارنده اختیاری. */
 class TileItem(
@@ -54,16 +55,17 @@ fun TileGrid(tiles: List<TileItem>) {
 fun ActionTile(t: TileItem, modifier: Modifier = Modifier) {
     Card(
         modifier.heightIn(min = 120.dp).clickable(onClick = t.onClick),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Row(verticalAlignment = Alignment.Top) {
+                // دایره پر رنگ برند با آیکون سفید؛ کاشی‌ها زنده‌تر و از دور شناختنی‌اند.
                 Box(
-                    Modifier.size(40.dp).background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+                    Modifier.size(44.dp).background(brandColor, CircleShape),
                     contentAlignment = Alignment.Center,
-                ) { Icon(t.icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary) }
+                ) { Icon(t.icon, contentDescription = null, tint = MaterialTheme.colorScheme.onTertiary) }
                 Spacer(Modifier.weight(1f))
                 if (t.badge > 0) Badge { Text(toPersianDigits(if (t.badge > 99) "99+" else t.badge.toString())) }
             }
@@ -87,11 +89,15 @@ fun WideCard(
 ) {
     Card(
         Modifier.fillMaxWidth().clickable(onClick = onClick),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = container),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
     ) {
         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            Icon(icon, contentDescription = null, Modifier.size(32.dp), tint = tint)
+            Box(
+                Modifier.size(48.dp).background(tint.copy(alpha = 0.12f), CircleShape),
+                contentAlignment = Alignment.Center,
+            ) { Icon(icon, contentDescription = null, Modifier.size(28.dp), tint = tint) }
             Column(Modifier.weight(1f)) {
                 Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                 Text(subtitle, style = MaterialTheme.typography.bodySmall)

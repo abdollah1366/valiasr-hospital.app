@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Campaign
 import androidx.compose.material.icons.outlined.FactCheck
+import androidx.compose.material.icons.outlined.MedicalServices
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.outlined.ReportProblem
@@ -88,6 +89,7 @@ fun StaffHomeScreen(
     onNotifications: () -> Unit,
     onChat: () -> Unit,
     onSchedule: () -> Unit,
+    onMyPatients: () -> Unit,
     onPublic: () -> Unit,
     onLogout: () -> Unit,
 ) {
@@ -154,6 +156,10 @@ fun StaffHomeScreen(
             }
             TileGrid(
                 buildList {
+                    // حساب پزشک: فهرست بیماران نوبت‌گرفته اول دیده می‌شود.
+                    if (me.doctorId != null) {
+                        add(TileItem("بیماران من", "نوبت‌های امروز و روزهای بعد", Icons.Outlined.MedicalServices, onClick = onMyPatients))
+                    }
                     if (me.can("incident.create")) {
                         add(
                             TileItem(

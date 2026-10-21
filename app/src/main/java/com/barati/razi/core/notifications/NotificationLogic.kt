@@ -14,6 +14,8 @@ sealed interface NotificationTarget {
     data object Announcements : NotificationTarget
     data object Training : NotificationTarget
     data class Schedule(val id: String?) : NotificationTarget
+    /** نوبت تازه یا لغوشده نزد پزشک؛ فهرست بیماران پزشک باز می‌شود. */
+    data object Appointments : NotificationTarget
 }
 
 /** منطق خالص اعلان‌ها (بدون اندروید) تا با تست واحد آزموده شود. */
@@ -31,6 +33,7 @@ object NotificationLogic {
         "announcement" -> NotificationTarget.Announcements
         "schedule" -> NotificationTarget.Schedule(linkId)
         "chat" -> linkId?.let { NotificationTarget.Chat(it) }
+        "appointment" -> NotificationTarget.Appointments
         // آزمون از صفحه آموزش شروع می‌شود تا کاربر پیش از شروع، زمان و شرایط را ببیند.
         "exam" -> NotificationTarget.Training
         else -> null

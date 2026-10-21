@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- نشان بیمارستان (همان مسیرهای آیکون اپ) بدون حاشیه، برای صفحه آغاز و سربرگ منو. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp" android:height="112dp"
+    android:viewportWidth="264" android:viewportHeight="308">
+    <group
+        android:translateX="-70"
+        android:translateY="-38">
+        <path
+            android:fillColor="#0785a8"
+            android:fillType="evenOdd"
+            android:pathData="M202.8 45.8 121 86.5v125.8c0 48.7 34.2 81.7 81.8 81.7s81.7-33 81.7-81.7V86.5L202.8 45.8Zm0 22.3 62.5 31.1v113.1c0 36.5-25.1 61.8-62.5 61.8s-62.6-25.3-62.6-61.8V99.2l62.6-31.1Z" />
+        <path
+            android:fillColor="#119b80"
+            android:fillType="evenOdd"
+            android:pathData="M78.8 116.3h47.1c34.2 0 61.6 16.7 76.9 43.4 15.2-26.7 42.6-43.4 76.8-43.4h47.7v96.1c0 71.8-52.7 125.1-124.5 125.1S78.8 284.2 78.8 212.4v-96.1Zm19.8 19.8v76.3c0 61.2 43.9 105.3 104.2 105.3S307 273.6 307 212.4v-76.3h-27.4c-37.8 0-66.8 26.9-66.8 63.2v4.2h-19.8v-4.2c0-36.3-29-63.2-67.1-63.2H98.6Z" />
+        <path
+            android:fillColor="#0785a8"
+            android:pathData="M214.5 120.7a11.7 11.7 0 1 0-23.4 0a11.7 11.7 0 1 0 23.4 0z" />
+        <path
+            android:fillColor="#0785a8"
+            android:pathData="M193 238.2h19.8v45.6h-19.8z" />
+    </group>
+</vector>

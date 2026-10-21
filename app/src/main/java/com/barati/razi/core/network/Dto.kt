@@ -39,6 +39,8 @@ data class MeDto(
     val roles: List<String>,
     val permissions: List<String>,
     @SerialName("must_change_password") val mustChangePassword: Boolean,
+    /** حساب به پرونده یک پزشک وصل است (فهرست بیماران من). */
+    @SerialName("doctor_id") val doctorId: String? = null,
 )
 
 @Serializable

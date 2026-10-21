@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -55,6 +56,7 @@ import com.barati.razi.ui.theme.brandColor
 fun RaziScaffold(
     title: String,
     onBack: (() -> Unit)? = null,
+    onMenu: (() -> Unit)? = null,
     actions: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
@@ -69,6 +71,10 @@ fun RaziScaffold(
                         if (onBack != null) {
                             IconButton(onClick = onBack) {
                                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
+                            }
+                        } else if (onMenu != null) {
+                            IconButton(onClick = onMenu) {
+                                Icon(Icons.Filled.Menu, contentDescription = stringResource(R.string.drawer_menu))
                             }
                         }
                     },

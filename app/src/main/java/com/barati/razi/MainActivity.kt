@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
+import com.barati.razi.core.data.PatientSession
 import com.barati.razi.core.data.SessionState
 import com.barati.razi.core.i18n.AppLanguage
 import com.barati.razi.notify.SystemNotifier
@@ -53,6 +54,16 @@ class MainActivity : ComponentActivity() {
                         container.chatRepository.clear()
                     }
                     SessionState.Unknown -> Unit
+                }
+            }
+        }
+        lifecycleScope.launch {
+            container.patientAuthRepository.session.collect { s ->
+                when (s) {
+                    // یادآورهای نوبت با نوبت‌های تازه سرور به‌روز می‌شوند؛ با خروج مراجع پاک می‌شوند.
+                    is PatientSession.SignedIn -> container.appointmentRepository.myAppointments()
+                    is PatientSession.SignedOut -> container.appointmentRepository.clearReminders()
+                    PatientSession.Unknown -> Unit
                 }
             }
         }

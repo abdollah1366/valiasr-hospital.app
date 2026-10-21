@@ -19,12 +19,17 @@ object ValiasrColors {
 
     val Brand = Color(0xFF019681)
     val BrandSoft = Color(0xFFE0F2F0)
+    /** سبز تیره‌تر برای پیوند و متن کوچک روی سفید (کنتراست ۵٫۲۵:۱). */
+    val Link = Color(0xFF017A6B)
+    /** شیب صفحه آغاز و کارت اصلی خانه: سبز برند به آبی نفتی و سرمه‌ای. */
+    val GradientStart = Color(0xFF019681)
+    val GradientEnd = Color(0xFF013A48)
 
     val Gold = Color(0xFF361E58)
     val GoldDeco = Color(0xFFFFDC6F)
     val Cream = Color(0xFFFBF6EC)
 
-    val Bg = Color(0xFFF6F8F7)
+    val Bg = Color(0xFFEAF2F2)
     val Surface = Color(0xFFFFFFFF)
     val SurfaceVariant = Color(0xFFECEEEE)
     val Border = Color(0xFFD6DCDB)

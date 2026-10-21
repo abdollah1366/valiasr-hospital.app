@@ -24,6 +24,7 @@ object SystemNotifier {
     const val EXTRA_NOTIFICATION_ID = "notification_id"
     const val EXTRA_LINK_TYPE = "link_type"
     const val EXTRA_LINK_ID = "link_id"
+    const val LINK_MY_APPOINTMENTS = "my_appointments"
     private const val SUMMARY_ID = 1
 
     fun ensureChannels(context: Context) {
@@ -64,6 +65,23 @@ object SystemNotifier {
     }
 
     fun cancelAll(context: Context) = NotificationManagerCompat.from(context).cancelAll()
+
+    /** یادآور نوبت مراجع؛ با لمس آن «نوبت‌های من» باز می‌شود. */
+    fun showReminder(context: Context, key: String, title: String, body: String) {
+        if (!canPost(context)) return
+        ensureChannels(context)
+        val notification = base(context, important = true)
+            .setContentTitle(title)
+            .setContentText(body)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(body))
+            .setContentIntent(openIntent(context, key.hashCode(), null, LINK_MY_APPOINTMENTS, null))
+            .build()
+        try {
+            NotificationManagerCompat.from(context).notify(key.hashCode(), notification)
+        } catch (_: SecurityException) {
+            // اجازه اعلان گرفته شده است؛ نوبت در خود اپ دیده می‌شود.
+        }
+    }
 
     private fun base(context: Context, important: Boolean) =
         NotificationCompat.Builder(context, if (important) CHANNEL_IMPORTANT else CHANNEL_GENERAL)
