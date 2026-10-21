@@ -32,6 +32,15 @@ interface PatientApiService {
     @GET("patient/appointments")
     suspend fun appointments(): List<PatientAppointmentDto>
 
+    @GET("patient/tokens")
+    suspend fun tokens(): TokensDto
+
+    @POST("patient/referral")
+    suspend fun enterReferral(@Body body: ReferralRequest): TokensDto
+
+    @POST("patient/tokens/redeem")
+    suspend fun redeemReward(@Body body: RedeemRequest): VoucherDto
+
     @GET("patient/results")
     suspend fun results(@Query("kind") kind: String? = null): List<ResultDto>
 

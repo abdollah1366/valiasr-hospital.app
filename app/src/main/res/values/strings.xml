@@ -241,4 +241,25 @@
     <string name="results_empty">جوابی ثبت نشده است.</string>
     <string name="results_pending">آماده نیست</string>
     <string name="results_reference">محدوده: %1$s</string>
+    <string name="nav_club">باشگاه مراجعان</string>
+    <string name="club_signin_needed">برای دیدن ژتون‌ها وارد شوید.</string>
+    <string name="club_balance">موجودی ژتون</string>
+    <string name="club_invite_title">اپ را معرفی کنید</string>
+    <string name="club_invite_text">وقتی دوستتان با کد شما ثبت‌نام کند و اولین ویزیتش انجام شود، شما %1$s ژتون و او %2$s ژتون می‌گیرد.</string>
+    <string name="club_share">ارسال دعوت</string>
+    <string name="club_copy">کپی کد</string>
+    <string name="club_share_text">من با این اپ بیمارستان بین‌المللی ولیعصر تبریز نوبت می‌گیرم. موقع ثبت‌نام کد معرف %1$s را وارد کن.</string>
+    <string name="club_have_code">کد معرف دارید؟</string>
+    <string name="club_code_label">کد معرف</string>
+    <string name="club_code_submit">ثبت کد</string>
+    <string name="club_rewards">امتیازهای قابل دریافت</string>
+    <string name="club_cost">%1$s ژتون</string>
+    <string name="club_vouchers">کدهای استفاده شما</string>
+    <string name="club_voucher_hint">کد را در پذیرش یا نوبت‌دهی نشان دهید.</string>
+    <string name="club_voucher_issued">تحویل‌نشده</string>
+    <string name="club_voucher_used">تحویل شد</string>
+    <string name="club_voucher_cancelled">باطل شد</string>
+    <string name="club_history">سابقه ژتون</string>
+    <string name="club_confirm">خرج شود؟</string>
+    <string name="club_confirm_yes">بله، دریافت کن</string>
 </resources>

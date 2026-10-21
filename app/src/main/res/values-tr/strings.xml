@@ -237,4 +237,25 @@
     <string name="results_empty">Henüz sonuç yok.</string>
     <string name="results_pending">Hazır değil</string>
     <string name="results_reference">Aralık: %1$s</string>
+    <string name="nav_club">Hasta kulübü</string>
+    <string name="club_signin_needed">Jetonlarınızı görmek için giriş yapın.</string>
+    <string name="club_balance">Jeton bakiyesi</string>
+    <string name="club_invite_title">Arkadaşlarınızı davet edin</string>
+    <string name="club_invite_text">Arkadaşınız kodunuzla kayıt olup ilk muayenesini tamamlayınca siz %1$s, o %2$s jeton kazanır.</string>
+    <string name="club_share">Davet gönder</string>
+    <string name="club_copy">Kodu kopyala</string>
+    <string name="club_share_text">Randevularımı Veliasr Uluslararası Hastanesi uygulamasından alıyorum. Kayıt olurken %1$s davet kodunu gir.</string>
+    <string name="club_have_code">Davet kodunuz var mı?</string>
+    <string name="club_code_label">Davet kodu</string>
+    <string name="club_code_submit">Kodu uygula</string>
+    <string name="club_rewards">Ödüller</string>
+    <string name="club_cost">%1$s jeton</string>
+    <string name="club_vouchers">Kullanım kodlarınız</string>
+    <string name="club_voucher_hint">Kodu kabulde veya randevuda gösterin.</string>
+    <string name="club_voucher_issued">Kullanılmadı</string>
+    <string name="club_voucher_used">Kullanıldı</string>
+    <string name="club_voucher_cancelled">İptal edildi</string>
+    <string name="club_history">Jeton geçmişi</string>
+    <string name="club_confirm">%1$s jeton harcansın mı?</string>
+    <string name="club_confirm_yes">Evet, al</string>
 </resources>
