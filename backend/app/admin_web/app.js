@@ -26,6 +26,7 @@ const L = {
 // render(main, sub): sub بخش‌های بعدی نشانی است، مثلاً #/courses/<id>/stats → ["<id>", "stats"]
 const PAGES = [
   { id: "my-patients", title: "بیماران من", icon: "patients", when: () => !!state.me.doctor_id, render: renderMyPatients },
+  { id: "my-reviews", title: "نظرات من", icon: "chat", when: () => !!state.me.doctor_id, render: renderMyReviews },
   { id: "dashboard", title: "داشبورد", icon: "dashboard", perm: "dashboard.read", render: renderDashboard },
   { id: "courses", title: "دوره‌های آموزشی", icon: "school", perm: "training.manage", render: renderCourses },
   { id: "exams", title: "آزمون‌ها", icon: "quiz", perm: "training.manage", render: renderExams },
@@ -37,6 +38,7 @@ const PAGES = [
   { id: "booking", title: "نوبت‌دهی", icon: "event", perm: ["doctor.manage", "appointment.manage"], render: renderBooking },
   { id: "doctors", title: "معرفی پزشکان", icon: "doctor", perm: "doctor.manage", render: renderDoctors },
   { id: "specialties", title: "گروه‌های تخصصی", icon: "category", perm: "doctor.manage", render: renderSpecialties },
+  { id: "reviews", title: "نظرات بیماران", icon: "chat", perm: ["review.moderate", "review.reply"], render: renderReviews },
   { id: "users", title: "کاربران", icon: "people", perm: "user.manage", render: renderUsers },
   { id: "units", title: "واحدها", icon: "units", perm: "unit.manage", render: renderUnits },
   { id: "announcements", title: "اطلاعیه‌ها", icon: "bell", perm: "announcement.manage", render: renderAnnouncements },

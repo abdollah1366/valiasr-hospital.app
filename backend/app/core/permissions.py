@@ -38,6 +38,10 @@ PERMISSIONS: dict[str, str] = {
     # پزشکی که حسابش به پرونده پزشک وصل است، فهرست بیماران خودش را بدون مجوز جدا می‌بیند.
     "doctor.manage": "تعریف تخصص‌ها، معرفی پزشکان و سپردن پزشک به منشی",
     "appointment.manage": "تعریف و ویرایش وقت‌ها و نوبت‌های پزشکان سپرده‌شده (منشی)",
+    # نظرات مراجعان درباره پزشکان: متن نظر پس از تأیید مدیر پزشکان منتشر می‌شود؛ پزشک (حساب وصل به پرونده)
+    # بدون مجوز جدا به نظرهای خودش پاسخ می‌دهد.
+    "review.moderate": "تأیید یا رد نظرهای مراجعان درباره پزشکان و پاسخ به آن‌ها",
+    "review.reply": "پاسخ مدیر سیستم به نظرهای مراجعان درباره پزشکان",
 }
 
 DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
@@ -118,7 +122,14 @@ DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
     ),
     "doctor_admin": (
         "مدیر معرفی پزشکان و نوبت‌دهی",
-        ["announcement.read", "training.read", "request.create", "doctor.manage", "appointment.manage"],
+        [
+            "announcement.read",
+            "training.read",
+            "request.create",
+            "doctor.manage",
+            "appointment.manage",
+            "review.moderate",
+        ],
     ),
     "secretary": (
         "منشی پزشک",
@@ -136,6 +147,7 @@ DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
             "request.type.manage",
             "chat.group.create",
             "schedule.config",
+            "review.reply",
         ],
     ),
 }

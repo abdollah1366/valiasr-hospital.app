@@ -818,3 +818,33 @@ class Appointment(TimestampMixin, Base):
 
     slot: Mapped[AppointmentSlot] = relationship(lazy="joined")
     doctor: Mapped[Doctor] = relationship(lazy="joined")
+
+
+class DoctorReview(TimestampMixin, Base):
+    """امتیاز و نظر مراجع پس از ویزیت (یک نظر برای هر نوبت).
+
+    ستاره بلافاصله در امتیاز پزشک حساب می‌شود؛ متن نظر پس از تأیید مدیر پزشکان منتشر می‌شود.
+    پاسخ پزشک و پاسخ مدیر سیستم همراه نظر نگه داشته می‌شود. مراجع در خروجی عمومی نام‌برده نمی‌شود.
+    """
+
+    __tablename__ = "doctor_reviews"
+    id: Mapped[uuid.UUID] = pk()
+    appointment_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("appointments.id", ondelete="CASCADE"), unique=True
+    )
+    doctor_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("doctors.id", ondelete="CASCADE"), index=True)
+    patient_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("patients.id", ondelete="SET NULL"))
+    stars: Mapped[int] = mapped_column(Integer)
+    comment: Mapped[str | None] = mapped_column(String(1500))
+    # pending | approved | rejected (بدون متن نظر: approved)
+    status: Mapped[str] = mapped_column(String(20), default="pending", index=True)
+    moderated_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+    moderated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    doctor_reply: Mapped[str | None] = mapped_column(String(1500))
+    doctor_reply_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    admin_reply: Mapped[str | None] = mapped_column(String(1500))
+    admin_reply_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    admin_reply_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+
+    appointment: Mapped[Appointment] = relationship(lazy="joined")
+    doctor: Mapped[Doctor] = relationship(lazy="joined")

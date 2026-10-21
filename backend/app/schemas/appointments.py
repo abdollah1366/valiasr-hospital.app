@@ -4,6 +4,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, field_validator
 
+from app.schemas.reviews import MyReviewOut
+
 # کلید آیکون تصویری هر گروه تخصصی؛ اپ و پنل برای هر کلید تصویر خودشان را دارند.
 SPECIALTY_ICONS = (
     "stethoscope",
@@ -109,6 +111,8 @@ class PublicDoctorOut(BaseModel):
     is_featured: bool
     booking_enabled: bool
     next_free_at: datetime | None
+    rating_average: float | None = None
+    rating_count: int = 0
 
 
 class PublicSlotOut(BaseModel):
@@ -218,3 +222,6 @@ class PatientAppointmentOut(BaseModel):
     note: str | None
     can_cancel: bool
     cancelled_by: str | None
+    # بعد از ویزیت: می‌تواند ستاره و نظر بدهد؛ پس از ثبت، نظر خودش اینجا می‌آید
+    can_review: bool = False
+    my_review: MyReviewOut | None = None
