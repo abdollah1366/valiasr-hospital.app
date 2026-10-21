@@ -237,4 +237,25 @@
     <string name="results_empty">Hələ nəticə yoxdur.</string>
     <string name="results_pending">Hazır deyil</string>
     <string name="results_reference">Aralıq: %1$s</string>
+    <string name="nav_club">Pasiyent klubu</string>
+    <string name="club_signin_needed">Jetonlarınızı görmək üçün daxil olun.</string>
+    <string name="club_balance">Jeton balansı</string>
+    <string name="club_invite_title">Dostlarınızı dəvət edin</string>
+    <string name="club_invite_text">Dostunuz kodunuzla qeydiyyatdan keçib ilk müayinəsini tamamlayanda siz %1$s, o isə %2$s jeton qazanır.</string>
+    <string name="club_share">Dəvət göndər</string>
+    <string name="club_copy">Kodu kopyala</string>
+    <string name="club_share_text">Mən Vəliəsr Beynəlxalq Xəstəxanasının tətbiqi ilə növbə alıram. Qeydiyyatda %1$s dəvət kodunu daxil et.</string>
+    <string name="club_have_code">Dəvət kodunuz var?</string>
+    <string name="club_code_label">Dəvət kodu</string>
+    <string name="club_code_submit">Kodu tətbiq et</string>
+    <string name="club_rewards">Mükafatlar</string>
+    <string name="club_cost">%1$s jeton</string>
+    <string name="club_vouchers">İstifadə kodlarınız</string>
+    <string name="club_voucher_hint">Kodu qəbulda və ya növbə zamanı göstərin.</string>
+    <string name="club_voucher_issued">Təhvil verilməyib</string>
+    <string name="club_voucher_used">Təhvil verildi</string>
+    <string name="club_voucher_cancelled">Ləğv edildi</string>
+    <string name="club_history">Jeton tarixçəsi</string>
+    <string name="club_confirm">%1$s jeton xərclənsin?</string>
+    <string name="club_confirm_yes">Bəli, götür</string>
 </resources>

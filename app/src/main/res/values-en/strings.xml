@@ -237,4 +237,25 @@
     <string name="results_empty">No results yet.</string>
     <string name="results_pending">Not ready</string>
     <string name="results_reference">Range: %1$s</string>
+    <string name="nav_club">Patient club</string>
+    <string name="club_signin_needed">Sign in to see your tokens.</string>
+    <string name="club_balance">Token balance</string>
+    <string name="club_invite_title">Invite friends</string>
+    <string name="club_invite_text">When a friend signs up with your code and completes their first visit, you get %1$s tokens and they get %2$s.</string>
+    <string name="club_share">Send invite</string>
+    <string name="club_copy">Copy code</string>
+    <string name="club_share_text">I book my visits with the Valiasr International Hospital app. Enter my referral code %1$s when you sign up.</string>
+    <string name="club_have_code">Have a referral code?</string>
+    <string name="club_code_label">Referral code</string>
+    <string name="club_code_submit">Apply code</string>
+    <string name="club_rewards">Rewards</string>
+    <string name="club_cost">%1$s tokens</string>
+    <string name="club_vouchers">Your vouchers</string>
+    <string name="club_voucher_hint">Show the code at admission or booking.</string>
+    <string name="club_voucher_issued">Not redeemed</string>
+    <string name="club_voucher_used">Redeemed</string>
+    <string name="club_voucher_cancelled">Cancelled</string>
+    <string name="club_history">Token history</string>
+    <string name="club_confirm">Spend %1$s tokens?</string>
+    <string name="club_confirm_yes">Yes, redeem</string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import com.barati.razi.core.data.AppointmentRepository
 import com.barati.razi.core.data.ResultsRepository
+import com.barati.razi.core.data.TokensRepository
 import com.barati.razi.core.data.ChatRepository
 import com.barati.razi.core.data.ContentRepository
 import com.barati.razi.core.data.DataStoreKeyValueStore
@@ -81,6 +82,7 @@ class AppContainer(context: Context) {
     }
 
     val resultsRepository = ResultsRepository(patientApi)
+    val tokensRepository = TokensRepository(patientApi)
 
     /** نشانی کامل عکس پزشک (عمومی، بدون توکن). */
     fun doctorPhotoUrl(doctorId: String): String = apiRoot() + "public/doctors/$doctorId/photo"

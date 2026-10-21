@@ -237,4 +237,25 @@
     <string name="results_empty">لا توجد نتائج.</string>
     <string name="results_pending">غير جاهز</string>
     <string name="results_reference">المدى: %1$s</string>
+    <string name="nav_club">نادي المراجعين</string>
+    <string name="club_signin_needed">سجّل الدخول لعرض الرموز.</string>
+    <string name="club_balance">رصيد الرموز</string>
+    <string name="club_invite_title">ادعُ أصدقاءك</string>
+    <string name="club_invite_text">عندما يسجّل صديقك برمزك ويُكمل أول زيارة، تحصل على %1$s رمزًا ويحصل هو على %2$s.</string>
+    <string name="club_share">إرسال الدعوة</string>
+    <string name="club_copy">نسخ الرمز</string>
+    <string name="club_share_text">أحجز مواعيدي عبر تطبيق مستشفى ولي العصر الدولي. أدخل رمز الدعوة %1$s عند التسجيل.</string>
+    <string name="club_have_code">هل لديك رمز دعوة؟</string>
+    <string name="club_code_label">رمز الدعوة</string>
+    <string name="club_code_submit">تطبيق الرمز</string>
+    <string name="club_rewards">المكافآت</string>
+    <string name="club_cost">%1$s رمز</string>
+    <string name="club_vouchers">رموز الاستخدام</string>
+    <string name="club_voucher_hint">اعرض الرمز عند الاستقبال أو الحجز.</string>
+    <string name="club_voucher_issued">لم يُستلم</string>
+    <string name="club_voucher_used">تم الاستلام</string>
+    <string name="club_voucher_cancelled">ملغى</string>
+    <string name="club_history">سجل الرموز</string>
+    <string name="club_confirm">إنفاق %1$s رمز؟</string>
+    <string name="club_confirm_yes">نعم، استلم</string>
 </resources>
