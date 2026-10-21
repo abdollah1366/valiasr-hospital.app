@@ -113,6 +113,7 @@ def _public_doctor(db: Session, d: Doctor, with_next: bool = True) -> PublicDoct
         clinic_name=clinic.name if clinic else None,
         clinic_location=clinic.location if clinic else None,
         has_photo=d.has_photo,
+        photo_version=str(d.photo_media_id) if d.photo_media_id else None,
         is_featured=d.is_featured,
         booking_enabled=d.booking_enabled,
         next_free_at=svc.next_free_at(db, d.id, horizon) if with_next and d.booking_enabled else None,

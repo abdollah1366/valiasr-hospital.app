@@ -10,7 +10,7 @@
     <string name="error_generic">حدث خطأ. يرجى المحاولة مرة أخرى.</string>
     <string name="error_network">تعذّر الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت.</string>
 
-    <string name="hospital_full_name">مستشفى ولي العصر الدولي في تبريز</string>
+    <string name="hospital_full_name">ولي العصر تبريز</string>
     <string name="tile_news">الإعلانات</string>
     <string name="tile_news_sub">أخبار المستشفى وتغييرات الخدمات</string>
     <string name="tile_feedback_sub">الإرسال والمتابعة برمز</string>

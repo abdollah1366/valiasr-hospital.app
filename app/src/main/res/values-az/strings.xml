@@ -10,7 +10,7 @@
     <string name="error_generic">Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.</string>
     <string name="error_network">Serverə qoşulmaq mümkün olmadı. İnternet bağlantınızı yoxlayın.</string>
 
-    <string name="hospital_full_name">Təbriz Beynəlxalq Vəliəsr Xəstəxanası</string>
+    <string name="hospital_full_name">Vəliəsr Təbriz</string>
     <string name="tile_news">Elanlar</string>
     <string name="tile_news_sub">Xəstəxana xəbərləri və xidmət dəyişiklikləri</string>
     <string name="tile_feedback_sub">Kodla göndərin və izləyin</string>

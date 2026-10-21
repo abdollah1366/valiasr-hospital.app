@@ -26,6 +26,8 @@ data class DoctorDto(
     @SerialName("clinic_name") val clinicName: String? = null,
     @SerialName("clinic_location") val clinicLocation: String? = null,
     @SerialName("has_photo") val hasPhoto: Boolean = false,
+    // شناسه فایل عکس؛ با هر عکس جدید عوض می‌شود تا کش گوشی عکس قبلی را نشان ندهد
+    @SerialName("photo_version") val photoVersion: String? = null,
     @SerialName("is_featured") val isFeatured: Boolean = false,
     @SerialName("booking_enabled") val bookingEnabled: Boolean = true,
     @SerialName("next_free_at") val nextFreeAt: String? = null,

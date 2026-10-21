@@ -11,7 +11,7 @@
     <string name="error_network">اتصال به سرور برقرار نشد. اینترنت خود را بررسی کنید.</string>
 
     <!-- صفحه اول مراجعان -->
-    <string name="hospital_full_name">بیمارستان بین‌المللی ولیعصر تبریز</string>
+    <string name="hospital_full_name">ولیعصر تبریز</string>
     <string name="tile_news">اطلاعیه‌ها</string>
     <string name="tile_news_sub">اخبار و تغییرات خدمات بیمارستان</string>
     <string name="tile_feedback_sub">ثبت و پیگیری با کد</string>
