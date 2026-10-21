@@ -24,6 +24,7 @@ from app.models import (
     Appointment,
     AppointmentSlot,
     Doctor,
+    DoctorReview,
     DoctorSecretary,
     MediaFile,
     Patient,
@@ -33,6 +34,7 @@ from app.models import (
 )
 from app.routers.admin import UNIT_IMAGE_MAX_MB, UNIT_IMAGE_TYPES
 from app.routers.patient import get_current_patient
+from app.routers.reviews import my_review_out
 from app.schemas.appointments import (
     CancelDayIn,
     CancelDayOut,
@@ -56,6 +58,7 @@ from app.schemas.appointments import (
 )
 from app.services import appointments as svc
 from app.services import notifications as notes
+from app.services import reviews as reviews_svc
 from app.services.media import store_upload
 from app.services.phone import normalize_mobile
 from app.services.training import media_path
@@ -97,6 +100,7 @@ def _doctor_out(db: Session, d: Doctor) -> DoctorOut:
 def _public_doctor(db: Session, d: Doctor, with_next: bool = True) -> PublicDoctorOut:
     clinic = db.get(Unit, d.clinic_unit_id) if d.clinic_unit_id else None
     horizon = get_settings().appointment_booking_days
+    average, count = reviews_svc.rating(db, d.id)
     return PublicDoctorOut(
         id=d.id,
         full_name=d.full_name,
@@ -111,6 +115,8 @@ def _public_doctor(db: Session, d: Doctor, with_next: bool = True) -> PublicDoct
         is_featured=d.is_featured,
         booking_enabled=d.booking_enabled,
         next_free_at=svc.next_free_at(db, d.id, horizon) if with_next and d.booking_enabled else None,
+        rating_average=average,
+        rating_count=count,
     )
 
 
@@ -136,6 +142,7 @@ def _patient_appt(db: Session, a: Appointment) -> PatientAppointmentOut:
     d = a.doctor
     clinic = db.get(Unit, d.clinic_unit_id) if d.clinic_unit_id else None
     cancel_until = a.slot.starts_at - timedelta(hours=get_settings().appointment_cancel_hours)
+    review = db.scalar(select(DoctorReview).where(DoctorReview.appointment_id == a.id))
     return PatientAppointmentOut(
         id=a.id,
         tracking_code=a.tracking_code,
@@ -151,6 +158,8 @@ def _patient_appt(db: Session, a: Appointment) -> PatientAppointmentOut:
         note=a.note,
         can_cancel=a.status == "booked" and svc.now() < cancel_until,
         cancelled_by=a.cancelled_by,
+        can_review=a.status == "attended" and review is None,
+        my_review=my_review_out(review) if review else None,
     )
 
 

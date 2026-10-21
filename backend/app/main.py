@@ -22,6 +22,7 @@ from app.routers import (
     patient,
     public,
     requests,
+    reviews,
     schedules,
     training,
     translations,
@@ -98,6 +99,7 @@ def create_app() -> FastAPI:
         schedules.router,
         translations.router,
         appointments.router,
+        reviews.router,
     ):
         app.include_router(r, prefix=API_PREFIX)
 
