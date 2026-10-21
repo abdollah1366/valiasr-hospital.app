@@ -30,4 +30,4 @@ class ContentRepository(private val api: ApiService) {
 }
 
 /** فارسی متن اصلی است و پارامتر زبان لازم ندارد. */
-private val AppLanguage.query: String? get() = if (this == AppLanguage.FA) null else code
+internal val AppLanguage.query: String? get() = if (this == AppLanguage.FA) null else code
