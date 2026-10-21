@@ -229,4 +229,12 @@
     <string name="review_rate_action">Rate your visit</string>
     <string name="review_your_rating">Your rating:</string>
     <string name="review_pending_short">Awaiting approval</string>
+    <string name="nav_results">Lab and imaging results</string>
+    <string name="results_signin_needed">Sign in to see your results.</string>
+    <string name="results_all">All</string>
+    <string name="results_lab">Lab</string>
+    <string name="results_imaging">Imaging</string>
+    <string name="results_empty">No results yet.</string>
+    <string name="results_pending">Not ready</string>
+    <string name="results_reference">Range: %1$s</string>
 </resources>

@@ -229,4 +229,12 @@
     <string name="review_rate_action">قيّم زيارتك</string>
     <string name="review_your_rating">تقييمك:</string>
     <string name="review_pending_short">بانتظار الموافقة</string>
+    <string name="nav_results">نتائج التحاليل والتصوير</string>
+    <string name="results_signin_needed">سجّل الدخول لعرض النتائج.</string>
+    <string name="results_all">الكل</string>
+    <string name="results_lab">التحاليل</string>
+    <string name="results_imaging">التصوير</string>
+    <string name="results_empty">لا توجد نتائج.</string>
+    <string name="results_pending">غير جاهز</string>
+    <string name="results_reference">المدى: %1$s</string>
 </resources>

@@ -229,4 +229,12 @@
     <string name="review_rate_action">Ziyaretinizi puanlayın</string>
     <string name="review_your_rating">Puanınız:</string>
     <string name="review_pending_short">Onay bekliyor</string>
+    <string name="nav_results">Tahlil ve görüntüleme sonuçları</string>
+    <string name="results_signin_needed">Sonuçları görmek için giriş yapın.</string>
+    <string name="results_all">Tümü</string>
+    <string name="results_lab">Tahlil</string>
+    <string name="results_imaging">Görüntüleme</string>
+    <string name="results_empty">Henüz sonuç yok.</string>
+    <string name="results_pending">Hazır değil</string>
+    <string name="results_reference">Aralık: %1$s</string>
 </resources>

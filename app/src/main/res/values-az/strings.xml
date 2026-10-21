@@ -229,4 +229,12 @@
     <string name="review_rate_action">Ziyarətinizi qiymətləndirin</string>
     <string name="review_your_rating">Qiymətiniz:</string>
     <string name="review_pending_short">Təsdiq gözləyir</string>
+    <string name="nav_results">Analiz və görüntüləmə nəticələri</string>
+    <string name="results_signin_needed">Nəticələri görmək üçün daxil olun.</string>
+    <string name="results_all">Hamısı</string>
+    <string name="results_lab">Analiz</string>
+    <string name="results_imaging">Görüntüləmə</string>
+    <string name="results_empty">Hələ nəticə yoxdur.</string>
+    <string name="results_pending">Hazır deyil</string>
+    <string name="results_reference">Aralıq: %1$s</string>
 </resources>

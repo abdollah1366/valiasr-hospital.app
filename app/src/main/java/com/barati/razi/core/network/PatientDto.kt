@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Query
 import retrofit2.http.Path
 
 /** ورود مراجعان با موبایل و کد پیامکی (سرور: app/routers/patient.py). */
@@ -30,6 +31,9 @@ interface PatientApiService {
 
     @GET("patient/appointments")
     suspend fun appointments(): List<PatientAppointmentDto>
+
+    @GET("patient/results")
+    suspend fun results(@Query("kind") kind: String? = null): List<ResultDto>
 
     @POST("patient/appointments/{id}/review")
     suspend fun reviewAppointment(@Path("id") id: String, @Body body: ReviewRequest): MyReviewDto

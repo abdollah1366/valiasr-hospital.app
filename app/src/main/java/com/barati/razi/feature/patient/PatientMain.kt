@@ -41,6 +41,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.LocalHospital
 import androidx.compose.material.icons.outlined.MedicalServices
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Science
 import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.outlined.Search
@@ -92,6 +93,7 @@ import com.barati.razi.core.network.Result
 import com.barati.razi.feature.appointments.DoctorsTab
 import com.barati.razi.feature.appointments.FeaturedDoctorCard
 import com.barati.razi.feature.appointments.MyAppointmentsTab
+import com.barati.razi.feature.results.ResultsTab
 import com.barati.razi.feature.appointments.SpecialtyTile
 import com.barati.razi.feature.publicinfo.FeedbackBody
 import com.barati.razi.feature.publicinfo.UnitsList
@@ -116,6 +118,7 @@ private enum class PatientTab(val label: Int, val icon: ImageVector, val selecte
     APPOINTMENTS(R.string.nav_appointments, Icons.Outlined.CalendarMonth, Icons.Filled.CalendarMonth),
     PROFILE(R.string.nav_profile, Icons.Outlined.Person, Icons.Filled.Person),
     UNITS(R.string.drawer_units, Icons.Outlined.LocalHospital, Icons.Outlined.LocalHospital, inBar = false),
+    RESULTS(R.string.nav_results, Icons.Outlined.Science, Icons.Outlined.Science, inBar = false),
     FEEDBACK(R.string.drawer_feedback, Icons.Outlined.Feedback, Icons.Outlined.Feedback, inBar = false),
 }
 
@@ -174,6 +177,7 @@ fun PatientHomeScreen(
                     Spacer(Modifier.height(8.dp))
                     DrawerItem(Icons.Outlined.MedicalServices, stringResource(R.string.nav_doctors)) { go(PatientTab.DOCTORS) }
                     DrawerItem(Icons.Outlined.CalendarMonth, stringResource(R.string.nav_appointments)) { go(PatientTab.APPOINTMENTS) }
+                    DrawerItem(Icons.Outlined.Science, stringResource(R.string.nav_results)) { go(PatientTab.RESULTS) }
                     DrawerItem(Icons.Outlined.LocalHospital, stringResource(R.string.drawer_units)) { go(PatientTab.UNITS) }
                     DrawerItem(Icons.AutoMirrored.Outlined.Assignment, stringResource(R.string.admission_title)) { openDrawerItem(onAdmission) }
                     DrawerItem(Icons.Outlined.AccessTime, stringResource(R.string.tile_visiting)) { openDrawerItem(onFaq) }
@@ -261,6 +265,7 @@ fun PatientHomeScreen(
                     onFindDoctor = { tab = PatientTab.DOCTORS.ordinal },
                 )
                 PatientTab.PROFILE -> ProfileTab(padding, language, onLanguage, patient, staffLoggedIn, onSignIn, onSignOut, onTrackIncident, onStaff)
+                PatientTab.RESULTS -> ResultsTab(container, padding, signedIn = patient != null, onSignIn = onSignIn)
                 PatientTab.UNITS -> UnitsList(container, padding)
                 PatientTab.FEEDBACK -> FeedbackBody(container, padding)
             }
