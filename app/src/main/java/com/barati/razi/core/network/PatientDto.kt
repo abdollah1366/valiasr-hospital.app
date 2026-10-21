@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 /** ورود مراجعان با موبایل و کد پیامکی (سرور: app/routers/patient.py). */
 interface PatientApiService {
@@ -23,6 +24,15 @@ interface PatientApiService {
 
     @PATCH("patient/me")
     suspend fun updateMe(@Body body: PatientUpdateRequest): PatientDto
+
+    @POST("patient/appointments")
+    suspend fun book(@Body body: BookRequest): PatientAppointmentDto
+
+    @GET("patient/appointments")
+    suspend fun appointments(): List<PatientAppointmentDto>
+
+    @POST("patient/appointments/{id}/cancel")
+    suspend fun cancelAppointment(@Path("id") id: String): PatientAppointmentDto
 }
 
 @Serializable

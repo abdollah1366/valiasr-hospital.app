@@ -2,6 +2,7 @@ package com.barati.razi
 
 import android.content.Context
 import android.os.Build
+import com.barati.razi.core.data.AppointmentRepository
 import com.barati.razi.core.data.ChatRepository
 import com.barati.razi.core.data.ContentRepository
 import com.barati.razi.core.data.DataStoreKeyValueStore
@@ -15,6 +16,7 @@ import com.barati.razi.core.data.ScheduleRepository
 import com.barati.razi.core.data.ServiceRequestRepository
 import com.barati.razi.core.data.TrainingRepository
 import com.barati.razi.core.network.HttpFactory
+import com.barati.razi.work.AppointmentReminderWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,14 +54,15 @@ class AppContainer(context: Context) {
 
     private lateinit var patientAuthRef: PatientAuthRepository
     private val patientTokens = com.barati.razi.core.data.EncryptedTokenStorage(appContext, "valiasr_patient_tokens")
+    private val patientApi = HttpFactory.createPatient(
+        baseUrl = BuildConfig.API_BASE_URL,
+        tokens = patientTokens,
+        originOverride = { if (BuildConfig.ALLOW_SERVER_OVERRIDE) serverOrigin else null },
+        debug = BuildConfig.DEBUG,
+        onSessionExpired = { patientAuthRef.onSessionExpired() },
+    )
     val patientAuthRepository = PatientAuthRepository(
-        api = HttpFactory.createPatient(
-            baseUrl = BuildConfig.API_BASE_URL,
-            tokens = patientTokens,
-            originOverride = { if (BuildConfig.ALLOW_SERVER_OVERRIDE) serverOrigin else null },
-            debug = BuildConfig.DEBUG,
-            onSessionExpired = { patientAuthRef.onSessionExpired() },
-        ),
+        api = patientApi,
         tokens = patientTokens,
         store = store,
         languages = languageRepository,
@@ -70,6 +73,18 @@ class AppContainer(context: Context) {
         store = store,
         bundledForm = { appContext.assets.open("forms/incident_form.json").bufferedReader().use { it.readText() } },
     )
+
+    val appointmentRepository = AppointmentRepository(api, patientApi) { items ->
+        AppointmentReminderWorker.sync(appContext, items, languageRepository.language.value)
+    }
+
+    /** نشانی کامل عکس پزشک (عمومی، بدون توکن). */
+    fun doctorPhotoUrl(doctorId: String): String = apiRoot() + "public/doctors/$doctorId/photo"
+
+    private fun apiRoot(): String {
+        val override = if (BuildConfig.ALLOW_SERVER_OVERRIDE) serverOrigin else null
+        return if (override != null) "$override/api/v1/" else BuildConfig.API_BASE_URL
+    }
 
     val serviceRequestRepository = ServiceRequestRepository(api, store)
     val notificationRepository = NotificationRepository(api, store)

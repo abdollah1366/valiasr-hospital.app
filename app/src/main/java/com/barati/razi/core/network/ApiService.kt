@@ -24,6 +24,29 @@ interface ApiService {
     @GET("auth/me")
     suspend fun me(): MeDto
 
+    @GET("public/specialties")
+    suspend fun specialties(): List<SpecialtyDto>
+
+    @GET("public/doctors")
+    suspend fun doctors(
+        @Query("specialty_id") specialtyId: String? = null,
+        @Query("q") query: String? = null,
+        @Query("featured") featured: Boolean? = null,
+    ): List<DoctorDto>
+
+    @GET("public/doctors/{id}")
+    suspend fun doctor(@Path("id") id: String): DoctorDto
+
+    @GET("public/doctors/{id}/slots")
+    suspend fun doctorSlots(@Path("id") id: String): List<SlotDto>
+
+    /** فهرست بیماران پزشکی که حسابش به پرونده پزشک وصل است؛ start تاریخ میلادی yyyy-MM-dd. */
+    @GET("doctor/me/appointments")
+    suspend fun myDoctorAppointments(@Query("start") start: String, @Query("days") days: Int = 1): List<DoctorAppointmentDto>
+
+    @POST("doctor/me/appointments/{id}/status")
+    suspend fun setDoctorAppointmentStatus(@Path("id") id: String, @Body body: AppointmentStatusRequest): DoctorAppointmentDto
+
     /** lang: کد زبان مراجع؛ null یعنی فارسی (متن اصلی). */
     @GET("public/units")
     suspend fun publicUnits(@Query("lang") lang: String? = null): List<UnitDto>

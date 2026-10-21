@@ -14,6 +14,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.barati.razi.AppContainer
+import com.barati.razi.OpenRequest
+import com.barati.razi.feature.appointments.DoctorDetailScreen
+import com.barati.razi.feature.appointments.DoctorPatientsScreen
+import com.barati.razi.feature.splash.SplashScreen
+import com.barati.razi.notify.SystemNotifier
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.delay
 import com.barati.razi.core.data.PatientSession
 import com.barati.razi.core.data.SessionState
 import com.barati.razi.core.data.can
@@ -98,13 +107,15 @@ object Routes {
     const val SCHEDULE_ROSTER = "schedule/{id}"
     const val SCHEDULE_SWAPS = "schedule_swaps"
     const val ON_DUTY = "on_duty"
+    const val DOCTOR = "doctor/{id}"
+    const val DOCTOR_PATIENTS = "doctor_patients"
 
     /** صفحه‌هایی که بدون نشست معتبر باز نمی‌مانند. */
     val staffOnly = setOf(
         CHANGE_PASSWORD, STAFF_HOME, MY_INCIDENTS, INCIDENT_DETAIL, ANNOUNCEMENTS, REVIEW,
         TRAINING, COURSE, COURSE_ITEM, EXAM_TAKE, ATTEMPT, REQUESTS, REQUEST_DETAIL, NOTIFICATIONS,
         CHATS, CHAT_NEW, CHAT_GROUP_NEW, CHAT, CHAT_INFO,
-        SCHEDULE, SCHEDULE_UNITS, SCHEDULE_ROSTER, SCHEDULE_SWAPS, ON_DUTY,
+        SCHEDULE, SCHEDULE_UNITS, SCHEDULE_ROSTER, SCHEDULE_SWAPS, ON_DUTY, DOCTOR_PATIENTS,
     )
 
     fun track(code: String = "", secret: String = "") = "track?code=${Uri.encode(code)}&secret=${Uri.encode(secret)}"
@@ -117,6 +128,7 @@ object Routes {
     fun chat(id: String) = "chat/$id"
     fun chatInfo(id: String) = "chat/$id/info"
     fun scheduleRoster(id: String) = "schedule/$id"
+    fun doctor(id: String) = "doctor/$id"
 
     fun of(target: NotificationTarget): String = when (target) {
         is NotificationTarget.Request -> request(target.id)
@@ -126,6 +138,7 @@ object Routes {
         NotificationTarget.Training -> TRAINING
         is NotificationTarget.Chat -> chat(target.id)
         is NotificationTarget.Schedule -> target.id?.let(::scheduleRoster) ?: SCHEDULE
+        NotificationTarget.Appointments -> DOCTOR_PATIENTS
     }
 }
 
@@ -144,6 +157,11 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
     LaunchedEffect(pendingOpen, session, current?.destination?.route) {
         val open = pendingOpen ?: return@LaunchedEffect
         val here = current?.destination?.route ?: return@LaunchedEffect
+        // یادآور نوبت مال بخش مراجعان است؛ صفحه خانه مراجع خودش زبانه «نوبت‌های من» را باز می‌کند.
+        if (open.linkType == SystemNotifier.LINK_MY_APPOINTMENTS) {
+            if (here != Routes.SPLASH && here != Routes.PUBLIC_HOME) nav.popBackStack(Routes.PUBLIC_HOME, inclusive = false)
+            return@LaunchedEffect
+        }
         val s = session
         if (s !is SessionState.LoggedIn || here !in Routes.staffOnly || here == Routes.CHANGE_PASSWORD) return@LaunchedEffect
         container.pendingOpen.value = null
@@ -166,11 +184,17 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
 
     NavHost(navController = nav, startDestination = Routes.SPLASH) {
         composable(Routes.SPLASH) {
-            LoadingBox()
-            LaunchedEffect(session, patientSession) {
+            PatientContent(container) { SplashScreen() }
+            // صفحه آغاز دست‌کم کمی دیده شود، حتی اگر نشست‌ها زود آماده شوند.
+            var shown by remember { mutableStateOf(false) }
+            LaunchedEffect(Unit) {
+                delay(1400)
+                shown = true
+            }
+            LaunchedEffect(session, patientSession, shown) {
                 val s = session
                 val p = patientSession
-                if (s is SessionState.Unknown || p is PatientSession.Unknown) return@LaunchedEffect
+                if (!shown || s is SessionState.Unknown || p is PatientSession.Unknown) return@LaunchedEffect
                 nav.navigate(Routes.PUBLIC_HOME) { popUpTo(Routes.SPLASH) { inclusive = true } }
                 if (s is SessionState.LoggedIn) {
                     nav.navigate(if (s.me.mustChangePassword) Routes.CHANGE_PASSWORD else Routes.STAFF_HOME)
@@ -197,6 +221,7 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
                     onAbout = { nav.navigate(Routes.ABOUT) },
                     onAdmission = { nav.navigate(Routes.ADMISSION) },
                     onTrackIncident = { nav.navigate(Routes.track()) },
+                    onDoctor = { nav.navigate(Routes.doctor(it)) },
                     onStaff = {
                         val s = session
                         if (s is SessionState.LoggedIn && !s.me.mustChangePassword) goStaffHome() else nav.navigate(Routes.LOGIN)
@@ -224,6 +249,22 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
         composable(Routes.INTERNATIONAL) { PatientContent(container) { InternationalScreen(back) } }
         composable(Routes.ABOUT) { PatientContent(container) { AboutScreen(back) } }
         composable(Routes.ADMISSION) { PatientContent(container) { AdmissionGuideScreen(back) } }
+        composable(Routes.DOCTOR, arguments = listOf(navArgument("id") { type = NavType.StringType })) { entry ->
+            PatientContent(container) {
+                DoctorDetailScreen(
+                    container,
+                    entry.arguments?.getString("id").orEmpty(),
+                    patient = (patientSession as? PatientSession.SignedIn)?.patient,
+                    onBack = back,
+                    onSignIn = { nav.navigate(Routes.PATIENT_SIGNIN) },
+                    onMyAppointments = {
+                        container.pendingOpen.value = OpenRequest(null, SystemNotifier.LINK_MY_APPOINTMENTS, null)
+                        nav.popBackStack(Routes.PUBLIC_HOME, inclusive = false)
+                    },
+                )
+            }
+        }
+        composable(Routes.DOCTOR_PATIENTS) { DoctorPatientsScreen(container, back) }
         composable(
             Routes.TRACK,
             arguments = listOf(
@@ -261,6 +302,7 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
                     onNotifications = { nav.navigate(Routes.NOTIFICATIONS) },
                     onChat = { nav.navigate(Routes.CHATS) },
                     onSchedule = { nav.navigate(Routes.SCHEDULE) },
+                    onMyPatients = { nav.navigate(Routes.DOCTOR_PATIENTS) },
                     onPublic = { nav.popBackStack(Routes.PUBLIC_HOME, inclusive = false) },
                     onLogout = { scope.launch { container.authRepository.logout() } },
                 )
