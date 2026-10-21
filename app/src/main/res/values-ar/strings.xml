@@ -1,6 +1,6 @@
 <resources>
     <!-- يجب أن يراجعها المستشفى قبل النشر. -->
-    <string name="app_name">مستشفى ولي العصر</string>
+    <string name="app_name">مستشفى ولي العصر تبريز</string>
 
     <string name="back">رجوع</string>
     <string name="close">إغلاق</string>

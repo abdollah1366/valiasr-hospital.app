@@ -1,6 +1,6 @@
 <resources>
     <!-- Yayından önce hastane tarafından onaylanmalıdır. -->
-    <string name="app_name">Veliasr Hastanesi</string>
+    <string name="app_name">Veliasr Hastanesi Tebriz</string>
 
     <string name="back">Geri</string>
     <string name="close">Kapat</string>

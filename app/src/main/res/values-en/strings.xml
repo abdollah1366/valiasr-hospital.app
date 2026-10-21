@@ -1,6 +1,6 @@
 <resources>
     <!-- Pending review by the hospital before release. -->
-    <string name="app_name">Valiasr Hospital</string>
+    <string name="app_name">Valiasr Hospital Tabriz</string>
 
     <string name="back">Back</string>
     <string name="close">Close</string>
