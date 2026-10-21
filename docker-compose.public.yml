@@ -34,7 +34,8 @@ services:
     # کاربران نمایشی 1001 تا 1005 با رمز RAZI_DEMO_PASSWORD ساخته می‌شوند.
     command: sh -c "alembic upgrade head && python -m app.seed --demo && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     ports:
-      - "8000:8000"
+      # پورت 8001 تا کنار سرور رازی (8000) روی همان VPS اجرا شود.
+      - "8001:8000"
     depends_on:
       db:
         condition: service_healthy

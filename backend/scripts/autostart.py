@@ -1,6 +1,6 @@
-"""Run the Razi server on a Windows VPS and start it automatically at boot.
+"""Run the Valiasr server on a Windows VPS and start it automatically at boot.
 
-Usage (from C:\\razi\\backend, PowerShell "Run as administrator"):
+Usage (from C:\\valiasr\\backend, PowerShell "Run as administrator"):
     .venv\\Scripts\\python scripts\\autostart.py install   # register + start now
     .venv\\Scripts\\python scripts\\autostart.py status
     .venv\\Scripts\\python scripts\\autostart.py stop
@@ -22,10 +22,11 @@ from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
-TASK_NAME = "RaziServer"
+# Own task name and port so it can run next to the Razi server on the same VPS.
+TASK_NAME = "ValiasrServer"
 BACKEND = Path(__file__).resolve().parents[1]
 LOG_DIR = BACKEND / "logs"
-HOST, PORT = "0.0.0.0", "8000"
+HOST, PORT = "0.0.0.0", "8001"
 RESTART_DELAY = 5  # seconds between restarts after a crash
 BOOT_DELAY = "0001:00"  # mm:ss wait after boot so PostgreSQL is up first
 
@@ -124,11 +125,12 @@ def main(argv: list[str]) -> int:
         return _schtasks("/Run", "/TN", TASK_NAME)
     if cmd == "stop":
         _schtasks("/End", "/TN", TASK_NAME)
-        # /End stops the watcher; make sure no uvicorn child keeps port 8000.
+        # /End stops the watcher; make sure no uvicorn child keeps our port.
+        # Only this server's port, so the Razi server on the same VPS keeps running.
         return subprocess.call(
             ["powershell", "-NoProfile", "-Command",
              "Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | "
-             "Where-Object { $_.CommandLine -like '*uvicorn*app.main:app*' } | "
+             f"Where-Object {{ $_.CommandLine -like '*uvicorn*app.main:app*--port {PORT}*' }} | "
              "ForEach-Object { Stop-Process -Id $_.ProcessId -Force }"]
         )  # fmt: skip
     if cmd == "status":
