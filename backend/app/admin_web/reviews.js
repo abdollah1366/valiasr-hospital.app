@@ -6,11 +6,11 @@ const RV = {
   tone: { pending: "amber", approved: "green", rejected: "gray" },
 };
 
-const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
+const reviewStars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
 
 function reviewCell(r) {
   return h("div", {},
-    h("div", { class: "amber" }, stars(r.stars)),
+    h("div", { class: "amber" }, reviewStars(r.stars)),
     h("div", {}, r.comment || h("span", { class: "muted" }, "فقط ستاره")),
     r.doctor_reply ? h("div", { class: "muted" }, "پاسخ پزشک: " + r.doctor_reply) : null,
     r.admin_reply ? h("div", { class: "muted" }, "پاسخ مدیریت: " + r.admin_reply) : null);

@@ -40,3 +40,17 @@ def test_catalog_readable_by_content_manager_only_among_non_admins(client):
         assert client.get("/api/v1/admin/units", headers=auth(client, code)).status_code == 403
     # خواندن فهرست به معنی اجازه تغییر نیست.
     assert client.post("/api/v1/admin/units", headers=h, json={"name": "آزمایشی"}).status_code == 403
+
+
+def test_admin_scripts_do_not_redeclare_top_level_names():
+    """اسکریپت‌های پنل در یک دامنه سراسری بارگذاری می‌شوند؛ تعریف دوباره یک نام کل صفحه را از کار می‌اندازد."""
+    import re
+    from pathlib import Path
+
+    web = Path(__file__).resolve().parents[1] / "app" / "admin_web"
+    decl = re.compile(r"^(?:async\s+)?(?:function\s*\*?|const|let|class)\s+([A-Za-z_$][\w$]*)", re.M)
+    seen: dict[str, str] = {}
+    for js in sorted(web.glob("*.js")):
+        for name in decl.findall(js.read_text(encoding="utf-8")):
+            assert name not in seen, f"{name} در {seen[name]} و {js.name} دوبار تعریف شده است"
+            seen[name] = js.name
