@@ -48,6 +48,12 @@ class Settings(BaseSettings):
     # قالب پیامک یادآور نوبت در کاوه‌نگار (token=تاریخ، token2=ساعت، token10=نام پزشک). خالی: پیامک یادآور نمی‌رود.
     sms_reminder_template: str | None = None
 
+    # جواب‌دهی آزمایشگاه و تصویربرداری: sample یعنی داده نمونه؛ http یعنی خواندن از سرور بیمارستان (docs/his-results.md).
+    his_provider: str = "sample"
+    his_base_url: str | None = None
+    his_api_key: str | None = None
+    his_timeout_seconds: int = 10
+
     @property
     def otp_debug_enabled(self) -> bool:
         return self.env in ("development", "test") or (self.otp_debug and self.env != "production")
@@ -72,6 +78,8 @@ class Settings(BaseSettings):
             raise RuntimeError("RAZI_OTP_FIXED_CODE فقط برای آزمایش است و در production مجاز نیست")
         if self.env == "production" and self.sms_provider == "console":
             raise RuntimeError("RAZI_SMS_PROVIDER باید برای ارسال کد ورود مراجعان تنظیم شود")
+        if self.his_provider == "http" and not self.his_base_url:
+            raise RuntimeError("RAZI_HIS_BASE_URL برای RAZI_HIS_PROVIDER=http لازم است")
         if self.sms_provider == "kavenegar" and not (self.sms_api_key and self.sms_template):
             raise RuntimeError("RAZI_SMS_API_KEY و RAZI_SMS_TEMPLATE برای کاوه‌نگار لازم است")
 

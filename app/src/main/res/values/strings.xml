@@ -233,4 +233,12 @@
     <string name="review_rate_action">امتیاز و نظر شما</string>
     <string name="review_your_rating">امتیاز شما:</string>
     <string name="review_pending_short">در انتظار تایید</string>
+    <string name="nav_results">جواب آزمایش و تصویربرداری</string>
+    <string name="results_signin_needed">برای دیدن جواب‌ها وارد شوید.</string>
+    <string name="results_all">همه</string>
+    <string name="results_lab">آزمایش</string>
+    <string name="results_imaging">تصویربرداری</string>
+    <string name="results_empty">جوابی ثبت نشده است.</string>
+    <string name="results_pending">آماده نیست</string>
+    <string name="results_reference">محدوده: %1$s</string>
 </resources>

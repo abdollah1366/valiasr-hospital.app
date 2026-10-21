@@ -3,6 +3,7 @@ package com.barati.razi
 import android.content.Context
 import android.os.Build
 import com.barati.razi.core.data.AppointmentRepository
+import com.barati.razi.core.data.ResultsRepository
 import com.barati.razi.core.data.ChatRepository
 import com.barati.razi.core.data.ContentRepository
 import com.barati.razi.core.data.DataStoreKeyValueStore
@@ -78,6 +79,8 @@ class AppContainer(context: Context) {
     val appointmentRepository = AppointmentRepository(api, patientApi) { items ->
         AppointmentReminderWorker.sync(appContext, items, languageRepository.language.value)
     }
+
+    val resultsRepository = ResultsRepository(patientApi)
 
     /** نشانی کامل عکس پزشک (عمومی، بدون توکن). */
     fun doctorPhotoUrl(doctorId: String): String = apiRoot() + "public/doctors/$doctorId/photo"
