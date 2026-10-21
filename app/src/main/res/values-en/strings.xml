@@ -10,7 +10,7 @@
     <string name="error_generic">Something went wrong. Please try again.</string>
     <string name="error_network">Could not reach the server. Please check your internet connection.</string>
 
-    <string name="hospital_full_name">Valiasr Tabriz</string>
+    <string name="hospital_full_name">Valiasr Hospital Tabriz</string>
     <string name="tile_news">Announcements</string>
     <string name="tile_news_sub">Hospital news and service changes</string>
     <string name="tile_feedback_sub">Submit and track with a code</string>
@@ -258,4 +258,27 @@
     <string name="club_history">Token history</string>
     <string name="club_confirm">Spend %1$s tokens?</string>
     <string name="club_confirm_yes">Yes, redeem</string>
+    <string name="nav_education">Patient education</string>
+    <string name="edu_home_sub">Articles, videos and care guides</string>
+    <string name="edu_search">Search education</string>
+    <string name="edu_empty">No education found for these filters.</string>
+    <string name="edu_kind_article">Article</string>
+    <string name="edu_kind_image">Image</string>
+    <string name="edu_kind_video">Video</string>
+    <string name="edu_kind_audio">Audio</string>
+    <string name="edu_kind_pdf">PDF</string>
+    <string name="edu_care_prevention">Prevention</string>
+    <string name="edu_care_before">Before procedure</string>
+    <string name="edu_care_after">After procedure</string>
+    <string name="edu_care_medication">Medication</string>
+    <string name="edu_care_nutrition">Nutrition</string>
+    <string name="edu_care_exercise">Exercise</string>
+    <string name="edu_care_home">Home care</string>
+    <string name="edu_care_warning">Warning signs</string>
+    <string name="edu_care_other">Other</string>
+    <string name="edu_open_file">Open file</string>
+    <string name="edu_open_link">Open link</string>
+    <string name="edu_source">Scientific source: %1$s</string>
+    <string name="edu_reviewed">Last scientific review: %1$s</string>
+    <string name="edu_disclaimer">This content does not replace your doctor. If you notice warning signs or are worried, contact your doctor.</string>
 </resources>

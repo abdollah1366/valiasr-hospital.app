@@ -66,6 +66,22 @@ interface ApiService {
     @GET("public/faqs")
     suspend fun faqs(@Query("lang") lang: String? = null): List<FaqDto>
 
+    @GET("public/education")
+    suspend fun education(
+        @Query("q") query: String? = null,
+        @Query("kind") kind: String? = null,
+        @Query("care_type") careType: String? = null,
+        @Query("condition") condition: String? = null,
+        @Query("specialty_id") specialtyId: String? = null,
+        @Query("lang") lang: String? = null,
+    ): List<EducationDto>
+
+    @GET("public/education/filters")
+    suspend fun educationFilters(): EducationFiltersDto
+
+    @GET("public/education/{id}")
+    suspend fun educationItem(@Path("id") id: String, @Query("lang") lang: String? = null): EducationDto
+
     @GET("public/announcements")
     suspend fun publicAnnouncements(@Query("lang") lang: String? = null): List<AnnouncementDto>
 

@@ -11,7 +11,7 @@
     <string name="error_network">اتصال به سرور برقرار نشد. اینترنت خود را بررسی کنید.</string>
 
     <!-- صفحه اول مراجعان -->
-    <string name="hospital_full_name">ولیعصر تبریز</string>
+    <string name="hospital_full_name">بیمارستان ولیعصر تبریز</string>
     <string name="tile_news">اطلاعیه‌ها</string>
     <string name="tile_news_sub">اخبار و تغییرات خدمات بیمارستان</string>
     <string name="tile_feedback_sub">ثبت و پیگیری با کد</string>
@@ -262,4 +262,27 @@
     <string name="club_history">سابقه ژتون</string>
     <string name="club_confirm">خرج شود؟</string>
     <string name="club_confirm_yes">بله، دریافت کن</string>
+    <string name="nav_education">آموزش به بیمار</string>
+    <string name="edu_home_sub">مقاله، ویدئو و راهنمای مراقبت</string>
+    <string name="edu_search">جست‌وجو در آموزش‌ها</string>
+    <string name="edu_empty">آموزشی با این شرایط پیدا نشد.</string>
+    <string name="edu_kind_article">مقاله</string>
+    <string name="edu_kind_image">تصویر</string>
+    <string name="edu_kind_video">ویدئو</string>
+    <string name="edu_kind_audio">فایل صوتی</string>
+    <string name="edu_kind_pdf">PDF</string>
+    <string name="edu_care_prevention">پیشگیری</string>
+    <string name="edu_care_before">قبل از عمل</string>
+    <string name="edu_care_after">بعد از عمل</string>
+    <string name="edu_care_medication">دارو</string>
+    <string name="edu_care_nutrition">تغذیه</string>
+    <string name="edu_care_exercise">ورزش و حرکت</string>
+    <string name="edu_care_home">مراقبت در منزل</string>
+    <string name="edu_care_warning">علائم هشدار</string>
+    <string name="edu_care_other">سایر</string>
+    <string name="edu_open_file">باز کردن فایل</string>
+    <string name="edu_open_link">باز کردن پیوند</string>
+    <string name="edu_source">منبع علمی: %1$s</string>
+    <string name="edu_reviewed">آخرین بازبینی علمی: %1$s</string>
+    <string name="edu_disclaimer">این محتوا جایگزین نظر پزشک نیست. در صورت علائم هشدار یا نگرانی با پزشک خود تماس بگیرید.</string>
 </resources>

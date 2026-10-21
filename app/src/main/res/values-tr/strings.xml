@@ -10,7 +10,7 @@
     <string name="error_generic">Bir sorun oluştu. Lütfen tekrar deneyin.</string>
     <string name="error_network">Sunucuya bağlanılamadı. İnternet bağlantınızı kontrol edin.</string>
 
-    <string name="hospital_full_name">Veliasr Tebriz</string>
+    <string name="hospital_full_name">Veliasr Hastanesi Tebriz</string>
     <string name="tile_news">Duyurular</string>
     <string name="tile_news_sub">Hastane haberleri ve hizmet değişiklikleri</string>
     <string name="tile_feedback_sub">Kod ile gönderin ve takip edin</string>
@@ -258,4 +258,27 @@
     <string name="club_history">Jeton geçmişi</string>
     <string name="club_confirm">%1$s jeton harcansın mı?</string>
     <string name="club_confirm_yes">Evet, al</string>
+    <string name="nav_education">Hasta eğitimi</string>
+    <string name="edu_home_sub">Makaleler, videolar ve bakım rehberleri</string>
+    <string name="edu_search">Eğitimlerde ara</string>
+    <string name="edu_empty">Bu filtrelere uygun eğitim bulunamadı.</string>
+    <string name="edu_kind_article">Makale</string>
+    <string name="edu_kind_image">Görsel</string>
+    <string name="edu_kind_video">Video</string>
+    <string name="edu_kind_audio">Ses</string>
+    <string name="edu_kind_pdf">PDF</string>
+    <string name="edu_care_prevention">Korunma</string>
+    <string name="edu_care_before">İşlem öncesi</string>
+    <string name="edu_care_after">İşlem sonrası</string>
+    <string name="edu_care_medication">İlaç</string>
+    <string name="edu_care_nutrition">Beslenme</string>
+    <string name="edu_care_exercise">Egzersiz ve hareket</string>
+    <string name="edu_care_home">Evde bakım</string>
+    <string name="edu_care_warning">Uyarı belirtileri</string>
+    <string name="edu_care_other">Diğer</string>
+    <string name="edu_open_file">Dosyayı aç</string>
+    <string name="edu_open_link">Bağlantıyı aç</string>
+    <string name="edu_source">Bilimsel kaynak: %1$s</string>
+    <string name="edu_reviewed">Son bilimsel inceleme: %1$s</string>
+    <string name="edu_disclaimer">Bu içerik doktorun yerini tutmaz. Uyarı belirtileri veya endişe durumunda doktorunuzla iletişime geçin.</string>
 </resources>

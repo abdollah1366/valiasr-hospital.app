@@ -39,6 +39,7 @@ import androidx.compose.material.icons.outlined.Feedback
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.LocalHospital
+import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.outlined.MedicalServices
 import androidx.compose.material.icons.outlined.CardGiftcard
 import androidx.compose.material.icons.outlined.Person
@@ -95,6 +96,7 @@ import com.barati.razi.feature.appointments.DoctorsTab
 import com.barati.razi.feature.appointments.FeaturedDoctorCard
 import com.barati.razi.feature.appointments.MyAppointmentsTab
 import com.barati.razi.feature.club.ClubTab
+import com.barati.razi.feature.education.EducationTab
 import com.barati.razi.feature.results.ResultsTab
 import com.barati.razi.feature.appointments.SpecialtyTile
 import com.barati.razi.feature.publicinfo.FeedbackBody
@@ -122,6 +124,7 @@ private enum class PatientTab(val label: Int, val icon: ImageVector, val selecte
     UNITS(R.string.drawer_units, Icons.Outlined.LocalHospital, Icons.Outlined.LocalHospital, inBar = false),
     CLUB(R.string.nav_club, Icons.Outlined.CardGiftcard, Icons.Outlined.CardGiftcard, inBar = false),
     RESULTS(R.string.nav_results, Icons.Outlined.Science, Icons.Outlined.Science, inBar = false),
+    EDUCATION(R.string.nav_education, Icons.AutoMirrored.Outlined.MenuBook, Icons.AutoMirrored.Outlined.MenuBook, inBar = false),
     FEEDBACK(R.string.drawer_feedback, Icons.Outlined.Feedback, Icons.Outlined.Feedback, inBar = false),
 }
 
@@ -181,6 +184,7 @@ fun PatientHomeScreen(
                     DrawerItem(Icons.Outlined.MedicalServices, stringResource(R.string.nav_doctors)) { go(PatientTab.DOCTORS) }
                     DrawerItem(Icons.Outlined.CalendarMonth, stringResource(R.string.nav_appointments)) { go(PatientTab.APPOINTMENTS) }
                     DrawerItem(Icons.Outlined.Science, stringResource(R.string.nav_results)) { go(PatientTab.RESULTS) }
+                    DrawerItem(Icons.AutoMirrored.Outlined.MenuBook, stringResource(R.string.nav_education)) { go(PatientTab.EDUCATION) }
                     DrawerItem(Icons.Outlined.CardGiftcard, stringResource(R.string.nav_club)) { go(PatientTab.CLUB) }
                     DrawerItem(Icons.Outlined.LocalHospital, stringResource(R.string.drawer_units)) { go(PatientTab.UNITS) }
                     DrawerItem(Icons.AutoMirrored.Outlined.Assignment, stringResource(R.string.admission_title)) { openDrawerItem(onAdmission) }
@@ -256,6 +260,7 @@ fun PatientHomeScreen(
                     onNews = onNews,
                     onContact = onContact,
                     onFeedback = { tab = PatientTab.FEEDBACK.ordinal },
+                    onEducation = { tab = PatientTab.EDUCATION.ordinal },
                     onInternational = onInternational,
                     onAbout = onAbout,
                     onAdmission = onAdmission,
@@ -271,6 +276,7 @@ fun PatientHomeScreen(
                 PatientTab.PROFILE -> ProfileTab(padding, language, onLanguage, patient, staffLoggedIn, onSignIn, onSignOut, onTrackIncident, onStaff)
                 PatientTab.CLUB -> ClubTab(container, padding, signedIn = patient != null, onSignIn = onSignIn)
                 PatientTab.RESULTS -> ResultsTab(container, padding, signedIn = patient != null, onSignIn = onSignIn)
+                PatientTab.EDUCATION -> EducationTab(container, padding)
                 PatientTab.UNITS -> UnitsList(container, padding)
                 PatientTab.FEEDBACK -> FeedbackBody(container, padding)
             }
@@ -324,6 +330,7 @@ private fun HomeTab(
     onNews: () -> Unit,
     onContact: () -> Unit,
     onFeedback: () -> Unit,
+    onEducation: () -> Unit,
     onInternational: () -> Unit,
     onAbout: () -> Unit,
     onAdmission: () -> Unit,
@@ -384,6 +391,7 @@ private fun HomeTab(
                 ),
             )
             WideCard(Icons.AutoMirrored.Outlined.Assignment, stringResource(R.string.admission_title), stringResource(R.string.admission_sub), onAdmission)
+            WideCard(Icons.AutoMirrored.Outlined.MenuBook, stringResource(R.string.nav_education), stringResource(R.string.edu_home_sub), onEducation)
             if (!internationalFirst) InternationalCard(onInternational)
             WideCard(Icons.Outlined.Info, stringResource(R.string.about_title), stringResource(R.string.about_sub), onAbout)
             SupportCard()
