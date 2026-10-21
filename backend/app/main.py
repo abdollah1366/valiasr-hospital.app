@@ -25,6 +25,7 @@ from app.routers import (
     results,
     reviews,
     schedules,
+    tokens,
     training,
     translations,
 )
@@ -101,6 +102,7 @@ def create_app() -> FastAPI:
         translations.router,
         appointments.router,
         results.router,
+        tokens.router,
         reviews.router,
     ):
         app.include_router(r, prefix=API_PREFIX)

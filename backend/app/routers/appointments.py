@@ -59,6 +59,7 @@ from app.schemas.appointments import (
 from app.services import appointments as svc
 from app.services import notifications as notes
 from app.services import reviews as reviews_svc
+from app.services import tokens as tokens_svc
 from app.services.media import store_upload
 from app.services.phone import normalize_mobile
 from app.services.training import media_path
@@ -857,6 +858,8 @@ def _set_status(db: Session, a: Appointment, status: str) -> None:
     if a.status == "cancelled":
         raise api_error(409, "cancelled", "نوبت لغوشده را نمی‌توان تغییر داد")
     a.status = status
+    if status == "attended":
+        tokens_svc.on_attended(db, a)
 
 
 @router.post("/manage/appointments/{appointment_id}/status", response_model=ManageAppointmentOut)

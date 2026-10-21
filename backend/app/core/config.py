@@ -48,6 +48,9 @@ class Settings(BaseSettings):
     # قالب پیامک یادآور نوبت در کاوه‌نگار (token=تاریخ، token2=ساعت، token10=نام پزشک). خالی: پیامک یادآور نمی‌رود.
     sms_reminder_template: str | None = None
 
+    # باشگاه مراجعان: ژتون معرف و معرفی‌شده پس از اولین ویزیت معرفی‌شده
+    token_referral_reward: int = 50
+    token_referred_bonus: int = 20
     # جواب‌دهی آزمایشگاه و تصویربرداری: sample یعنی داده نمونه؛ http یعنی خواندن از سرور بیمارستان (docs/his-results.md).
     his_provider: str = "sample"
     his_base_url: str | None = None
