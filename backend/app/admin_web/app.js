@@ -25,6 +25,7 @@ const L = {
 
 // render(main, sub): sub بخش‌های بعدی نشانی است، مثلاً #/courses/<id>/stats → ["<id>", "stats"]
 const PAGES = [
+  { id: "my-patients", title: "بیماران من", icon: "patients", when: () => !!state.me.doctor_id, render: renderMyPatients },
   { id: "dashboard", title: "داشبورد", icon: "dashboard", perm: "dashboard.read", render: renderDashboard },
   { id: "courses", title: "دوره‌های آموزشی", icon: "school", perm: "training.manage", render: renderCourses },
   { id: "exams", title: "آزمون‌ها", icon: "quiz", perm: "training.manage", render: renderExams },
@@ -33,6 +34,9 @@ const PAGES = [
   { id: "schedules", title: "برنامه شیفت", icon: "calendar", perm: ["schedule.write", "schedule.approve", "schedule.read.all"], render: renderSchedules },
   { id: "on-duty", title: "کشیک", icon: "clock", perm: ["schedule.read.all", "schedule.approve"], render: renderOnDuty },
   { id: "shift-codes", title: "تنظیمات شیفت", icon: "tune", perm: "schedule.config", render: renderShiftCodes },
+  { id: "booking", title: "نوبت‌دهی", icon: "event", perm: ["doctor.manage", "appointment.manage"], render: renderBooking },
+  { id: "doctors", title: "معرفی پزشکان", icon: "doctor", perm: "doctor.manage", render: renderDoctors },
+  { id: "specialties", title: "گروه‌های تخصصی", icon: "category", perm: "doctor.manage", render: renderSpecialties },
   { id: "users", title: "کاربران", icon: "people", perm: "user.manage", render: renderUsers },
   { id: "units", title: "واحدها", icon: "units", perm: "unit.manage", render: renderUnits },
   { id: "announcements", title: "اطلاعیه‌ها", icon: "bell", perm: "announcement.manage", render: renderAnnouncements },
@@ -199,6 +203,7 @@ async function logout() {
   store.set("refresh", null);
   state.me = state.roles = state.units = null;
   peopleCache = null;
+  doctorCache = null;
   location.hash = "";
   renderLogin();
 }
@@ -217,7 +222,7 @@ async function start() {
 window.addEventListener("hashchange", () => state.me && !state.me.must_change_password && route());
 
 function route() {
-  const pages = PAGES.filter((p) => can(p.perm));
+  const pages = PAGES.filter((p) => (p.when ? p.when() : can(p.perm)));
   if (!pages.length) return renderNoAccess();
   const [id, ...sub] = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
   let page = pages.find((p) => p.id === id);
