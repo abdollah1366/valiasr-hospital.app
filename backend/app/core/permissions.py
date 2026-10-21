@@ -42,6 +42,9 @@ PERMISSIONS: dict[str, str] = {
     # بدون مجوز جدا به نظرهای خودش پاسخ می‌دهد.
     "review.moderate": "تأیید یا رد نظرهای مراجعان درباره پزشکان و پاسخ به آن‌ها",
     "review.reply": "پاسخ مدیر سیستم به نظرهای مراجعان درباره پزشکان",
+    # باشگاه مراجعان (ژتون)
+    "token.manage": "اهدای ژتون به مراجعان و تعریف امتیازهای قابل دریافت",
+    "token.redeem": "بررسی و تحویل کد استفاده از ژتون مراجعان (پذیرش و نوبت‌دهی)",
 }
 
 DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
@@ -129,11 +132,13 @@ DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
             "doctor.manage",
             "appointment.manage",
             "review.moderate",
+            "token.manage",
+            "token.redeem",
         ],
     ),
     "secretary": (
         "منشی پزشک",
-        ["announcement.read", "training.read", "request.create", "appointment.manage"],
+        ["announcement.read", "training.read", "request.create", "appointment.manage", "token.redeem"],
     ),
     "auditor": ("حسابرس", ["audit.read"]),
     # مدیر سیستم عمداً به محتوای گزارش‌های خطا دسترسی ندارد.
@@ -148,6 +153,8 @@ DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
             "chat.group.create",
             "schedule.config",
             "review.reply",
+            "token.manage",
+            "token.redeem",
         ],
     ),
 }

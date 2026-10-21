@@ -39,6 +39,7 @@ const PAGES = [
   { id: "doctors", title: "معرفی پزشکان", icon: "doctor", perm: "doctor.manage", render: renderDoctors },
   { id: "specialties", title: "گروه‌های تخصصی", icon: "category", perm: "doctor.manage", render: renderSpecialties },
   { id: "reviews", title: "نظرات بیماران", icon: "chat", perm: ["review.moderate", "review.reply"], render: renderReviews },
+  { id: "tokens", title: "باشگاه ژتون", icon: "category", perm: ["token.manage", "token.redeem"], render: renderTokens },
   { id: "users", title: "کاربران", icon: "people", perm: "user.manage", render: renderUsers },
   { id: "units", title: "واحدها", icon: "units", perm: "unit.manage", render: renderUnits },
   { id: "announcements", title: "اطلاعیه‌ها", icon: "bell", perm: "announcement.manage", render: renderAnnouncements },

@@ -670,6 +670,10 @@ class Patient(TimestampMixin, Base):
     full_name: Mapped[str | None] = mapped_column(String(200))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # باشگاه مراجعان: کد معرفی خود مراجع (در اولین نیاز ساخته می‌شود) و معرف او
+    referral_code: Mapped[str | None] = mapped_column(String(12), unique=True)
+    referred_by_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("patients.id", ondelete="SET NULL"))
+    referral_rewarded: Mapped[bool] = mapped_column(Boolean, default=False)
 
 
 class PatientRefreshToken(Base):
@@ -848,3 +852,43 @@ class DoctorReview(TimestampMixin, Base):
 
     appointment: Mapped[Appointment] = relationship(lazy="joined")
     doctor: Mapped[Doctor] = relationship(lazy="joined")
+
+
+class TokenTransaction(TimestampMixin, Base):
+    """دفتر ژتون مراجع؛ موجودی مجموع مبلغ‌هاست (مثبت: دریافت، منفی: مصرف)."""
+
+    __tablename__ = "token_transactions"
+    id: Mapped[uuid.UUID] = pk()
+    patient_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("patients.id", ondelete="CASCADE"), index=True)
+    amount: Mapped[int] = mapped_column(Integer)
+    # referral | referred_bonus | admin | spend | refund
+    kind: Mapped[str] = mapped_column(String(30))
+    note: Mapped[str | None] = mapped_column(String(300))
+    actor_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+
+
+class TokenReward(TimestampMixin, Base):
+    """امتیاز قابل دریافت با ژتون (مثلاً تخفیف پذیرش) که بیمارستان تعریف می‌کند."""
+
+    __tablename__ = "token_rewards"
+    id: Mapped[uuid.UUID] = pk()
+    title: Mapped[str] = mapped_column(String(200))
+    description: Mapped[str | None] = mapped_column(String(500))
+    cost: Mapped[int] = mapped_column(Integer)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    sort_order: Mapped[int] = mapped_column(Integer, default=0)
+
+
+class TokenRedemption(TimestampMixin, Base):
+    """کد استفاده‌ای که مراجع با خرج ژتون می‌گیرد و در پذیرش یا نوبت‌دهی نشان می‌دهد."""
+
+    __tablename__ = "token_redemptions"
+    id: Mapped[uuid.UUID] = pk()
+    patient_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("patients.id", ondelete="CASCADE"), index=True)
+    reward_title: Mapped[str] = mapped_column(String(200))
+    cost: Mapped[int] = mapped_column(Integer)
+    code: Mapped[str] = mapped_column(String(12), unique=True)
+    # issued | used | cancelled
+    status: Mapped[str] = mapped_column(String(20), default="issued", index=True)
+    used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    used_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
