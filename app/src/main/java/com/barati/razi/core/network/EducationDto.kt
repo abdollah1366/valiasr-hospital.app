@@ -22,6 +22,12 @@ data class EducationDto(
     val body: String? = null,
     @SerialName("external_url") val externalUrl: String? = null,
     @SerialName("content_type") val contentType: String? = null,
+    @SerialName("rating_average") val ratingAverage: Double? = null,
+    @SerialName("rating_count") val ratingCount: Int = 0,
+    // فقط برای «آموزش‌های من»
+    @SerialName("assigned_at") val assignedAt: String? = null,
+    @SerialName("assignment_note") val assignmentNote: String? = null,
+    val seen: Boolean = true,
 )
 
 @Serializable
@@ -34,3 +40,59 @@ data class EducationFiltersDto(
     val kinds: List<String> = emptyList(),
     val specialties: List<EducationSpecialtyDto> = emptyList(),
 )
+
+@Serializable
+data class MyRatingDto(
+    val stars: Int? = null,
+    @SerialName("rating_average") val ratingAverage: Double? = null,
+    @SerialName("rating_count") val ratingCount: Int = 0,
+)
+
+@Serializable
+data class RatingRequest(val stars: Int)
+
+/** تیکت مراجع با مسئول آموزش به بیمار (سرور: app/routers/education_engage.py). */
+
+@Serializable
+data class TicketDto(
+    val id: String,
+    val subject: String,
+    val status: String,
+    val unread: Boolean = false,
+    @SerialName("updated_at") val updatedAt: String,
+    @SerialName("last_message") val lastMessage: String? = null,
+)
+
+@Serializable
+data class TicketAttachmentDto(
+    @SerialName("original_name") val originalName: String,
+    @SerialName("content_type") val contentType: String,
+    val size: Long = 0,
+    val url: String,
+)
+
+@Serializable
+data class TicketMessageDto(
+    val id: String,
+    @SerialName("from_staff") val fromStaff: Boolean,
+    @SerialName("staff_name") val staffName: String? = null,
+    val body: String? = null,
+    val attachment: TicketAttachmentDto? = null,
+    @SerialName("created_at") val createdAt: String,
+)
+
+@Serializable
+data class TicketDetailDto(
+    val id: String,
+    val subject: String,
+    val status: String,
+    val unread: Boolean = false,
+    @SerialName("updated_at") val updatedAt: String,
+    val messages: List<TicketMessageDto> = emptyList(),
+)
+
+@Serializable
+data class TicketCreateRequest(val subject: String, val body: String)
+
+@Serializable
+data class TicketMessageRequest(val body: String)

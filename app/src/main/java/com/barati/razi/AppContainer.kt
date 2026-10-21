@@ -85,7 +85,7 @@ class AppContainer(context: Context) {
     }
 
     val resultsRepository = ResultsRepository(patientApi)
-    val educationRepository = EducationRepository(api)
+    val educationRepository = EducationRepository(api, patientApi)
     val tokensRepository = TokensRepository(patientApi)
 
     /** نشانی کامل عکس پزشک (عمومی، بدون توکن). */

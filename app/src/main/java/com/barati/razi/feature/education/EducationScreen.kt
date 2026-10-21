@@ -39,13 +39,18 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -69,12 +74,16 @@ import com.barati.razi.AppContainer
 import com.barati.razi.R
 import com.barati.razi.core.appointments.AppointmentLogic
 import com.barati.razi.core.network.EducationDto
+import com.barati.razi.core.network.Result
+import com.barati.razi.feature.appointments.RatingSummary
+import com.barati.razi.feature.appointments.StarPicker
 import com.barati.razi.ui.components.Load
 import com.barati.razi.ui.components.LoadContent
 import com.barati.razi.ui.components.rememberLoader
 import com.barati.razi.ui.i18n.LocalAppLanguage
 import com.barati.razi.ui.theme.ValiasrColors
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 /** برچسب نوع محتوا و نوع مراقبت؛ کلیدها همان‌هایی است که سرور می‌فرستد. */
@@ -111,15 +120,33 @@ fun kindIcon(kind: String): ImageVector = when (kind) {
 /** انتخاب دوباره‌ی همان گزینه فیلتر را برمی‌دارد. */
 fun toggled(current: String?, picked: String): String? = if (current == picked) null else picked
 
-/** کتابخانه آموزش به بیمار: جست‌وجو، فیلتر و باز کردن مقاله، تصویر، ویدئو، صوت یا PDF. */
+/** آموزش به بیمار: کتابخانه، آموزش‌های فرستاده‌شده برای خود مراجع و تیکت با مسئول آموزش. */
 @Composable
-fun EducationTab(container: AppContainer, padding: PaddingValues) {
+fun EducationTab(container: AppContainer, padding: PaddingValues, signedIn: Boolean, onSignIn: () -> Unit) {
+    var section by rememberSaveable { mutableIntStateOf(0) }
+    val labels = listOf(R.string.edu_tab_library, R.string.edu_tab_mine, R.string.edu_tab_tickets)
+    Column(Modifier.fillMaxSize().padding(padding)) {
+        TabRow(selectedTabIndex = section) {
+            labels.forEachIndexed { i, l -> Tab(selected = section == i, onClick = { section = i }, text = { Text(stringResource(l)) }) }
+        }
+        val inner = PaddingValues(0.dp)
+        when (section) {
+            0 -> EducationLibrary(container, inner, signedIn, onSignIn)
+            1 -> MyEducationList(container, inner, signedIn, onSignIn)
+            else -> EducationTickets(container, inner, signedIn, onSignIn)
+        }
+    }
+}
+
+/** کتابخانه: جست‌وجو، فیلتر و باز کردن مقاله، تصویر، ویدئو، صوت یا PDF. */
+@Composable
+private fun EducationLibrary(container: AppContainer, padding: PaddingValues, signedIn: Boolean, onSignIn: () -> Unit) {
     val language = LocalAppLanguage.current
     var openId by rememberSaveable { mutableStateOf<String?>(null) }
     BackHandler(enabled = openId != null) { openId = null }
     val id = openId
     if (id != null) {
-        EducationDetail(container, id, padding)
+        EducationDetail(container, id, padding, signedIn, onSignIn)
         return
     }
 
@@ -205,9 +232,11 @@ private fun EducationCard(e: EducationDto, onClick: () -> Unit) {
 }
 
 @Composable
-private fun EducationDetail(container: AppContainer, id: String, padding: PaddingValues) {
+fun EducationDetail(container: AppContainer, id: String, padding: PaddingValues, signedIn: Boolean, onSignIn: () -> Unit) {
     val language = LocalAppLanguage.current
     val loader = rememberLoader(id, language) { container.educationRepository.item(id, language) }
+    // اگر این آموزش را برای مراجع فرستاده باشند، دیده شدنش به مسئول آموزش اطلاع داده می‌شود.
+    LaunchedEffect(id, signedIn) { if (signedIn) container.educationRepository.markSeen(id) }
     LoadContent(loader, Modifier.padding(padding)) { e ->
         val context = LocalContext.current
         fun open(url: String) = runCatching {
@@ -251,6 +280,7 @@ private fun EducationDetail(container: AppContainer, id: String, padding: Paddin
                     Text(stringResource(R.string.edu_reviewed, day), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
+            RatingSection(container, e, signedIn, onSignIn)
             Text(stringResource(R.string.edu_disclaimer), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
@@ -258,7 +288,7 @@ private fun EducationDetail(container: AppContainer, id: String, padding: Paddin
 
 @OptIn(UnstableApi::class)
 @Composable
-private fun EducationPlayer(url: String, audio: Boolean) {
+fun EducationPlayer(url: String, audio: Boolean) {
     val context = LocalContext.current
     val player = remember(url) {
         ExoPlayer.Builder(context).build().apply {
@@ -289,4 +319,39 @@ private fun EducationPlayer(url: String, audio: Boolean) {
             Modifier.fillMaxWidth().aspectRatio(16f / 9f).background(Color.Black)
         },
     )
+}
+
+/** میانگین امتیاز برای همه؛ مراجع واردشده می‌تواند ستاره بدهد یا عوض کند. */
+@Composable
+private fun RatingSection(container: AppContainer, e: EducationDto, signedIn: Boolean, onSignIn: () -> Unit) {
+    var average by remember(e.id) { mutableStateOf(e.ratingAverage) }
+    var count by remember(e.id) { mutableIntStateOf(e.ratingCount) }
+    var mine by remember(e.id) { mutableIntStateOf(0) }
+    var failed by remember(e.id) { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    LaunchedEffect(e.id, signedIn) {
+        if (signedIn) (container.educationRepository.myRating(e.id) as? Result.Ok)?.value?.let { mine = it.stars ?: 0 }
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        RatingSummary(average, count)
+        if (signedIn) {
+            Text(stringResource(if (mine > 0) R.string.edu_rate_yours else R.string.edu_rate_prompt), style = MaterialTheme.typography.labelLarge)
+            StarPicker(mine) { stars ->
+                scope.launch {
+                    when (val r = container.educationRepository.rate(e.id, stars)) {
+                        is Result.Ok -> {
+                            mine = stars
+                            average = r.value.ratingAverage
+                            count = r.value.ratingCount
+                            failed = false
+                        }
+                        is Result.Err -> failed = true
+                    }
+                }
+            }
+            if (failed) Text(stringResource(R.string.error_generic), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+        } else {
+            TextButton(onClick = onSignIn) { Text(stringResource(R.string.edu_rate_signin)) }
+        }
+    }
 }

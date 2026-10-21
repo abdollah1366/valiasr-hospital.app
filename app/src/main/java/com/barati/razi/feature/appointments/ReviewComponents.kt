@@ -85,7 +85,7 @@ fun RatingSummary(average: Double?, count: Int) {
 }
 
 @Composable
-private fun StarPicker(value: Int, onChange: (Int) -> Unit) {
+fun StarPicker(value: Int, onChange: (Int) -> Unit) {
     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         repeat(5) { i ->
             Icon(
