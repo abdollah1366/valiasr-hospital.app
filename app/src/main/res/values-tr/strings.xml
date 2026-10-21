@@ -215,4 +215,18 @@
     <string name="theme_light">Açık</string>
     <string name="theme_dark">Koyu</string>
     <string name="theme_system">Telefona göre</string>
+    <string name="rating_count">%1$s yorum</string>
+    <string name="reviews_title">Hasta yorumları</string>
+    <string name="review_title">%1$s için puan ver</string>
+    <string name="review_comment_label">Yorumunuz (isteğe bağlı)</string>
+    <string name="review_moderation_note">Yıldızlar hemen sayılır; yorumunuz hastane onayından sonra yayımlanır.</string>
+    <string name="review_submit">Puanı gönder</string>
+    <string name="review_thanks">Puanınız için teşekkürler.</string>
+    <string name="review_thanks_pending">Teşekkürler! Yorumunuz hastane onayından sonra yayımlanacak.</string>
+    <string name="review_ok">Tamam</string>
+    <string name="review_doctor_reply">Doktorun yanıtı</string>
+    <string name="review_admin_reply">Hastanenin yanıtı</string>
+    <string name="review_rate_action">Ziyaretinizi puanlayın</string>
+    <string name="review_your_rating">Puanınız:</string>
+    <string name="review_pending_short">Onay bekliyor</string>
 </resources>

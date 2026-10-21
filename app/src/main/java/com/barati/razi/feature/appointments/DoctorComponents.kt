@@ -141,6 +141,7 @@ fun DoctorRowCard(doctor: DoctorDto, photoUrl: (String) -> String, onClick: () -
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
+                RatingSummary(doctor.ratingAverage, doctor.ratingCount)
                 NextFreeChip(doctor)
             }
             Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)

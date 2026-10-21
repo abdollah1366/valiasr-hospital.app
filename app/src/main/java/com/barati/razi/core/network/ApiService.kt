@@ -37,6 +37,15 @@ interface ApiService {
     @GET("public/doctors/{id}")
     suspend fun doctor(@Path("id") id: String): DoctorDto
 
+    @GET("public/doctors/{id}/reviews")
+    suspend fun doctorReviews(@Path("id") id: String): DoctorReviewsDto
+
+    @GET("doctor/me/reviews")
+    suspend fun myDoctorReviews(): List<DoctorOwnReviewDto>
+
+    @POST("doctor/me/reviews/{id}/reply")
+    suspend fun replyToReview(@Path("id") id: String, @Body body: ReplyRequest): DoctorOwnReviewDto
+
     @GET("public/doctors/{id}/slots")
     suspend fun doctorSlots(@Path("id") id: String): List<SlotDto>
 

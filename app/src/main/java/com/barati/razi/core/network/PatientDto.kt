@@ -31,6 +31,9 @@ interface PatientApiService {
     @GET("patient/appointments")
     suspend fun appointments(): List<PatientAppointmentDto>
 
+    @POST("patient/appointments/{id}/review")
+    suspend fun reviewAppointment(@Path("id") id: String, @Body body: ReviewRequest): MyReviewDto
+
     @POST("patient/appointments/{id}/cancel")
     suspend fun cancelAppointment(@Path("id") id: String): PatientAppointmentDto
 }

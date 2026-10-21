@@ -215,4 +215,18 @@
     <string name="theme_light">Açıq</string>
     <string name="theme_dark">Qaranlıq</string>
     <string name="theme_system">Telefona uyğun</string>
+    <string name="rating_count">%1$s rəy</string>
+    <string name="reviews_title">Pasiyent rəyləri</string>
+    <string name="review_title">%1$s həkimini qiymətləndirin</string>
+    <string name="review_comment_label">Rəyiniz (könüllü)</string>
+    <string name="review_moderation_note">Ulduzlar dərhal hesablanır; rəyiniz xəstəxana təsdiq etdikdən sonra dərc olunur.</string>
+    <string name="review_submit">Qiyməti göndər</string>
+    <string name="review_thanks">Qiymətiniz üçün təşəkkür edirik.</string>
+    <string name="review_thanks_pending">Təşəkkürlər! Rəyiniz xəstəxana təsdiq etdikdən sonra görünəcək.</string>
+    <string name="review_ok">Yaxşı</string>
+    <string name="review_doctor_reply">Həkimin cavabı</string>
+    <string name="review_admin_reply">Xəstəxananın cavabı</string>
+    <string name="review_rate_action">Ziyarətinizi qiymətləndirin</string>
+    <string name="review_your_rating">Qiymətiniz:</string>
+    <string name="review_pending_short">Təsdiq gözləyir</string>
 </resources>

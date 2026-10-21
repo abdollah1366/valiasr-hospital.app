@@ -219,4 +219,18 @@
     <string name="theme_light">روشن</string>
     <string name="theme_dark">تیره</string>
     <string name="theme_system">مطابق گوشی</string>
+    <string name="rating_count">%1$s نظر</string>
+    <string name="reviews_title">نظرات بیماران</string>
+    <string name="review_title">امتیاز شما به %1$s</string>
+    <string name="review_comment_label">نظر شما (اختیاری)</string>
+    <string name="review_moderation_note">ستاره‌ها بلافاصله ثبت می‌شوند؛ متن نظر پس از تایید بیمارستان منتشر می‌شود.</string>
+    <string name="review_submit">ثبت امتیاز</string>
+    <string name="review_thanks">سپاس از امتیاز شما.</string>
+    <string name="review_thanks_pending">سپاس! متن نظر شما پس از تایید بیمارستان منتشر می‌شود.</string>
+    <string name="review_ok">باشه</string>
+    <string name="review_doctor_reply">پاسخ پزشک</string>
+    <string name="review_admin_reply">پاسخ بیمارستان</string>
+    <string name="review_rate_action">امتیاز و نظر شما</string>
+    <string name="review_your_rating">امتیاز شما:</string>
+    <string name="review_pending_short">در انتظار تایید</string>
 </resources>
