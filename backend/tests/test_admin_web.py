@@ -19,6 +19,7 @@ def test_admin_page_is_served_with_strict_headers(client):
     assert client.get("/admin/reviews.js").status_code == 200
     assert client.get("/admin/tokens.js").status_code == 200
     assert client.get("/admin/education.js").status_code == 200
+    assert client.get("/admin/education_care.js").status_code == 200
     assert client.get("/admin/fonts/vazirmatn_regular.ttf").status_code == 200
     assert client.get("/admin/logo.svg").status_code == 200
     # API همان رفتار قبلی را دارد و سرآیندهای پنل به آن اضافه نمی‌شود.

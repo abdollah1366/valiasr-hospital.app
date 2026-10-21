@@ -62,6 +62,8 @@ class EducationListOut(BaseModel):
     reviewed_on: date | None
     has_file: bool
     file_version: str | None = None
+    rating_average: float | None = None
+    rating_count: int = 0
 
 
 class EducationDetailOut(EducationListOut):
@@ -73,6 +75,8 @@ class EducationDetailOut(EducationListOut):
 class EducationManageOut(EducationDetailOut):
     is_published: bool
     file_name: str | None
+    assigned_count: int = 0
+    seen_count: int = 0
     created_at: datetime
     updated_at: datetime
 
@@ -90,3 +94,101 @@ class EducationSpecialtyOut(BaseModel):
 
 
 EducationFiltersOut.model_rebuild()
+
+
+# ---------------------------------------------------------------- ارسال به مراجع، امتیاز، تیکت
+
+
+class AssignIn(BaseModel):
+    patient_id: uuid.UUID
+    item_ids: list[uuid.UUID] = Field(min_length=1, max_length=50)
+    note: str | None = Field(default=None, max_length=300)
+
+
+class AssignResultOut(BaseModel):
+    added: int
+    already: int
+
+
+class EducationPatientRow(BaseModel):
+    id: uuid.UUID
+    mobile: str
+    full_name: str | None
+    assigned_count: int
+    unseen_count: int
+
+
+class AssignmentRow(BaseModel):
+    id: uuid.UUID
+    patient_id: uuid.UUID
+    patient_mobile: str
+    patient_name: str | None
+    item_id: uuid.UUID
+    item_title: str
+    note: str | None
+    assigned_at: datetime
+    first_seen_at: datetime | None
+    last_seen_at: datetime | None
+    view_count: int
+
+
+class MyEducationOut(EducationListOut):
+    """آموزش فرستاده‌شده برای خود مراجع."""
+
+    assigned_at: datetime
+    assignment_note: str | None
+    seen: bool
+
+
+class RatingIn(BaseModel):
+    stars: int = Field(ge=1, le=5)
+
+
+class MyRatingOut(BaseModel):
+    stars: int | None
+    rating_average: float | None
+    rating_count: int
+
+
+TicketStatus = Literal["open", "closed"]
+
+
+class TicketCreateIn(BaseModel):
+    subject: str = Field(min_length=1, max_length=200)
+    body: str = Field(min_length=1, max_length=4000)
+
+
+class TicketMessageIn(BaseModel):
+    body: str = Field(min_length=1, max_length=4000)
+
+
+class TicketAttachmentOut(BaseModel):
+    original_name: str
+    content_type: str
+    size: int
+    url: str  # پیوند امضاشده و موقت
+
+
+class TicketMessageOut(BaseModel):
+    id: uuid.UUID
+    from_staff: bool
+    staff_name: str | None = None
+    body: str | None
+    attachment: TicketAttachmentOut | None
+    created_at: datetime
+
+
+class TicketOut(BaseModel):
+    id: uuid.UUID
+    subject: str
+    status: TicketStatus
+    unread: bool  # برای مراجع پاسخ ندیده، برای کارشناس پیام ندیده
+    created_at: datetime
+    updated_at: datetime
+    last_message: str | None = None
+    patient_mobile: str | None = None  # فقط در خروجی کارشناس
+    patient_name: str | None = None
+
+
+class TicketDetailOut(TicketOut):
+    messages: list[TicketMessageOut]

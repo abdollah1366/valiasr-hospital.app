@@ -40,6 +40,8 @@ const PAGES = [
   { id: "specialties", title: "گروه‌های تخصصی", icon: "category", perm: "doctor.manage", render: renderSpecialties },
   { id: "reviews", title: "نظرات بیماران", icon: "chat", perm: ["review.moderate", "review.reply"], render: renderReviews },
   { id: "education", title: "آموزش به بیمار", icon: "school", perm: "education.manage", render: renderEducation },
+  { id: "education-send", title: "ارسال آموزش به بیمار", icon: "patients", perm: "education.assign", render: renderEducationSend },
+  { id: "education-tickets", title: "تیکت‌های آموزش", icon: "chat", perm: "education.ticket", render: renderEducationTickets },
   { id: "tokens", title: "باشگاه ژتون", icon: "category", perm: ["token.manage", "token.redeem"], render: renderTokens },
   { id: "users", title: "کاربران", icon: "people", perm: "user.manage", render: renderUsers },
   { id: "units", title: "واحدها", icon: "units", perm: "unit.manage", render: renderUnits },

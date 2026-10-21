@@ -8,13 +8,20 @@ import uuid
 
 from fastapi import APIRouter, Depends, Query, Request
 from fastapi.responses import FileResponse
-from sqlalchemy import or_, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session
 
 from app.core.audit import audit
 from app.core.db import get_db
 from app.core.deps import CurrentUser, api_error, client_ip, require
-from app.models import ContentTranslation, EducationItem, MediaFile, Specialty
+from app.models import (
+    ContentTranslation,
+    EducationAssignment,
+    EducationItem,
+    EducationRating,
+    MediaFile,
+    Specialty,
+)
 from app.schemas.education import (
     EducationDetailOut,
     EducationFiltersOut,
@@ -59,11 +66,28 @@ def _specialty_names(db: Session, items: list[EducationItem]) -> dict[uuid.UUID,
     return {s.id: s.name for s in db.scalars(select(Specialty).where(Specialty.id.in_(ids)))}
 
 
+def rating_map(db: Session, item_ids: list[uuid.UUID]) -> dict[uuid.UUID, tuple[float, int]]:
+    """میانگین و تعداد امتیاز هر آموزش."""
+    if not item_ids:
+        return {}
+    rows = db.execute(
+        select(EducationRating.item_id, func.avg(EducationRating.stars), func.count())
+        .where(EducationRating.item_id.in_(item_ids))
+        .group_by(EducationRating.item_id)
+    )
+    return {item_id: (round(float(avg), 1), n) for item_id, avg, n in rows}
+
+
 def _media(db: Session, item: EducationItem) -> MediaFile | None:
     return db.get(MediaFile, item.media_id) if item.media_id else None
 
 
-def _list_out(item: EducationItem, names: dict[uuid.UUID, str]) -> dict:
+def _list_out(
+    item: EducationItem,
+    names: dict[uuid.UUID, str],
+    ratings: dict[uuid.UUID, tuple[float, int]] | None = None,
+) -> dict:
+    avg, count = (ratings or {}).get(item.id, (None, 0))
     return {
         "id": item.id,
         "title": item.title,
@@ -77,13 +101,15 @@ def _list_out(item: EducationItem, names: dict[uuid.UUID, str]) -> dict:
         "reviewed_on": item.reviewed_on,
         "has_file": item.media_id is not None,
         "file_version": str(item.media_id) if item.media_id else None,
+        "rating_average": avg,
+        "rating_count": count,
     }
 
 
 def _detail_out(db: Session, item: EducationItem) -> dict:
     m = _media(db, item)
     return {
-        **_list_out(item, _specialty_names(db, [item])),
+        **_list_out(item, _specialty_names(db, [item]), rating_map(db, [item.id])),
         "body": item.body,
         "external_url": item.external_url,
         "content_type": m.content_type if m else None,
@@ -92,8 +118,15 @@ def _detail_out(db: Session, item: EducationItem) -> dict:
 
 def _manage_out(db: Session, item: EducationItem) -> EducationManageOut:
     m = _media(db, item)
+    assigned, seen = db.execute(
+        select(func.count(), func.count(EducationAssignment.first_seen_at)).where(
+            EducationAssignment.item_id == item.id
+        )
+    ).one()
     return EducationManageOut(
         **_detail_out(db, item),
+        assigned_count=assigned,
+        seen_count=seen,
         is_published=item.is_published,
         file_name=m.original_name if m else None,
         created_at=item.created_at,
@@ -148,7 +181,8 @@ def public_education(
         )
     items = list(db.scalars(stmt.order_by(EducationItem.updated_at.desc(), EducationItem.title)))
     names = _specialty_names(db, items)
-    out = [EducationListOut(**_list_out(i, names)) for i in items]
+    ratings = rating_map(db, [i.id for i in items])
+    out = [EducationListOut(**_list_out(i, names, ratings)) for i in items]
     return localize(db, "education", out, language)
 
 

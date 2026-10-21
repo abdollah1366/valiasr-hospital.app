@@ -917,3 +917,66 @@ class EducationItem(TimestampMixin, Base):
     reviewed_on: Mapped[date | None] = mapped_column(Date)  # تاریخ آخرین بازبینی علمی
     is_published: Mapped[bool] = mapped_column(Boolean, default=False, index=True)
     created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+
+
+class EducationAssignment(Base):
+    """آموزشی که مسئول آموزش برای یک مراجع (بیمار یا همراه) فرستاده؛ با ردگیری دیده شدن."""
+
+    __tablename__ = "education_assignments"
+    __table_args__ = (UniqueConstraint("patient_id", "item_id"),)
+    id: Mapped[uuid.UUID] = pk()
+    patient_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("patients.id", ondelete="CASCADE"), index=True)
+    item_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("education_items.id", ondelete="CASCADE"), index=True
+    )
+    assigned_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+    note: Mapped[str | None] = mapped_column(String(300))
+    assigned_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    first_seen_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    last_seen_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    view_count: Mapped[int] = mapped_column(Integer, default=0)
+
+
+class EducationRating(Base):
+    """امتیاز ۱ تا ۵ یک مراجع به یک آموزش؛ هر مراجع یک امتیاز دارد و می‌تواند عوضش کند."""
+
+    __tablename__ = "education_ratings"
+    __table_args__ = (UniqueConstraint("item_id", "patient_id"),)
+    id: Mapped[uuid.UUID] = pk()
+    item_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("education_items.id", ondelete="CASCADE"), index=True
+    )
+    patient_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("patients.id", ondelete="CASCADE"))
+    stars: Mapped[int] = mapped_column(Integer)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, onupdate=utcnow)
+
+
+class EducationTicket(Base):
+    """گفتگوی مراجع با مسئول آموزش به بیمار."""
+
+    __tablename__ = "education_tickets"
+    id: Mapped[uuid.UUID] = pk()
+    patient_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("patients.id", ondelete="CASCADE"), index=True)
+    subject: Mapped[str] = mapped_column(String(200))
+    status: Mapped[str] = mapped_column(String(10), default="open", index=True)  # open | closed
+    staff_unread: Mapped[bool] = mapped_column(Boolean, default=True)  # پیام تازه مراجع که کارشناس ندیده
+    patient_unread: Mapped[bool] = mapped_column(Boolean, default=False)  # پاسخ تازه که مراجع ندیده
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    messages: Mapped[list["EducationTicketMessage"]] = relationship(
+        order_by="EducationTicketMessage.created_at", cascade="all, delete-orphan"
+    )
+
+
+class EducationTicketMessage(Base):
+    __tablename__ = "education_ticket_messages"
+    id: Mapped[uuid.UUID] = pk()
+    ticket_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("education_tickets.id", ondelete="CASCADE"), index=True
+    )
+    from_staff: Mapped[bool] = mapped_column(Boolean, default=False)
+    staff_user_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+    body: Mapped[str | None] = mapped_column(Text)
+    media_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("media_files.id", ondelete="SET NULL"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    media: Mapped["MediaFile | None"] = relationship()
