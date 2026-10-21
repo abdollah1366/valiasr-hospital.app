@@ -10,7 +10,7 @@ Object.assign(ICONS, {
 });
 
 const TR_LANGS = [["en", "انگلیسی"], ["az", "آذربایجانی"], ["tr", "ترکی استانبولی"], ["ar", "عربی"]];
-const TR_ENTITIES = [["unit", "بخش‌ها و درمانگاه‌ها"], ["faq", "پرسش‌های متداول"], ["announcement", "اطلاعیه‌های عمومی"]];
+const TR_ENTITIES = [["unit", "بخش‌ها و درمانگاه‌ها"], ["faq", "پرسش‌های متداول"], ["announcement", "اطلاعیه‌های عمومی"], ["education", "آموزش به بیمار"]];
 const TR_FIELDS = {
   name: "نام", location: "مکان", hours: "ساعات کار", description: "توضیح",
   question: "پرسش", answer: "پاسخ", title: "عنوان", body: "متن",

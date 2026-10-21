@@ -378,7 +378,7 @@ class PatientUpdateIn(BaseModel):
 
 # ---------------------------------------------------------------- ترجمه محتوای عمومی
 
-TranslationEntity = Literal["unit", "faq", "announcement"]
+TranslationEntity = Literal["unit", "faq", "announcement", "education"]
 TranslationLanguage = Literal["az", "en", "ar", "tr"]
 
 
