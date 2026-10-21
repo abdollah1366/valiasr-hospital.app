@@ -29,6 +29,7 @@ import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Campaign
 import androidx.compose.material.icons.outlined.FactCheck
 import androidx.compose.material.icons.outlined.MedicalServices
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.outlined.ReportProblem
@@ -91,6 +92,7 @@ fun StaffHomeScreen(
     onChat: () -> Unit,
     onSchedule: () -> Unit,
     onMyPatients: () -> Unit,
+    onMyReviews: () -> Unit,
     onPublic: () -> Unit,
     onLogout: () -> Unit,
 ) {
@@ -160,6 +162,7 @@ fun StaffHomeScreen(
                     // حساب پزشک: فهرست بیماران نوبت‌گرفته اول دیده می‌شود.
                     if (me.doctorId != null) {
                         add(TileItem("بیماران من", "نوبت‌های امروز و روزهای بعد", Icons.Outlined.MedicalServices, onClick = onMyPatients))
+                        add(TileItem("نظرات من", "امتیاز و نظر بیماران", Icons.Outlined.Star, onClick = onMyReviews))
                     }
                     if (me.can("incident.create")) {
                         add(

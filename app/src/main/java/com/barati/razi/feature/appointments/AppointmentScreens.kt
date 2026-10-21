@@ -71,6 +71,7 @@ import com.barati.razi.core.appointments.AppointmentLogic
 import com.barati.razi.core.network.DoctorDto
 import com.barati.razi.core.network.PatientAppointmentDto
 import com.barati.razi.core.network.PatientDto
+import com.barati.razi.core.network.PublicReviewDto
 import com.barati.razi.core.network.Result
 import com.barati.razi.core.network.SlotDto
 import com.barati.razi.core.util.toPersianDigits
@@ -201,12 +202,21 @@ fun DoctorDetailScreen(
             val scope = rememberCoroutineScope()
             val errorText = rememberErrorText()
             val fullError = stringResource(R.string.booking_failed_full)
+            var reviews by remember { mutableStateOf<List<PublicReviewDto>>(emptyList()) }
+            LaunchedEffect(doctorId) {
+                (repo.doctorReviews(doctorId) as? Result.Ok)?.let { reviews = it.value.items }
+            }
 
             Column(
                 Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 DoctorHeader(doctor, container::doctorPhotoUrl)
+                if (doctor.ratingCount > 0) {
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                        RatingSummary(doctor.ratingAverage, doctor.ratingCount)
+                    }
+                }
                 doctor.bio?.takeIf { it.isNotBlank() }?.let { bio ->
                     Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -215,6 +225,7 @@ fun DoctorDetailScreen(
                         }
                     }
                 }
+                ReviewList(reviews)
                 if (!doctor.bookingEnabled) {
                     Text(stringResource(R.string.booking_closed), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 } else if (days.isEmpty()) {
@@ -383,6 +394,7 @@ fun MyAppointmentsTab(
     val scope = rememberCoroutineScope()
     val errorText = rememberErrorText()
     var cancelling by remember { mutableStateOf<PatientAppointmentDto?>(null) }
+    var reviewing by remember { mutableStateOf<PatientAppointmentDto?>(null) }
     var error by remember { mutableStateOf<String?>(null) }
     LoadContent(loader, Modifier.padding(padding)) { items ->
         val now = Instant.now()
@@ -409,14 +421,20 @@ fun MyAppointmentsTab(
                 error?.let { item { ErrorText(it) } }
                 if (upcoming.isNotEmpty()) {
                     item { SectionTitle(stringResource(R.string.appt_upcoming)) }
-                    items(upcoming, key = { it.id }) { a -> AppointmentCard(a, onCancel = { cancelling = a }) }
+                    items(upcoming, key = { it.id }) { a -> AppointmentCard(a, onCancel = { cancelling = a }, onReview = null) }
                 }
                 if (past.isNotEmpty()) {
                     item { SectionTitle(stringResource(R.string.appt_past)) }
-                    items(past, key = { it.id }) { a -> AppointmentCard(a, onCancel = null) }
+                    items(past, key = { it.id }) { a -> AppointmentCard(a, onCancel = null, onReview = { reviewing = a }) }
                 }
             }
         }
+    }
+    reviewing?.let { a ->
+        ReviewDialog(container, a, onClose = { submitted ->
+            reviewing = null
+            if (submitted) loader.reload()
+        })
     }
     cancelling?.let { a ->
         AlertDialog(
@@ -448,7 +466,7 @@ private fun SectionTitle(text: String) {
 }
 
 @Composable
-private fun AppointmentCard(a: PatientAppointmentDto, onCancel: (() -> Unit)?) {
+private fun AppointmentCard(a: PatientAppointmentDto, onCancel: (() -> Unit)?, onReview: (() -> Unit)?) {
     val language = LocalAppLanguage.current
     val active = a.status == "booked" && onCancel != null
     Card(
@@ -489,6 +507,18 @@ private fun AppointmentCard(a: PatientAppointmentDto, onCancel: (() -> Unit)?) {
                 )
                 if (a.status == "cancelled" && a.cancelledBy == "staff") {
                     Text(stringResource(R.string.cancelled_by_hospital), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+                }
+                if (a.canReview && onReview != null) {
+                    Button(onClick = onReview, Modifier.height(44.dp)) { Text(stringResource(R.string.review_rate_action)) }
+                }
+                a.myReview?.let { r ->
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text(stringResource(R.string.review_your_rating), style = MaterialTheme.typography.bodySmall)
+                        StarRow(r.stars.toDouble())
+                        if (r.status == "pending") {
+                            Text(stringResource(R.string.review_pending_short), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                    }
                 }
                 if (active && a.canCancel) {
                     OutlinedButton(

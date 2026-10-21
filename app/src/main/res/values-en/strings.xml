@@ -215,4 +215,18 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_system">Match phone</string>
+    <string name="rating_count">%1$s reviews</string>
+    <string name="reviews_title">Patient reviews</string>
+    <string name="review_title">Rate %1$s</string>
+    <string name="review_comment_label">Your comment (optional)</string>
+    <string name="review_moderation_note">Stars count right away; your comment is published after the hospital approves it.</string>
+    <string name="review_submit">Submit rating</string>
+    <string name="review_thanks">Thank you for rating.</string>
+    <string name="review_thanks_pending">Thank you! Your comment will appear after the hospital approves it.</string>
+    <string name="review_ok">OK</string>
+    <string name="review_doctor_reply">Doctor\'s reply</string>
+    <string name="review_admin_reply">Hospital\'s reply</string>
+    <string name="review_rate_action">Rate your visit</string>
+    <string name="review_your_rating">Your rating:</string>
+    <string name="review_pending_short">Awaiting approval</string>
 </resources>

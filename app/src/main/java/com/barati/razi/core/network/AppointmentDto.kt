@@ -29,6 +29,8 @@ data class DoctorDto(
     @SerialName("is_featured") val isFeatured: Boolean = false,
     @SerialName("booking_enabled") val bookingEnabled: Boolean = true,
     @SerialName("next_free_at") val nextFreeAt: String? = null,
+    @SerialName("rating_average") val ratingAverage: Double? = null,
+    @SerialName("rating_count") val ratingCount: Int = 0,
 )
 
 @Serializable
@@ -62,6 +64,8 @@ data class PatientAppointmentDto(
     val note: String? = null,
     @SerialName("can_cancel") val canCancel: Boolean = false,
     @SerialName("cancelled_by") val cancelledBy: String? = null,
+    @SerialName("can_review") val canReview: Boolean = false,
+    @SerialName("my_review") val myReview: MyReviewDto? = null,
 )
 
 /** نوبت در نمای پزشک (بخش کارکنان). */

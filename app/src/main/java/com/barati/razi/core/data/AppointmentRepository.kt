@@ -5,6 +5,11 @@ import com.barati.razi.core.network.AppointmentStatusRequest
 import com.barati.razi.core.network.BookRequest
 import com.barati.razi.core.network.DoctorAppointmentDto
 import com.barati.razi.core.network.DoctorDto
+import com.barati.razi.core.network.DoctorOwnReviewDto
+import com.barati.razi.core.network.DoctorReviewsDto
+import com.barati.razi.core.network.MyReviewDto
+import com.barati.razi.core.network.ReplyRequest
+import com.barati.razi.core.network.ReviewRequest
 import com.barati.razi.core.network.PatientApiService
 import com.barati.razi.core.network.PatientAppointmentDto
 import com.barati.razi.core.network.Result
@@ -52,4 +57,17 @@ class AppointmentRepository(
 
     suspend fun setDoctorStatus(id: String, status: String): Result<DoctorAppointmentDto> =
         apiCall { api.setDoctorAppointmentStatus(id, AppointmentStatusRequest(status)) }
+
+    suspend fun doctorReviews(doctorId: String): Result<DoctorReviewsDto> = apiCall { api.doctorReviews(doctorId) }
+
+    suspend fun review(appointmentId: String, stars: Int, comment: String?): Result<MyReviewDto> {
+        val r = apiCall { patientApi.reviewAppointment(appointmentId, ReviewRequest(stars, comment?.trim()?.takeIf { it.isNotEmpty() })) }
+        if (r is Result.Ok) myAppointments()
+        return r
+    }
+
+    suspend fun myReviews(): Result<List<DoctorOwnReviewDto>> = apiCall { api.myDoctorReviews() }
+
+    suspend fun reply(reviewId: String, text: String): Result<DoctorOwnReviewDto> =
+        apiCall { api.replyToReview(reviewId, ReplyRequest(text.trim())) }
 }

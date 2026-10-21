@@ -215,4 +215,18 @@
     <string name="theme_light">فاتح</string>
     <string name="theme_dark">داكن</string>
     <string name="theme_system">حسب الهاتف</string>
+    <string name="rating_count">%1$s تقييم</string>
+    <string name="reviews_title">آراء المرضى</string>
+    <string name="review_title">قيّم %1$s</string>
+    <string name="review_comment_label">تعليقك (اختياري)</string>
+    <string name="review_moderation_note">تُحتسب النجوم فورًا، ويُنشر تعليقك بعد موافقة المستشفى.</string>
+    <string name="review_submit">إرسال التقييم</string>
+    <string name="review_thanks">شكرًا لتقييمك.</string>
+    <string name="review_thanks_pending">شكرًا! سيظهر تعليقك بعد موافقة المستشفى.</string>
+    <string name="review_ok">حسنًا</string>
+    <string name="review_doctor_reply">رد الطبيب</string>
+    <string name="review_admin_reply">رد المستشفى</string>
+    <string name="review_rate_action">قيّم زيارتك</string>
+    <string name="review_your_rating">تقييمك:</string>
+    <string name="review_pending_short">بانتظار الموافقة</string>
 </resources>

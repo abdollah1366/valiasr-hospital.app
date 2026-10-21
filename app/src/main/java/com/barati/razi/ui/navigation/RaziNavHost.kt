@@ -17,6 +17,7 @@ import com.barati.razi.AppContainer
 import com.barati.razi.OpenRequest
 import com.barati.razi.feature.appointments.DoctorDetailScreen
 import com.barati.razi.feature.appointments.DoctorPatientsScreen
+import com.barati.razi.feature.appointments.DoctorReviewsScreen
 import com.barati.razi.feature.splash.SplashScreen
 import com.barati.razi.notify.SystemNotifier
 import androidx.compose.runtime.mutableStateOf
@@ -109,13 +110,14 @@ object Routes {
     const val ON_DUTY = "on_duty"
     const val DOCTOR = "doctor/{id}"
     const val DOCTOR_PATIENTS = "doctor_patients"
+    const val DOCTOR_REVIEWS = "doctor_reviews"
 
     /** صفحه‌هایی که بدون نشست معتبر باز نمی‌مانند. */
     val staffOnly = setOf(
         CHANGE_PASSWORD, STAFF_HOME, MY_INCIDENTS, INCIDENT_DETAIL, ANNOUNCEMENTS, REVIEW,
         TRAINING, COURSE, COURSE_ITEM, EXAM_TAKE, ATTEMPT, REQUESTS, REQUEST_DETAIL, NOTIFICATIONS,
         CHATS, CHAT_NEW, CHAT_GROUP_NEW, CHAT, CHAT_INFO,
-        SCHEDULE, SCHEDULE_UNITS, SCHEDULE_ROSTER, SCHEDULE_SWAPS, ON_DUTY, DOCTOR_PATIENTS,
+        SCHEDULE, SCHEDULE_UNITS, SCHEDULE_ROSTER, SCHEDULE_SWAPS, ON_DUTY, DOCTOR_PATIENTS, DOCTOR_REVIEWS,
     )
 
     fun track(code: String = "", secret: String = "") = "track?code=${Uri.encode(code)}&secret=${Uri.encode(secret)}"
@@ -265,6 +267,7 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
             }
         }
         composable(Routes.DOCTOR_PATIENTS) { DoctorPatientsScreen(container, back) }
+        composable(Routes.DOCTOR_REVIEWS) { DoctorReviewsScreen(container, back) }
         composable(
             Routes.TRACK,
             arguments = listOf(
@@ -303,6 +306,7 @@ fun RaziNavHost(container: AppContainer, nav: NavHostController = rememberNavCon
                     onChat = { nav.navigate(Routes.CHATS) },
                     onSchedule = { nav.navigate(Routes.SCHEDULE) },
                     onMyPatients = { nav.navigate(Routes.DOCTOR_PATIENTS) },
+                    onMyReviews = { nav.navigate(Routes.DOCTOR_REVIEWS) },
                     onPublic = { nav.popBackStack(Routes.PUBLIC_HOME, inclusive = false) },
                     onLogout = { scope.launch { container.authRepository.logout() } },
                 )
