@@ -13,6 +13,7 @@ PERMISSIONS: dict[str, str] = {
     "announcement.read": "مشاهده اطلاعیه‌های داخلی",
     "announcement.manage": "انتشار و مدیریت اطلاعیه‌ها",
     "faq.manage": "مدیریت پرسش‌های متداول",
+    "education.manage": "مدیریت کتابخانه آموزش به بیمار (مقاله، ویدئو، صوت، PDF)",
     "translation.manage": "ثبت و تأیید ترجمه محتوای عمومی برای مراجعان",
     "feedback.manage": "رسیدگی به پیشنهادها و شکایات",
     "dashboard.read": "مشاهده داشبورد آماری",
@@ -83,6 +84,7 @@ DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
             "announcement.read",
             "announcement.manage",
             "faq.manage",
+            "education.manage",
             "translation.manage",
             "feedback.manage",
             "training.read",
@@ -134,6 +136,7 @@ DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
             "review.moderate",
             "token.manage",
             "token.redeem",
+            "education.manage",
         ],
     ),
     "secretary": (

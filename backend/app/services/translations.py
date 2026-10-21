@@ -13,15 +13,16 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models import Announcement, ContentTranslation, Faq, Unit
+from app.models import Announcement, ContentTranslation, EducationItem, Faq, Unit
 
 LANGUAGES = ("az", "en", "ar", "tr")
 FIELDS: dict[str, tuple[str, ...]] = {
     "unit": ("name", "location", "hours", "description"),
     "faq": ("question", "answer"),
     "announcement": ("title", "body"),
+    "education": ("title", "summary", "body", "condition", "source"),
 }
-MODELS = {"unit": Unit, "faq": Faq, "announcement": Announcement}
+MODELS = {"unit": Unit, "faq": Faq, "announcement": Announcement, "education": EducationItem}
 
 T = TypeVar("T", bound=BaseModel)
 

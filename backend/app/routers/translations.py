@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from app.core.audit import audit
 from app.core.db import get_db
 from app.core.deps import CurrentUser, api_error, client_ip, require
-from app.models import Announcement, ContentTranslation, Faq, Unit
+from app.models import Announcement, ContentTranslation, EducationItem, Faq, Unit
 from app.schemas import (
     TranslationEntity,
     TranslationFieldOut,
@@ -29,6 +29,14 @@ def _entities(db: Session, entity_type: str) -> list:
         return list(db.scalars(select(Unit).where(Unit.is_public.is_(True)).order_by(Unit.name)))
     if entity_type == "faq":
         return list(db.scalars(select(Faq).order_by(Faq.sort_order, Faq.question)))
+    if entity_type == "education":
+        return list(
+            db.scalars(
+                select(EducationItem)
+                .where(EducationItem.is_published.is_(True))
+                .order_by(EducationItem.title)
+            )
+        )
     return list(
         db.scalars(
             select(Announcement)
@@ -38,7 +46,7 @@ def _entities(db: Session, entity_type: str) -> list:
     )
 
 
-_LABEL_FIELD = {"unit": "name", "faq": "question", "announcement": "title"}
+_LABEL_FIELD = {"unit": "name", "faq": "question", "announcement": "title", "education": "title"}
 
 
 def _source(db: Session, key: TranslationKey) -> str | None:

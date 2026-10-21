@@ -892,3 +892,28 @@ class TokenRedemption(TimestampMixin, Base):
     status: Mapped[str] = mapped_column(String(20), default="issued", index=True)
     used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     used_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+
+
+class EducationItem(TimestampMixin, Base):
+    """محتوای آموزش به بیمار: مقاله، تصویر، ویدئو، صوت یا PDF با دسته‌بندی بیماری، تخصص و نوع مراقبت.
+
+    متن اصلی فارسی است؛ ترجمه‌ها در ContentTranslation (entity_type = education) می‌مانند.
+    """
+
+    __tablename__ = "education_items"
+    id: Mapped[uuid.UUID] = pk()
+    title: Mapped[str] = mapped_column(String(300))
+    summary: Mapped[str | None] = mapped_column(Text)
+    body: Mapped[str | None] = mapped_column(Text)  # متن مقاله
+    kind: Mapped[str] = mapped_column(String(10), index=True)  # article | image | video | audio | pdf
+    condition: Mapped[str | None] = mapped_column(String(150), index=True)  # بیماری یا موضوع، مثلاً «دیابت»
+    care_type: Mapped[str] = mapped_column(String(20), default="other", index=True)
+    specialty_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("specialties.id", ondelete="SET NULL"), index=True
+    )
+    media_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("media_files.id", ondelete="SET NULL"))
+    external_url: Mapped[str | None] = mapped_column(String(500))  # پیوند ویدئو یا فایل بیرونی
+    source: Mapped[str | None] = mapped_column(Text)  # منبع علمی
+    reviewed_on: Mapped[date | None] = mapped_column(Date)  # تاریخ آخرین بازبینی علمی
+    is_published: Mapped[bool] = mapped_column(Boolean, default=False, index=True)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
