@@ -325,8 +325,8 @@ fun ScheduleUnitsScreen(container: AppContainer, onBack: () -> Unit, onOpen: (St
 // ---------------------------------------------------------------- جدول یک بخش
 
 private val CELL_W = 40.dp
-private val CELL_H = 40.dp
-private val NAME_W = 110.dp
+private val CELL_H = 48.dp
+private val NAME_W = 128.dp
 
 @Composable
 fun ScheduleRosterScreen(container: AppContainer, me: MeDto, id: String, onBack: () -> Unit) {
@@ -452,8 +452,9 @@ private fun RosterTable(d: ScheduleDetailDto, myId: String, onCell: (com.barati.
                 Box(Modifier.width(NAME_W).height(CELL_H), contentAlignment = Alignment.CenterStart) {
                     Text(
                         m.fullName,
-                        maxLines = 2,
-                        fontSize = 12.sp,
+                        maxLines = 3,
+                        fontSize = 11.sp,
+                        lineHeight = 14.sp,
                         fontWeight = if (m.userId == myId) FontWeight.Bold else FontWeight.Normal,
                     )
                 }
