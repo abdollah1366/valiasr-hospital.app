@@ -11,7 +11,7 @@ def test_task_runs_this_script_at_boot_as_system():
 
 
 def test_uvicorn_listens_on_all_interfaces():
-    assert autostart.uvicorn_command()[-4:] == ["--host", "0.0.0.0", "--port", "8000"]
+    assert autostart.uvicorn_command()[-4:] == ["--host", "0.0.0.0", "--port", "8001"]
 
 
 def test_run_restarts_crashed_server_and_logs(tmp_path, monkeypatch):
@@ -33,4 +33,4 @@ def test_server_commands_refuse_outside_windows(monkeypatch):
 
 def test_task_has_no_time_limit():
     assert "-ExecutionTimeLimit ([TimeSpan]::Zero)" in autostart.SETTINGS_PS
-    assert "-TaskName RaziServer" in autostart.SETTINGS_PS
+    assert "-TaskName ValiasrServer" in autostart.SETTINGS_PS

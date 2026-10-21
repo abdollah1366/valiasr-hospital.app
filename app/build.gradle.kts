@@ -12,7 +12,8 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.barati.razi"
+        // شناسه جدا از اپ رازی تا هر دو روی یک گوشی نصب شوند و تنظیمات (مثل آدرس سرور) با هم قاطی نشود.
+        applicationId = "com.valiasr.hospital"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
