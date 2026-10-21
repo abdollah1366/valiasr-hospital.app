@@ -3,8 +3,10 @@ package com.barati.razi
 import android.content.Context
 import android.os.Build
 import com.barati.razi.core.data.AppointmentRepository
+import com.barati.razi.core.data.EducationRepository
 import com.barati.razi.core.data.ResultsRepository
 import com.barati.razi.core.network.DoctorDto
+import com.barati.razi.core.network.EducationDto
 import com.barati.razi.core.data.TokensRepository
 import com.barati.razi.core.data.ChatRepository
 import com.barati.razi.core.data.ContentRepository
@@ -83,11 +85,16 @@ class AppContainer(context: Context) {
     }
 
     val resultsRepository = ResultsRepository(patientApi)
+    val educationRepository = EducationRepository(api)
     val tokensRepository = TokensRepository(patientApi)
 
     /** نشانی کامل عکس پزشک (عمومی، بدون توکن). */
     fun doctorPhotoUrl(doctor: DoctorDto): String =
         apiRoot() + "public/doctors/${doctor.id}/photo" + (doctor.photoVersion?.let { "?v=$it" } ?: "")
+
+    /** نشانی فایل یک آموزش (عمومی)؛ نسخه فایل نشانی را با هر بار تغییر فایل عوض می‌کند. */
+    fun educationFileUrl(item: EducationDto): String =
+        apiRoot() + "public/education/${item.id}/file" + (item.fileVersion?.let { "?v=$it" } ?: "")
 
     private fun apiRoot(): String {
         val override = if (BuildConfig.ALLOW_SERVER_OVERRIDE) serverOrigin else null

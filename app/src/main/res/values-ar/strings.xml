@@ -10,7 +10,7 @@
     <string name="error_generic">حدث خطأ. يرجى المحاولة مرة أخرى.</string>
     <string name="error_network">تعذّر الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت.</string>
 
-    <string name="hospital_full_name">ولي العصر تبريز</string>
+    <string name="hospital_full_name">مستشفى ولي العصر تبريز</string>
     <string name="tile_news">الإعلانات</string>
     <string name="tile_news_sub">أخبار المستشفى وتغييرات الخدمات</string>
     <string name="tile_feedback_sub">الإرسال والمتابعة برمز</string>
@@ -258,4 +258,27 @@
     <string name="club_history">سجل الرموز</string>
     <string name="club_confirm">إنفاق %1$s رمز؟</string>
     <string name="club_confirm_yes">نعم، استلم</string>
+    <string name="nav_education">تثقيف المريض</string>
+    <string name="edu_home_sub">مقالات وفيديوهات وإرشادات الرعاية</string>
+    <string name="edu_search">البحث في المواد التثقيفية</string>
+    <string name="edu_empty">لا توجد مواد تثقيفية بهذه الشروط.</string>
+    <string name="edu_kind_article">مقال</string>
+    <string name="edu_kind_image">صورة</string>
+    <string name="edu_kind_video">فيديو</string>
+    <string name="edu_kind_audio">صوت</string>
+    <string name="edu_kind_pdf">PDF</string>
+    <string name="edu_care_prevention">الوقاية</string>
+    <string name="edu_care_before">قبل الإجراء</string>
+    <string name="edu_care_after">بعد الإجراء</string>
+    <string name="edu_care_medication">الدواء</string>
+    <string name="edu_care_nutrition">التغذية</string>
+    <string name="edu_care_exercise">الرياضة والحركة</string>
+    <string name="edu_care_home">الرعاية المنزلية</string>
+    <string name="edu_care_warning">علامات التحذير</string>
+    <string name="edu_care_other">أخرى</string>
+    <string name="edu_open_file">فتح الملف</string>
+    <string name="edu_open_link">فتح الرابط</string>
+    <string name="edu_source">المصدر العلمي: %1$s</string>
+    <string name="edu_reviewed">آخر مراجعة علمية: %1$s</string>
+    <string name="edu_disclaimer">هذا المحتوى لا يغني عن الطبيب. عند ظهور علامات تحذير أو قلق تواصل مع طبيبك.</string>
 </resources>
