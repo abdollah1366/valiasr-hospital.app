@@ -76,10 +76,11 @@ async function renderEducation(main) {
   const label = (pairs, key) => (pairs.find((p) => p[0] === key) || [0, key])[1];
   async function load() {
     const rows = await api("/admin/education");
-    list.replaceChildren(table(["عنوان", "نوع", "مراقبت", "بیماری", "وضعیت", "بازبینی"], rows.map((i) => ({
+    list.replaceChildren(table(["عنوان", "نوع", "مراقبت", "بیماری", "وضعیت", "امتیاز", "دیده‌شده / ارسال‌شده", "بازبینی"], rows.map((i) => ({
       item: i,
       cells: [i.title, label(EDU.kinds, i.kind), label(EDU.care, i.care_type), i.condition || "—",
         i.is_published ? badge("منتشر شده", "green") : badge("پیش‌نویس", "gray"),
+        educationStars(i.rating_average, i.rating_count), fa(i.seen_count) + " / " + fa(i.assigned_count),
         i.reviewed_on ? new Date(i.reviewed_on).toLocaleDateString("fa-IR") : "—"],
     })), (i) => educationDialog(i, specialties, load)));
   }

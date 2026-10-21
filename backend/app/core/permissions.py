@@ -14,6 +14,8 @@ PERMISSIONS: dict[str, str] = {
     "announcement.manage": "انتشار و مدیریت اطلاعیه‌ها",
     "faq.manage": "مدیریت پرسش‌های متداول",
     "education.manage": "مدیریت کتابخانه آموزش به بیمار (مقاله، ویدئو، صوت، PDF)",
+    "education.assign": "فرستادن آموزش برای مراجع مشخص و دیدن دیده‌شدن و آمار آن",
+    "education.ticket": "پاسخ به تیکت‌های مراجعان با مسئول آموزش به بیمار",
     "translation.manage": "ثبت و تأیید ترجمه محتوای عمومی برای مراجعان",
     "feedback.manage": "رسیدگی به پیشنهادها و شکایات",
     "dashboard.read": "مشاهده داشبورد آماری",
@@ -124,6 +126,18 @@ DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
     "quality_pr": (
         "مسئول ایمنی، اعتبارسنجی و روابط عمومی",
         ["announcement.read", "training.read", "request.create", "unit.manage", "translation.manage"],
+    ),
+    "patient_educator": (
+        "مسئول آموزش به بیمار",
+        [
+            "announcement.read",
+            "training.read",
+            "request.create",
+            "education.manage",
+            "education.assign",
+            "education.ticket",
+            "translation.manage",
+        ],
     ),
     "doctor_admin": (
         "مدیر معرفی پزشکان و نوبت‌دهی",

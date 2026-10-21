@@ -13,7 +13,7 @@ from app.services.training import media_root
 
 
 async def store_upload(
-    request: Request, filename: str, allowed: dict[str, str], max_mb: int, uploaded_by: uuid.UUID
+    request: Request, filename: str, allowed: dict[str, str], max_mb: int, uploaded_by: uuid.UUID | None
 ) -> MediaFile:
     """بدنه درخواست خود فایل است (نه multipart) تا فایل‌های بزرگ تکه‌تکه روی دیسک نوشته شوند.
 

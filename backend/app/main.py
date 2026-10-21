@@ -18,6 +18,7 @@ from app.routers import (
     chat,
     dashboard,
     education,
+    education_engage,
     incidents,
     notifications,
     patient,
@@ -106,6 +107,7 @@ def create_app() -> FastAPI:
         tokens.router,
         reviews.router,
         education.router,
+        education_engage.router,
     ):
         app.include_router(r, prefix=API_PREFIX)
 

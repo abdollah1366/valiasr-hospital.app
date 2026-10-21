@@ -155,6 +155,7 @@ def seed_demo(db: Session) -> None:
         seed_demo_requests(db, password)
         seed_demo_schedules(db, password)
         seed_demo_doctors(db, password)
+        seed_demo_educator(db, password)
         return
     units = {
         "emergency": Unit(
@@ -204,6 +205,7 @@ def seed_demo(db: Session) -> None:
     seed_demo_requests(db, password)
     seed_demo_schedules(db, password)
     seed_demo_doctors(db, password)
+    seed_demo_educator(db, password)
     db.add_all(
         [
             Faq(
@@ -421,6 +423,18 @@ DEMO_DOCTORS = [
     ("دکتر نمونه دوم", "ارتوپدی", "جراح و متخصص ارتوپدی (نمونه)", True),
     ("دکتر نمونه سوم", "زنان و زایمان", "متخصص زنان و زایمان (نمونه)", False),
 ]
+
+
+def seed_demo_educator(db: Session, password: str) -> None:
+    """مسئول آموزش به بیمار (1015)؛ جدا از پزشکان تا روی پایگاه داده‌ی قدیمی هم افزوده شود."""
+    _user(
+        db,
+        "1015",
+        "مسئول آموزش به بیمار",
+        _unit(db, "درمانگاه تخصصی", "clinic"),
+        [("patient_educator", None)],
+        password,
+    )
 
 
 def seed_demo_doctors(db: Session, password: str) -> None:
