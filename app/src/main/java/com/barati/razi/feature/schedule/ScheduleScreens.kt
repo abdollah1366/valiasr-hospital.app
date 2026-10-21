@@ -343,7 +343,7 @@ fun ScheduleRosterScreen(container: AppContainer, me: MeDto, id: String, onBack:
     RaziScaffold(title = "برنامه ماهانه", onBack = onBack) { padding ->
         LoadContent(loader, Modifier.padding(padding)) { loaded ->
             val d = updated ?: loaded
-            Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(d.title, Modifier.weight(1f), fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium)
                     val ok = d.status == "published"
@@ -609,9 +609,9 @@ fun ScheduleSwapsScreen(container: AppContainer, onBack: () -> Unit) {
     RaziScaffold(title = "جابجایی شیفت", onBack = onBack) { padding ->
         LoadContent(loader, Modifier.padding(padding)) { list ->
             if (list.isEmpty()) {
-                EmptyState(Icons.Filled.SwapHoriz, "درخواستی نیست", "برای جابجایی، در جدول ماهانه روی شیفت همکارتان بزنید.")
+                EmptyState(Icons.Filled.SwapHoriz, "درخواستی نیست", "برای جابجایی، در جدول ماهانه روی شیفت همکارتان بزنید.", Modifier.padding(padding))
             } else {
-                LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(10.dp), contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp)) {
+                LazyColumn(Modifier.fillMaxSize().padding(padding), verticalArrangement = Arrangement.spacedBy(10.dp), contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp)) {
                     item { ErrorText(error) }
                     items(list, key = { it.id }) { s ->
                         Card(Modifier.fillMaxWidth()) {
