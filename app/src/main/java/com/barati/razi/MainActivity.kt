@@ -5,10 +5,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.barati.razi.core.data.PatientSession
+import com.barati.razi.core.data.ThemeMode
 import com.barati.razi.core.data.SessionState
 import com.barati.razi.core.i18n.AppLanguage
 import com.barati.razi.notify.SystemNotifier
@@ -68,10 +73,18 @@ class MainActivity : ComponentActivity() {
             }
         }
         setContent {
-            RaziTheme {
+            val themeMode by container.themeRepository.mode.collectAsState()
+            RaziTheme(
+                darkTheme = when (themeMode) {
+                    ThemeMode.LIGHT -> false
+                    ThemeMode.DARK -> true
+                    ThemeMode.SYSTEM -> isSystemInDarkTheme()
+                },
+            ) {
                 // زبان گوشی اثری ندارد: اپ فارسی است و فقط صفحه‌های مراجعان زبان خودشان را می‌گیرند.
                 LocalizedContent(AppLanguage.FA) {
-                    Surface(Modifier.fillMaxSize()) { RaziNavHost(container) }
+                    // اندروید ۱۵ به بعد adjustResize را نادیده می‌گیرد و صفحه‌کلید روی فرم‌ها می‌افتد و پایین صفحه دست‌نیافتنی می‌شود.
+                    Surface(Modifier.fillMaxSize().imePadding()) { RaziNavHost(container) }
                 }
             }
         }

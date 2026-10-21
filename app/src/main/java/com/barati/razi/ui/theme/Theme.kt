@@ -1,6 +1,5 @@
 package com.barati.razi.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
@@ -133,9 +132,9 @@ private val RaziTypography = Typography(
     labelSmall = Base.labelSmall.withFont(),
 )
 
-/** تم اپ؛ کل رابط کاربری راست‌چین است، صرف‌نظر از زبان گوشی. حالت تیره تابع تنظیم گوشی است. */
+/** تم اپ؛ کل رابط کاربری راست‌چین است، صرف‌نظر از زبان گوشی. پیش‌فرض روشن است؛ حالت تیره را کاربر انتخاب می‌کند. */
 @Composable
-fun RaziTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun RaziTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         MaterialTheme(colorScheme = if (darkTheme) DarkColors else LightColors, typography = RaziTypography, content = content)
     }

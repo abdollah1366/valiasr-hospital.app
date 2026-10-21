@@ -211,4 +211,8 @@
     <string name="free_places">%1$s left</string>
     <string name="clinic_label">Clinic</string>
     <string name="booking_failed_full">That slot was just taken; pick another.</string>
+    <string name="theme_label">Appearance</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">Match phone</string>
 </resources>

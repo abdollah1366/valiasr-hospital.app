@@ -20,6 +20,7 @@ object Keys {
     const val CHAT_OUTBOX = "chat_outbox"
     const val MY_SCHEDULE = "my_schedule_cache"
     const val PATIENT_LANGUAGE = "patient_language"
+    const val THEME_MODE = "theme_mode"
     const val PATIENT_PROFILE = "patient_profile"
     const val PATIENT_SIGNUP_SKIPPED = "patient_signup_skipped"
 }

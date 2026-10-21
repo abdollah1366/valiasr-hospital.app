@@ -51,6 +51,7 @@ class AppContainer(context: Context) {
     val authRepository = DefaultAuthRepository(api, tokens, store, "${Build.MANUFACTURER} ${Build.MODEL}").also { authRef = it }
     val contentRepository = ContentRepository(api)
     val languageRepository = LanguageRepository(store, scope)
+    val themeRepository = com.barati.razi.core.data.ThemeRepository(store, scope)
 
     private lateinit var patientAuthRef: PatientAuthRepository
     private val patientTokens = com.barati.razi.core.data.EncryptedTokenStorage(appContext, "valiasr_patient_tokens")

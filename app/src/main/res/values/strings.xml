@@ -215,4 +215,8 @@
     <string name="free_places">%1$s جای خالی</string>
     <string name="clinic_label">درمانگاه</string>
     <string name="booking_failed_full">این وقت همین حالا پر شد؛ وقت دیگری انتخاب کنید.</string>
+    <string name="theme_label">حالت نمایش</string>
+    <string name="theme_light">روشن</string>
+    <string name="theme_dark">تیره</string>
+    <string name="theme_system">مطابق گوشی</string>
 </resources>

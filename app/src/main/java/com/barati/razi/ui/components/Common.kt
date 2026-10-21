@@ -202,3 +202,23 @@ fun rememberErrorText(): (ApiError) -> String {
         }
     }
 }
+
+/** انتخاب حالت نمایش (روشن، تیره، مطابق گوشی)؛ در منو و پروفایل مراجع و صفحه کارکنان. */
+@Composable
+fun ThemeModePicker(current: com.barati.razi.core.data.ThemeMode, onSelect: (com.barati.razi.core.data.ThemeMode) -> Unit) {
+    val options = listOf(
+        com.barati.razi.core.data.ThemeMode.LIGHT to R.string.theme_light,
+        com.barati.razi.core.data.ThemeMode.DARK to R.string.theme_dark,
+        com.barati.razi.core.data.ThemeMode.SYSTEM to R.string.theme_system,
+    )
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        options.forEach { (mode, label) ->
+            androidx.compose.material3.FilterChip(
+                selected = mode == current,
+                onClick = { onSelect(mode) },
+                label = { Text(stringResource(label), maxLines = 1) },
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(50),
+            )
+        }
+    }
+}
