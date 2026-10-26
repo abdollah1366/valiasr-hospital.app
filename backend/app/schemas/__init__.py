@@ -397,7 +397,22 @@ class TranslationFieldOut(BaseModel):
     field: str
     source: str | None
     text: str | None
-    status: Literal["missing", "draft", "approved", "outdated"]
+    status: Literal["missing", "draft", "machine", "approved", "outdated"]
+
+
+class MachineTranslateIn(BaseModel):
+    entity_type: TranslationEntity
+    language: TranslationLanguage | None = None  # خالی یعنی هر چهار زبان
+
+
+class MachineTranslateOut(BaseModel):
+    translated: int
+
+
+class MachineStatusOut(BaseModel):
+    provider: str
+    enabled: bool
+    show_unreviewed: bool
 
 
 class TranslationItemOut(BaseModel):

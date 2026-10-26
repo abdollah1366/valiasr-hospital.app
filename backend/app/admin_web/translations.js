@@ -20,6 +20,7 @@ const TR_FIELDS = {
 const TR_STATUS = {
   missing: ["ترجمه نشده", "gray"],
   draft: ["منتظر تأیید", "amber"],
+  machine: ["ترجمه ماشینی، بازبینی نشده", "blue"],
   approved: ["تأیید شده", "green"],
   outdated: ["نیازمند بازبینی", "red"],
 };
@@ -33,7 +34,7 @@ async function renderTranslations(main) {
   async function load() {
     list.replaceChildren(h("p", { class: "muted" }, "در حال بارگذاری…"));
     const items = await api(`/admin/translations?entity_type=${entity.value}&language=${lang.value}`);
-    const counts = { missing: 0, draft: 0, approved: 0, outdated: 0 };
+    const counts = { missing: 0, draft: 0, machine: 0, approved: 0, outdated: 0 };
     items.forEach((i) => i.fields.forEach((f) => counts[f.status]++));
     summary.textContent = Object.entries(counts).filter(([, n]) => n).map(([s, n]) => `${TR_STATUS[s][0]}: ${fa(n)}`).join(" · ");
     list.replaceChildren(...(items.length
@@ -43,8 +44,24 @@ async function renderTranslations(main) {
 
   lang.addEventListener("change", () => load().catch(showError));
   entity.addEventListener("change", () => load().catch(showError));
+  const machine = await api("/admin/translations/machine").catch(() => null);
+  const autoBtn = h("button", { class: "btn secondary", onclick: async () => {
+    autoBtn.disabled = true;
+    try {
+      const r = await api("/admin/translations/machine", { method: "POST", body: { entity_type: entity.value, language: lang.value } });
+      toast(`${fa(r.translated)} متن ماشینی ترجمه شد؛ لطفاً بازبینی و تأیید کنید`);
+      await load();
+    } catch (e) { showError(e); } finally { autoBtn.disabled = false; }
+  } }, "ترجمه خودکار موارد خالی");
+  const machineNote = machine && machine.enabled
+    ? (machine.show_unreviewed
+      ? "ترجمه ماشینی روشن است: متن‌های بدون ترجمه خودکار ترجمه و تا بازبینی شما به مراجع نشان داده می‌شوند."
+      : "ترجمه ماشینی روشن است، ولی تا تأیید شما به مراجع نشان داده نمی‌شود.")
+    : "ترجمه ماشینی خاموش است (RAZI_MT_PROVIDER روی سرور تنظیم نشده).";
   main.replaceChildren(
-    h("div", { class: "toolbar" }, h("h1", { class: "grow" }, "ترجمه محتوا برای مراجعان"), entity, lang),
+    h("div", { class: "toolbar" }, h("h1", { class: "grow" }, "ترجمه محتوا برای مراجعان"), entity, lang,
+      machine && machine.enabled ? autoBtn : null),
+    h("p", { class: "muted" }, machineNote),
     h("p", { class: "muted" },
       "متن فارسی اصل است. مراجع فقط ترجمه «تأیید شده» را می‌بیند؛ هر ویرایش ترجمه دوباره تأیید لازم دارد و اگر متن فارسی تغییر کند، تا بازبینی ترجمه، فارسی نمایش داده می‌شود."),
     summary,
@@ -71,7 +88,7 @@ function translationCard(item, language, reload) {
           await reload();
         } catch (e) { showError(e); }
       } }, "ذخیره");
-      const approve = h("button", { class: "btn small", disabled: f.status !== "draft", onclick: async () => {
+      const approve = h("button", { class: "btn small", disabled: f.status !== "draft" && f.status !== "machine", onclick: async () => {
         try {
           await api("/admin/translations/approve", { method: "POST", body: key });
           toast("تأیید شد");

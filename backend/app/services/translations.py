@@ -1,7 +1,9 @@
 """ترجمه محتوای عمومی (بخش‌ها، پرسش‌ها، اطلاعیه‌ها، تخصص‌ها، پزشکان، ...) برای زبان‌های مراجعان.
 
 متن اصلی همیشه فارسی است و در جدول خود محتوا می‌ماند. ترجمه فقط وقتی به مراجع نشان داده می‌شود که
-تأیید شده باشد و متن فارسی از زمان ترجمه تغییر نکرده باشد؛ در غیر این صورت همان فارسی برمی‌گردد.
+تأیید شده باشد (یا ترجمه ماشینی باشد و RAZI_MT_SHOW_UNREVIEWED روشن باشد) و متن فارسی از زمان ترجمه
+تغییر نکرده باشد؛ در غیر این صورت همان فارسی برمی‌گردد و اگر ترجمه ماشینی تنظیم شده باشد، ترجمه آن
+در پس‌زمینه ساخته می‌شود (machine_translation.schedule).
 """
 
 import hashlib
@@ -13,6 +15,7 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.core.config import get_settings
 from app.models import (
     Announcement,
     ContentTranslation,
@@ -81,7 +84,7 @@ def _approved(
         select(ContentTranslation).where(
             ContentTranslation.entity_type == entity_type,
             ContentTranslation.language == language,
-            ContentTranslation.status == "approved",
+            ContentTranslation.status.in_(_visible_statuses()),
             ContentTranslation.entity_id.in_(ids),
         )
     )
@@ -90,10 +93,19 @@ def _approved(
     return found
 
 
-def _pick(source: str | None, tr: ContentTranslation | None) -> str | None:
-    if source and tr is not None and tr.source_hash == source_hash(source):
-        return tr.text
-    return source
+def _visible_statuses() -> tuple[str, ...]:
+    return ("approved", "machine") if get_settings().mt_show_unreviewed else ("approved",)
+
+
+def _schedule_machine(entity_type: str, ids, language: str) -> None:
+    if ids:
+        from app.services import machine_translation
+
+        machine_translation.schedule(entity_type, ids, language)
+
+
+def _fresh(source: str | None, tr: ContentTranslation | None) -> bool:
+    return bool(source) and tr is not None and tr.source_hash == source_hash(source)
 
 
 def localize(db: Session, entity_type: str, items: list[T], language: str | None) -> list[T]:
@@ -102,14 +114,22 @@ def localize(db: Session, entity_type: str, items: list[T], language: str | None
         return items
     found = _approved(db, entity_type, [i.id for i in items], language)
     result = []
+    missing = []
     for item in items:
         update = {}
-        for field, tr in found.get(item.id, {}).items():
+        trs = found.get(item.id, {})
+        for field in FIELDS[entity_type]:
             source = getattr(item, field, None)
-            text = _pick(source, tr)
-            if text != source:
-                update[field] = text
+            if not source:
+                continue
+            tr = trs.get(field)
+            if _fresh(source, tr):
+                if tr.text != source:
+                    update[field] = tr.text
+            elif item.id not in missing:
+                missing.append(item.id)
         result.append(item.model_copy(update=update) if update else item)
+    _schedule_machine(entity_type, missing, language)
     return result
 
 
@@ -137,7 +157,11 @@ class Localizer:
         if not self.language or not source:
             return source
         self.prefetch(entity_type, [obj.id])
-        return _pick(source, self._cache[(entity_type, obj.id)].get(field))
+        tr = self._cache[(entity_type, obj.id)].get(field)
+        if _fresh(source, tr):
+            return tr.text
+        _schedule_machine(entity_type, [obj.id], self.language)
+        return source
 
 
 def field_status(source: str | None, tr: ContentTranslation | None) -> str:

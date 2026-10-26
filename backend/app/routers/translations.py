@@ -7,6 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.audit import audit
+from app.core.config import get_settings
 from app.core.db import get_db
 from app.core.deps import CurrentUser, api_error, client_ip, require
 from app.models import (
@@ -20,6 +21,9 @@ from app.models import (
     Unit,
 )
 from app.schemas import (
+    MachineStatusOut,
+    MachineTranslateIn,
+    MachineTranslateOut,
     TranslationEntity,
     TranslationFieldOut,
     TranslationIn,
@@ -27,7 +31,8 @@ from app.schemas import (
     TranslationKey,
     TranslationLanguage,
 )
-from app.services.translations import FIELDS, MODELS, field_status, source_hash
+from app.services import machine_translation as mt
+from app.services.translations import FIELDS, LANGUAGES, MODELS, field_status, source_hash
 
 router = APIRouter(prefix="/admin/translations", tags=["translations"])
 
@@ -216,3 +221,42 @@ def approve_translation(
     )
     db.commit()
     return TranslationFieldOut(field=body.field, source=source, text=tr.text, status="approved")
+
+
+@router.get("/machine", response_model=MachineStatusOut)
+def machine_status(_: CurrentUser = Depends(require("translation.manage"))):
+    s = get_settings()
+    return MachineStatusOut(
+        provider=s.mt_provider, enabled=mt.enabled(), show_unreviewed=s.mt_show_unreviewed
+    )
+
+
+@router.post("/machine", response_model=MachineTranslateOut)
+def machine_translate(
+    body: MachineTranslateIn,
+    request: Request,
+    cu: CurrentUser = Depends(require("translation.manage")),
+    db: Session = Depends(get_db),
+):
+    """همه فیلدهای ترجمه‌نشده یا کهنه این نوع محتوا را ماشینی ترجمه می‌کند؛ ترجمه دستی دست نمی‌خورد."""
+    if not mt.enabled():
+        raise api_error(503, "mt_disabled", "ترجمه ماشینی روی سرور تنظیم نشده است (RAZI_MT_PROVIDER)")
+    objs = _entities(db, body.entity_type)
+    total = 0
+    try:
+        for language in [body.language] if body.language else LANGUAGES:
+            total += mt.fill(db, body.entity_type, objs, language)
+    except mt.TranslationUnavailable:
+        raise api_error(502, "mt_unavailable", "سرویس ترجمه ماشینی در دسترس نیست") from None
+    audit(
+        db,
+        "translation.machine",
+        cu.id,
+        body.entity_type,
+        None,
+        client_ip(request),
+        language=body.language,
+        fields=total,
+    )
+    db.commit()
+    return MachineTranslateOut(translated=total)
