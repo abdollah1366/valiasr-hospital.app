@@ -56,6 +56,16 @@ class Settings(BaseSettings):
     his_base_url: str | None = None
     his_api_key: str | None = None
     his_timeout_seconds: int = 10
+    # ترجمه ماشینی متن‌هایی که ترجمه دستی ندارند: none | google | libretranslate (فقط آزمون: fake).
+    # google کلید Google Cloud Translation می‌خواهد؛ libretranslate نشانی سرور LibreTranslate (معمولاً روی همین سرور).
+    mt_provider: str = "none"
+    mt_api_key: str | None = None
+    mt_base_url: str | None = None
+    mt_timeout_seconds: int = 20
+    # ترجمه ماشینیِ هنوز بازبینی‌نشده به مراجع نشان داده شود (به جای متن فارسی)؛ بیمارستان بعداً در پنل تأیید یا اصلاح می‌کند.
+    mt_show_unreviewed: bool = True
+    # وقتی مراجعی محتوای بدون ترجمه را باز می‌کند، ترجمه ماشینی در پس‌زمینه ساخته و ذخیره شود.
+    mt_auto: bool = True
 
     @property
     def otp_debug_enabled(self) -> bool:
@@ -83,6 +93,10 @@ class Settings(BaseSettings):
             raise RuntimeError("RAZI_SMS_PROVIDER باید برای ارسال کد ورود مراجعان تنظیم شود")
         if self.his_provider == "http" and not self.his_base_url:
             raise RuntimeError("RAZI_HIS_BASE_URL برای RAZI_HIS_PROVIDER=http لازم است")
+        if self.mt_provider == "google" and not self.mt_api_key:
+            raise RuntimeError("RAZI_MT_API_KEY برای RAZI_MT_PROVIDER=google لازم است")
+        if self.mt_provider == "libretranslate" and not self.mt_base_url:
+            raise RuntimeError("RAZI_MT_BASE_URL برای RAZI_MT_PROVIDER=libretranslate لازم است")
         if self.sms_provider == "kavenegar" and not (self.sms_api_key and self.sms_template):
             raise RuntimeError("RAZI_SMS_API_KEY و RAZI_SMS_TEMPLATE برای کاوه‌نگار لازم است")
 

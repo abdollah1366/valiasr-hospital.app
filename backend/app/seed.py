@@ -158,7 +158,7 @@ def seed_demo(db: Session) -> None:
         seed_demo_schedules(db, password)
         seed_demo_doctors(db, password)
         db.flush()
-        seed_demo_doctor_translations(db)
+        seed_demo_translations(db)
         seed_demo_educator(db, password)
         return
     units = {
@@ -210,7 +210,7 @@ def seed_demo(db: Session) -> None:
     seed_demo_schedules(db, password)
     seed_demo_doctors(db, password)
     db.flush()
-    seed_demo_doctor_translations(db)
+    seed_demo_translations(db)
     seed_demo_educator(db, password)
     db.add_all(
         [
@@ -424,12 +424,96 @@ def seed_demo_schedules(db: Session, password: str) -> None:
             u.job_title = DEMO_JOB_TITLES[u.personnel_code]
 
 
-# نام و عنوان پزشکان نمونه به زبان‌های مراجعان (az, en, ar, tr) تا نمایش چندزبانه آزموده شود.
-DEMO_DOCTOR_TRANSLATIONS = {
-    "دکتر نمونه یکم": ("Dr. Nümunə Birinci", "Dr. Sample One", "د. النموذج الأول", "Dr. Örnek Bir"),
-    "دکتر نمونه دوم": ("Dr. Nümunə İkinci", "Dr. Sample Two", "د. النموذج الثاني", "Dr. Örnek İki"),
-    "دکتر نمونه سوم": ("Dr. Nümunə Üçüncü", "Dr. Sample Three", "د. النموذج الثالث", "Dr. Örnek Üç"),
-}
+# متن‌های نمونه پزشکان و درمانگاه به زبان‌های مراجعان (az, en, ar, tr) تا نمایش چندزبانه آزموده شود:
+# (نوع محتوا، فیلد، متن فارسی، ترجمه‌ها)
+_SAMPLE_BIO = "این متن نمونه است؛ معرفی واقعی پزشک را مدیر نوبت‌دهی در پنل وارد می‌کند."
+DEMO_TRANSLATIONS = [
+    (
+        "doctor",
+        "full_name",
+        "دکتر نمونه یکم",
+        ("Dr. Nümunə Birinci", "Dr. Sample One", "د. النموذج الأول", "Dr. Örnek Bir"),
+    ),
+    (
+        "doctor",
+        "full_name",
+        "دکتر نمونه دوم",
+        ("Dr. Nümunə İkinci", "Dr. Sample Two", "د. النموذج الثاني", "Dr. Örnek İki"),
+    ),
+    (
+        "doctor",
+        "full_name",
+        "دکتر نمونه سوم",
+        ("Dr. Nümunə Üçüncü", "Dr. Sample Three", "د. النموذج الثالث", "Dr. Örnek Üç"),
+    ),
+    (
+        "doctor",
+        "title",
+        "متخصص قلب و عروق (نمونه)",
+        (
+            "Kardioloq (nümunə)",
+            "Cardiologist (sample)",
+            "أخصائي القلب والأوعية الدموية (نموذج)",
+            "Kardiyoloji Uzmanı (örnek)",
+        ),
+    ),
+    (
+        "doctor",
+        "title",
+        "جراح و متخصص ارتوپدی (نمونه)",
+        (
+            "Ortoped-cərrah (nümunə)",
+            "Orthopedic surgeon (sample)",
+            "جرّاح العظام (نموذج)",
+            "Ortopedi Cerrahı (örnek)",
+        ),
+    ),
+    (
+        "doctor",
+        "title",
+        "متخصص زنان و زایمان (نمونه)",
+        (
+            "Ginekoloq (nümunə)",
+            "Obstetrician & gynecologist (sample)",
+            "أخصائية النساء والتوليد (نموذج)",
+            "Kadın Doğum Uzmanı (örnek)",
+        ),
+    ),
+    (
+        "doctor",
+        "bio",
+        _SAMPLE_BIO,
+        (
+            "Bu nümunə mətndir; həkimin real təqdimatını növbə meneceri paneldə daxil edir.",
+            "This is sample text; the appointments manager enters the doctor's real introduction in the panel.",
+            "هذا نص تجريبي؛ يُدخل مدير المواعيد التعريف الحقيقي بالطبيب في لوحة الإدارة.",
+            "Bu örnek bir metindir; doktorun gerçek tanıtımını randevu yöneticisi panele girer.",
+        ),
+    ),
+    (
+        "unit",
+        "name",
+        "درمانگاه تخصصی",
+        ("İxtisaslaşmış klinika", "Specialty Clinic", "العيادة التخصصية", "Uzmanlık Polikliniği"),
+    ),
+    (
+        "unit",
+        "location",
+        "ساختمان درمانگاه",
+        ("Klinika binası", "Clinic building", "مبنى العيادات", "Poliklinik binası"),
+    ),
+    (
+        "unit",
+        "hours",
+        "شنبه تا چهارشنبه، ۸ تا ۱۴",
+        (
+            "Şənbə–çərşənbə, 08:00–14:00",
+            "Saturday to Wednesday, 08:00–14:00",
+            "من السبت إلى الأربعاء، ٨ إلى ١٤",
+            "Cumartesi–Çarşamba, 08:00–14:00",
+        ),
+    ),
+]
 
 DEMO_DOCTORS = [
     ("دکتر نمونه یکم", "قلب و عروق", "متخصص قلب و عروق (نمونه)", True),
@@ -450,33 +534,36 @@ def seed_demo_educator(db: Session, password: str) -> None:
     )
 
 
-def seed_demo_doctor_translations(db: Session) -> None:
-    from app.services.translations import source_hash
+def seed_demo_translations(db: Session) -> None:
+    """ترجمه تأییدشده متن‌های نمونه؛ ترجمه‌ای که از قبل (دستی یا ماشینی) ثبت شده دست نمی‌خورد."""
+    from app.services.translations import MODELS, source_hash
 
     langs = ("az", "en", "ar", "tr")
-    for d in db.scalars(select(Doctor).where(Doctor.full_name.in_(DEMO_DOCTOR_TRANSLATIONS))):
-        have = set(
-            db.scalars(
-                select(ContentTranslation.language).where(
-                    ContentTranslation.entity_type == "doctor",
-                    ContentTranslation.entity_id == d.id,
-                    ContentTranslation.field == "full_name",
-                )
-            )
-        )
-        for lang, value in zip(langs, DEMO_DOCTOR_TRANSLATIONS[d.full_name], strict=True):
-            if lang not in have:
-                db.add(
-                    ContentTranslation(
-                        entity_type="doctor",
-                        entity_id=d.id,
-                        language=lang,
-                        field="full_name",
-                        text=value,
-                        source_hash=source_hash(d.full_name),
-                        status="approved",
+    for entity_type, field, persian, texts in DEMO_TRANSLATIONS:
+        model = MODELS[entity_type]
+        for obj in db.scalars(select(model).where(getattr(model, field) == persian)).unique():
+            have = set(
+                db.scalars(
+                    select(ContentTranslation.language).where(
+                        ContentTranslation.entity_type == entity_type,
+                        ContentTranslation.entity_id == obj.id,
+                        ContentTranslation.field == field,
                     )
                 )
+            )
+            for lang, value in zip(langs, texts, strict=True):
+                if lang not in have:
+                    db.add(
+                        ContentTranslation(
+                            entity_type=entity_type,
+                            entity_id=obj.id,
+                            language=lang,
+                            field=field,
+                            text=value,
+                            source_hash=source_hash(persian),
+                            status="approved",
+                        )
+                    )
 
 
 def seed_demo_doctors(db: Session, password: str) -> None:
@@ -504,7 +591,7 @@ def seed_demo_doctors(db: Session, password: str) -> None:
             full_name=name,
             specialty_id=by_name[spec].id,
             title=title,
-            bio="این متن نمونه است؛ معرفی واقعی پزشک را مدیر نوبت‌دهی در پنل وارد می‌کند.",
+            bio=_SAMPLE_BIO,
             clinic_unit_id=clinic.id,
             is_featured=featured,
             sort_order=k,

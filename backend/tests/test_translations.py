@@ -95,7 +95,10 @@ def test_permissions_and_validation(client):
     listed = client.get(f"{API}/admin/translations?entity_type=unit&language=ar", headers=h).json()
     # فقط بخش‌های عمومی در فهرست ترجمه هستند.
     assert all(i["label"] != "ICU" for i in listed)
-    assert all(f["status"] == "missing" for i in listed for f in i["fields"])
+    # جز درمانگاه نمونه که ترجمه آماده دارد، چیزی ترجمه نشده است.
+    assert all(
+        f["status"] == "missing" for i in listed if i["label"] != "درمانگاه تخصصی" for f in i["fields"]
+    )
 
 
 def test_deleting_faq_removes_its_translations(client, db):
@@ -136,8 +139,8 @@ def test_doctor_card_follows_language(client):
     assert en["full_name"] == "Dr. Sample Two"
     assert en["title"] == "Orthopedic surgeon"
     assert en["specialty_name"] == "Orthopedics"
-    # معرفی ترجمه نشده؛ همان فارسی
-    assert en["bio"] == doctor["bio"]
+    # معرفی نمونه ترجمه آماده دارد
+    assert en["bio"].startswith("This is sample text")
     # جستجو با نام ترجمه‌شده
     found = client.get(f"{API}/public/doctors", params={"q": "Sample Two", "lang": "en"}).json()
     assert [d["id"] for d in found] == [doctor["id"]]
@@ -147,7 +150,7 @@ def test_doctor_card_follows_language(client):
     listed = client.get(f"{API}/admin/translations?entity_type=doctor&language=en", headers=h).json()
     item = next(i for i in listed if i["entity_id"] == doctor["id"])
     status = {f["field"]: f["status"] for f in item["fields"]}
-    assert status["full_name"] == "approved" and status["title"] == "approved" and status["bio"] == "missing"
+    assert status["full_name"] == "approved" and status["title"] == "approved" and status["bio"] == "approved"
 
 
 def test_patient_appointments_follow_language(client):
@@ -159,3 +162,80 @@ def test_patient_appointments_follow_language(client):
     assert appt["doctor_name"] == "دکتر نمونه یکم"
     mine = client.get(f"{API}/patient/appointments", headers={**h, "Accept-Language": "tr"}).json()
     assert mine[0]["doctor_name"] == "Dr. Örnek Bir" and mine[0]["specialty_name"] == "Kardiyoloji"
+
+
+def _machine_on(monkeypatch, show=True):
+    from app.core.config import get_settings
+
+    monkeypatch.setattr(get_settings(), "mt_provider", "fake")
+    monkeypatch.setattr(get_settings(), "mt_show_unreviewed", show)
+
+
+def test_machine_translation_fills_only_missing(client, monkeypatch):
+    h = auth(client, CONTENT)
+    body = {"entity_type": "unit", "language": "en"}
+    assert client.post(f"{API}/admin/translations/machine", headers=h, json=body).status_code == 503
+    _machine_on(monkeypatch)
+    uid = _emergency(client)["id"]
+    _save(client, h, uid, "Emergency Department")  # ترجمه دستی (پیش‌نویس) نباید عوض شود
+    r = client.post(f"{API}/admin/translations/machine", headers=h, json=body)
+    assert r.status_code == 200 and r.json()["translated"] > 0
+    item = next(
+        i
+        for i in client.get(f"{API}/admin/translations?entity_type=unit&language=en", headers=h).json()
+        if i["entity_id"] == uid
+    )
+    fields = {f["field"]: f for f in item["fields"]}
+    assert fields["name"]["status"] == "draft" and fields["name"]["text"] == "Emergency Department"
+    assert fields["location"]["status"] == "machine" and fields["location"]["text"].startswith("[en] ")
+    # ترجمه ماشینی تا بازبینی نشان داده می‌شود؛ پیش‌نویس دستی هنوز نه.
+    unit = next(u for u in client.get(f"{API}/public/units?lang=en").json() if u["id"] == uid)
+    assert unit["name"] == "اورژانس" and unit["location"].startswith("[en] ")
+    # بیمارستان ترجمه ماشینی را تأیید می‌کند.
+    assert _approve(client, h, uid, field="location").json()["status"] == "approved"
+
+    _machine_on(monkeypatch, show=False)
+    unit = next(u for u in client.get(f"{API}/public/units?lang=en").json() if u["id"] == uid)
+    assert unit["location"].startswith("[en] ")  # تأییدشده
+    assert not unit["hours"].startswith("[en]")  # ماشینیِ تأییدنشده پنهان
+
+
+def test_missing_translation_is_made_in_background(client, monkeypatch):
+    from app.services import machine_translation
+
+    _machine_on(monkeypatch)
+    doctor = next(d for d in client.get(f"{API}/public/doctors").json() if d["full_name"] == "دکتر نمونه دوم")
+    # آخرین پزشک نمونه‌ای که ترجمه آماده ندارد: پزشک تازه
+    h = auth(client, "1012")
+    spec = client.get(f"{API}/public/specialties").json()[0]
+    created = client.post(
+        f"{API}/admin/doctors",
+        headers=h,
+        json={"full_name": "دکتر آزمایشی", "specialty_id": spec["id"], "title": "متخصص", "bio": "معرفی"},
+    ).json()
+    first = client.get(f"{API}/public/doctors/{created['id']}?lang=ar").json()
+    assert first["full_name"] == "دکتر آزمایشی"
+    machine_translation.drain()
+    again = client.get(f"{API}/public/doctors/{created['id']}?lang=ar").json()
+    assert again["full_name"] == "[ar] دکتر آزمایشی" and again["bio"] == "[ar] معرفی"
+    # ترجمه آماده پزشک نمونه با ماشینی جایگزین نمی‌شود.
+    assert client.get(f"{API}/public/doctors/{doctor['id']}?lang=en").json()["full_name"] == "Dr. Sample Two"
+    machine_translation.drain()
+
+
+def test_long_text_is_split_for_provider(monkeypatch):
+    from app.services import machine_translation as mt
+
+    calls = []
+
+    def fake(texts, target):
+        calls.append(sum(len(t) for t in texts))
+        return texts
+
+    monkeypatch.setitem(mt._PROVIDERS, "fake", fake)
+    from app.core.config import get_settings
+
+    monkeypatch.setattr(get_settings(), "mt_provider", "fake")
+    long = "\n".join(["سطر " * 300] * 10)
+    assert mt.translate([long, "کوتاه"], "en") == [long, "کوتاه"]
+    assert all(c <= mt.MAX_REQUEST_CHARS for c in calls) and len(calls) > 1
