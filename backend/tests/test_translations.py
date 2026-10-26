@@ -217,7 +217,8 @@ def test_missing_translation_is_made_in_background(client, monkeypatch):
     assert first["full_name"] == "دکتر آزمایشی"
     machine_translation.drain()
     again = client.get(f"{API}/public/doctors/{created['id']}?lang=ar").json()
-    assert again["full_name"] == "[ar] دکتر آزمایشی" and again["bio"] == "[ar] معرفی"
+    # نام ترجمه ماشینی نمی‌شود؛ عنوان و معرفی می‌شوند.
+    assert again["full_name"] == "دکتر آزمایشی" and again["bio"] == "[ar] معرفی"
     # ترجمه آماده پزشک نمونه با ماشینی جایگزین نمی‌شود.
     assert client.get(f"{API}/public/doctors/{doctor['id']}?lang=en").json()["full_name"] == "Dr. Sample Two"
     machine_translation.drain()
@@ -239,3 +240,20 @@ def test_long_text_is_split_for_provider(monkeypatch):
     long = "\n".join(["سطر " * 300] * 10)
     assert mt.translate([long, "کوتاه"], "en") == [long, "کوتاه"]
     assert all(c <= mt.MAX_REQUEST_CHARS for c in calls) and len(calls) > 1
+
+
+def test_doctor_names_are_not_machine_translated(client, monkeypatch):
+    from app.services import machine_translation
+
+    _machine_on(monkeypatch)
+    h = auth(client, "1012")
+    spec = client.get(f"{API}/public/specialties").json()[0]
+    created = client.post(
+        f"{API}/admin/doctors",
+        headers=h,
+        json={"full_name": "دکتر براتی", "specialty_id": spec["id"], "title": "متخصص"},
+    ).json()
+    client.get(f"{API}/public/doctors/{created['id']}?lang=en")
+    machine_translation.drain()
+    again = client.get(f"{API}/public/doctors/{created['id']}?lang=en").json()
+    assert again["full_name"] == "دکتر براتی" and again["title"] == "[en] متخصص"
