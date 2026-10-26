@@ -151,6 +151,7 @@ DEFAULT_ROLES: dict[str, tuple[str, list[str]]] = {
             "token.manage",
             "token.redeem",
             "education.manage",
+            "translation.manage",
         ],
     ),
     "secretary": (

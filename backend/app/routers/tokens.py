@@ -32,6 +32,7 @@ from app.schemas.tokens import (
     VoucherOut,
 )
 from app.services import tokens as svc
+from app.services.translations import Localizer, content_language
 
 router = APIRouter(tags=["tokens"])
 
@@ -44,18 +45,18 @@ def _voucher(r: TokenRedemption) -> VoucherOut:
     )
 
 
-def _reward(r: TokenReward) -> RewardOut:
+def _reward(r: TokenReward, loc: Localizer | None = None) -> RewardOut:
     return RewardOut(
         id=r.id,
-        title=r.title,
-        description=r.description,
+        title=loc.text("reward", r, "title") if loc else r.title,
+        description=loc.text("reward", r, "description") if loc else r.description,
         cost=r.cost,
         is_active=r.is_active,
         sort_order=r.sort_order,
     )
 
 
-def _tokens_out(db: Session, patient: Patient) -> TokensOut:
+def _tokens_out(db: Session, patient: Patient, language: str | None) -> TokensOut:
     s = get_settings()
     code = svc.ensure_referral_code(db, patient)
     db.commit()
@@ -70,6 +71,8 @@ def _tokens_out(db: Session, patient: Patient) -> TokensOut:
         .where(TokenReward.is_active.is_(True))
         .order_by(TokenReward.sort_order, TokenReward.cost)
     ).all()
+    loc = Localizer(db, language)
+    loc.prefetch("reward", [r.id for r in rewards])
     vouchers = db.scalars(
         select(TokenRedemption)
         .where(TokenRedemption.patient_id == patient.id)
@@ -86,7 +89,7 @@ def _tokens_out(db: Session, patient: Patient) -> TokensOut:
             TokenTxOut(id=t.id, amount=t.amount, kind=t.kind, note=t.note, created_at=t.created_at)
             for t in history
         ],
-        rewards=[_reward(r) for r in rewards],
+        rewards=[_reward(r, loc) for r in rewards],
         vouchers=[_voucher(v) for v in vouchers],
     )
 
@@ -95,17 +98,24 @@ def _tokens_out(db: Session, patient: Patient) -> TokensOut:
 
 
 @router.get("/patient/tokens", response_model=TokensOut)
-def my_tokens(patient: Patient = Depends(get_current_patient), db: Session = Depends(get_db)):
-    return _tokens_out(db, patient)
+def my_tokens(
+    patient: Patient = Depends(get_current_patient),
+    language: str | None = Depends(content_language),
+    db: Session = Depends(get_db),
+):
+    return _tokens_out(db, patient, language)
 
 
 @router.post("/patient/referral", response_model=TokensOut)
 def enter_referral(
-    body: ReferralIn, patient: Patient = Depends(get_current_patient), db: Session = Depends(get_db)
+    body: ReferralIn,
+    patient: Patient = Depends(get_current_patient),
+    language: str | None = Depends(content_language),
+    db: Session = Depends(get_db),
 ):
     svc.apply_referral(db, patient, body.code)
     db.commit()
-    return _tokens_out(db, patient)
+    return _tokens_out(db, patient, language)
 
 
 @router.post("/patient/tokens/redeem", response_model=VoucherOut, status_code=201)

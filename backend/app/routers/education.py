@@ -33,7 +33,7 @@ from app.schemas.education import (
 )
 from app.services.media import store_upload
 from app.services.training import media_path
-from app.services.translations import content_language, localize
+from app.services.translations import Localizer, content_language, localize
 
 router = APIRouter(tags=["education"])
 
@@ -59,11 +59,18 @@ KIND_FILES: dict[str, tuple[dict[str, str], int]] = {
 }
 
 
-def _specialty_names(db: Session, items: list[EducationItem]) -> dict[uuid.UUID, str]:
+def _specialty_names(
+    db: Session, items: list[EducationItem], language: str | None = None
+) -> dict[uuid.UUID, str]:
     ids = {i.specialty_id for i in items if i.specialty_id}
     if not ids:
         return {}
-    return {s.id: s.name for s in db.scalars(select(Specialty).where(Specialty.id.in_(ids)))}
+    loc = Localizer(db, language)
+    loc.prefetch("specialty", ids)
+    return {
+        s.id: loc.text("specialty", s, "name")
+        for s in db.scalars(select(Specialty).where(Specialty.id.in_(ids)))
+    }
 
 
 def rating_map(db: Session, item_ids: list[uuid.UUID]) -> dict[uuid.UUID, tuple[float, int]]:
@@ -106,10 +113,10 @@ def _list_out(
     }
 
 
-def _detail_out(db: Session, item: EducationItem) -> dict:
+def _detail_out(db: Session, item: EducationItem, language: str | None = None) -> dict:
     m = _media(db, item)
     return {
-        **_list_out(item, _specialty_names(db, [item]), rating_map(db, [item.id])),
+        **_list_out(item, _specialty_names(db, [item], language), rating_map(db, [item.id])),
         "body": item.body,
         "external_url": item.external_url,
         "content_type": m.content_type if m else None,
@@ -180,14 +187,14 @@ def public_education(
             )
         )
     items = list(db.scalars(stmt.order_by(EducationItem.updated_at.desc(), EducationItem.title)))
-    names = _specialty_names(db, items)
+    names = _specialty_names(db, items, language)
     ratings = rating_map(db, [i.id for i in items])
     out = [EducationListOut(**_list_out(i, names, ratings)) for i in items]
     return localize(db, "education", out, language)
 
 
 @router.get("/public/education/filters", response_model=EducationFiltersOut)
-def public_education_filters(db: Session = Depends(get_db)):
+def public_education_filters(language: str | None = Depends(content_language), db: Session = Depends(get_db)):
     pub = EducationItem.is_published.is_(True)
     conditions = db.scalars(
         select(EducationItem.condition).where(pub, EducationItem.condition.is_not(None)).distinct()
@@ -198,14 +205,18 @@ def public_education_filters(db: Session = Depends(get_db)):
             select(EducationItem.specialty_id).where(pub, EducationItem.specialty_id.is_not(None))
         )
     }
-    specs = db.scalars(
-        select(Specialty).where(Specialty.id.in_(used)).order_by(Specialty.sort_order, Specialty.name)
+    specs = list(
+        db.scalars(
+            select(Specialty).where(Specialty.id.in_(used)).order_by(Specialty.sort_order, Specialty.name)
+        )
     )
+    loc = Localizer(db, language)
+    loc.prefetch("specialty", [s.id for s in specs])
     return EducationFiltersOut(
         conditions=sorted(c for c in conditions if c),
         care_types=list(CARE_TYPES),
         kinds=list(KINDS),
-        specialties=[EducationSpecialtyOut(id=s.id, name=s.name) for s in specs],
+        specialties=[EducationSpecialtyOut(id=s.id, name=loc.text("specialty", s, "name")) for s in specs],
     )
 
 
@@ -223,7 +234,7 @@ def public_education_item(
     db: Session = Depends(get_db),
 ):
     item = _published(db, item_id)
-    out = EducationDetailOut(**_detail_out(db, item))
+    out = EducationDetailOut(**_detail_out(db, item, language))
     return localize(db, "education", [out], language)[0]
 
 

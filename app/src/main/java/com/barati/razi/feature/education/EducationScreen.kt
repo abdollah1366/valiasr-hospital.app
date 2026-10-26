@@ -159,7 +159,7 @@ private fun EducationLibrary(container: AppContainer, padding: PaddingValues, si
         delay(400)
         debounced = query
     }
-    val filters = rememberLoader { container.educationRepository.filters() }
+    val filters = rememberLoader(language) { container.educationRepository.filters() }
     val loader = rememberLoader(language, debounced, kind, care, condition) {
         container.educationRepository.list(language, debounced, kind, care, condition)
     }

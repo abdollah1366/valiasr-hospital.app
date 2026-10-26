@@ -85,7 +85,7 @@ def my_education(
         .order_by(EducationAssignment.assigned_at.desc())
     ).all()
     items = [i for _, i in rows]
-    names = _specialty_names(db, items)
+    names = _specialty_names(db, items, language)
     ratings = rating_map(db, [i.id for i in items])
     out = [
         MyEducationOut(

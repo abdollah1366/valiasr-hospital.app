@@ -115,10 +115,19 @@ fun DoctorAvatar(doctor: DoctorDto, photoUrl: (DoctorDto) -> String, size: Dp) {
             Modifier.size(size).clip(shape).background(Brush.linearGradient(listOf(ValiasrColors.GradientStart, ValiasrColors.Primary))),
             contentAlignment = Alignment.Center,
         ) {
-            val initial = doctor.fullName.removePrefix("دکتر").trim().take(1)
+            val initial = doctorInitial(doctor.fullName)
             Text(initial, color = Color.White, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleLarge)
         }
     }
+}
+
+private val DOCTOR_PREFIXES = listOf("دکتر", "Dr.", "Dr", "د.", "Doktor", "Həkim")
+
+/** حرف اول نام پزشک بدون پیشوند «دکتر» به هر زبان. */
+fun doctorInitial(fullName: String): String {
+    val name = fullName.trim()
+    val prefix = DOCTOR_PREFIXES.firstOrNull { name.startsWith("$it ") }
+    return (if (prefix != null) name.removePrefix(prefix) else name).trim().take(1)
 }
 
 /** کارت پزشک در فهرست: عکس، نام، تخصص و نزدیک‌ترین نوبت. */

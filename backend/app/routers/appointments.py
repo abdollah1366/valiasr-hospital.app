@@ -12,7 +12,7 @@ from datetime import date, timedelta
 
 from fastapi import APIRouter, Depends, Query, Request
 from fastapi.responses import FileResponse
-from sqlalchemy import func, select
+from sqlalchemy import delete, func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -23,6 +23,7 @@ from app.core.deps import CurrentUser, api_error, client_ip, get_active_user, re
 from app.models import (
     Appointment,
     AppointmentSlot,
+    ContentTranslation,
     Doctor,
     DoctorReview,
     DoctorSecretary,
@@ -63,6 +64,7 @@ from app.services import tokens as tokens_svc
 from app.services.media import store_upload
 from app.services.phone import normalize_mobile
 from app.services.training import media_path
+from app.services.translations import Localizer, content_language
 
 router = APIRouter(tags=["appointments"])
 
@@ -98,20 +100,21 @@ def _doctor_out(db: Session, d: Doctor) -> DoctorOut:
     )
 
 
-def _public_doctor(db: Session, d: Doctor, with_next: bool = True) -> PublicDoctorOut:
+def _public_doctor(db: Session, d: Doctor, loc: Localizer, with_next: bool = True) -> PublicDoctorOut:
+    """کارت پزشک برای مراجع؛ نام، عنوان، معرفی، تخصص و درمانگاه به زبان مراجع (اگر ترجمه تأییدشده باشد)."""
     clinic = db.get(Unit, d.clinic_unit_id) if d.clinic_unit_id else None
     horizon = get_settings().appointment_booking_days
     average, count = reviews_svc.rating(db, d.id)
     return PublicDoctorOut(
         id=d.id,
-        full_name=d.full_name,
-        title=d.title,
-        bio=d.bio,
+        full_name=loc.text("doctor", d, "full_name"),
+        title=loc.text("doctor", d, "title"),
+        bio=loc.text("doctor", d, "bio"),
         specialty_id=d.specialty_id,
-        specialty_name=d.specialty.name,
+        specialty_name=loc.text("specialty", d.specialty, "name"),
         specialty_icon=d.specialty.icon,
-        clinic_name=clinic.name if clinic else None,
-        clinic_location=clinic.location if clinic else None,
+        clinic_name=loc.text("unit", clinic, "name"),
+        clinic_location=loc.text("unit", clinic, "location"),
         has_photo=d.has_photo,
         photo_version=str(d.photo_media_id) if d.photo_media_id else None,
         is_featured=d.is_featured,
@@ -140,7 +143,7 @@ def _manage_appt(a: Appointment) -> ManageAppointmentOut:
     )
 
 
-def _patient_appt(db: Session, a: Appointment) -> PatientAppointmentOut:
+def _patient_appt(db: Session, a: Appointment, loc: Localizer) -> PatientAppointmentOut:
     d = a.doctor
     clinic = db.get(Unit, d.clinic_unit_id) if d.clinic_unit_id else None
     cancel_until = a.slot.starts_at - timedelta(hours=get_settings().appointment_cancel_hours)
@@ -152,11 +155,11 @@ def _patient_appt(db: Session, a: Appointment) -> PatientAppointmentOut:
         starts_at=a.slot.starts_at,
         minutes=a.slot.minutes,
         doctor_id=d.id,
-        doctor_name=d.full_name,
-        doctor_title=d.title,
-        specialty_name=d.specialty.name,
-        clinic_name=clinic.name if clinic else None,
-        clinic_location=clinic.location if clinic else None,
+        doctor_name=loc.text("doctor", d, "full_name"),
+        doctor_title=loc.text("doctor", d, "title"),
+        specialty_name=loc.text("specialty", d.specialty, "name"),
+        clinic_name=loc.text("unit", clinic, "name"),
+        clinic_location=loc.text("unit", clinic, "location"),
         note=a.note,
         can_cancel=a.status == "booked" and svc.now() < cancel_until,
         cancelled_by=a.cancelled_by,
@@ -183,7 +186,7 @@ def _check_range(start: date, days: int) -> tuple:
 
 
 @router.get("/public/specialties", response_model=list[SpecialtyOut])
-def public_specialties(db: Session = Depends(get_db)):
+def public_specialties(language: str | None = Depends(content_language), db: Session = Depends(get_db)):
     counts = dict(
         db.execute(
             select(Doctor.specialty_id, func.count())
@@ -191,14 +194,20 @@ def public_specialties(db: Session = Depends(get_db)):
             .group_by(Doctor.specialty_id)
         ).all()
     )
-    rows = db.scalars(
-        select(Specialty).where(Specialty.is_active.is_(True)).order_by(Specialty.sort_order, Specialty.name)
+    rows = list(
+        db.scalars(
+            select(Specialty)
+            .where(Specialty.is_active.is_(True))
+            .order_by(Specialty.sort_order, Specialty.name)
+        )
     )
+    loc = Localizer(db, language)
+    loc.prefetch("specialty", [s.id for s in rows])
     return [
         SpecialtyOut(
             id=s.id,
-            name=s.name,
-            description=s.description,
+            name=loc.text("specialty", s, "name"),
+            description=loc.text("specialty", s, "description"),
             icon=s.icon,
             sort_order=s.sort_order,
             is_active=s.is_active,
@@ -213,6 +222,7 @@ def public_doctors(
     specialty_id: uuid.UUID | None = None,
     q: str | None = Query(default=None, max_length=100),
     featured: bool = False,
+    language: str | None = Depends(content_language),
     db: Session = Depends(get_db),
 ):
     stmt = (
@@ -226,16 +236,33 @@ def public_doctors(
         stmt = stmt.where(Doctor.is_featured.is_(True))
     if q and q.strip():
         like = f"%{q.strip()}%"
-        stmt = stmt.where(
-            Doctor.full_name.ilike(like) | Specialty.name.ilike(like) | Doctor.title.ilike(like)
-        )
-    doctors = db.scalars(stmt.order_by(Doctor.sort_order, Doctor.full_name).limit(300)).unique()
-    return [_public_doctor(db, d) for d in doctors]
+        cond = Doctor.full_name.ilike(like) | Specialty.name.ilike(like) | Doctor.title.ilike(like)
+        if language:
+            # مراجع نام پزشک یا تخصص را به زبان خودش هم می‌تواند جستجو کند.
+            translated = select(ContentTranslation.entity_id).where(
+                ContentTranslation.language == language,
+                ContentTranslation.status == "approved",
+                ContentTranslation.text.ilike(like),
+            )
+            cond = (
+                cond
+                | Doctor.id.in_(translated.where(ContentTranslation.entity_type == "doctor"))
+                | Specialty.id.in_(translated.where(ContentTranslation.entity_type == "specialty"))
+            )
+        stmt = stmt.where(cond)
+    doctors = list(db.scalars(stmt.order_by(Doctor.sort_order, Doctor.full_name).limit(300)).unique())
+    loc = Localizer(db, language)
+    loc.prefetch("doctor", [d.id for d in doctors])
+    loc.prefetch("specialty", {d.specialty_id for d in doctors})
+    loc.prefetch("unit", {d.clinic_unit_id for d in doctors})
+    return [_public_doctor(db, d, loc) for d in doctors]
 
 
 @router.get("/public/doctors/{doctor_id}", response_model=PublicDoctorOut)
-def public_doctor(doctor_id: uuid.UUID, db: Session = Depends(get_db)):
-    return _public_doctor(db, _public_doctor_or_404(db, doctor_id))
+def public_doctor(
+    doctor_id: uuid.UUID, language: str | None = Depends(content_language), db: Session = Depends(get_db)
+):
+    return _public_doctor(db, _public_doctor_or_404(db, doctor_id), Localizer(db, language))
 
 
 @router.get("/public/doctors/{doctor_id}/photo", include_in_schema=False)
@@ -286,6 +313,7 @@ def public_slots(doctor_id: uuid.UUID, db: Session = Depends(get_db)):
 def patient_book(
     body: PatientBookIn,
     patient: Patient = Depends(get_current_patient),
+    language: str | None = Depends(content_language),
     db: Session = Depends(get_db),
 ):
     slot = svc.lock_slot_for_booking(db, body.slot_id)
@@ -335,31 +363,43 @@ def patient_book(
     )
     db.commit()
     db.refresh(a)
-    return _patient_appt(db, a)
+    return _patient_appt(db, a, Localizer(db, language))
 
 
 @router.get("/patient/appointments", response_model=list[PatientAppointmentOut])
-def patient_appointments(patient: Patient = Depends(get_current_patient), db: Session = Depends(get_db)):
-    rows = db.scalars(
-        select(Appointment)
-        .join(AppointmentSlot, Appointment.slot_id == AppointmentSlot.id)
-        .where(Appointment.patient_id == patient.id)
-        .order_by(AppointmentSlot.starts_at.desc())
-        .limit(100)
-    ).unique()
-    return [_patient_appt(db, a) for a in rows]
+def patient_appointments(
+    patient: Patient = Depends(get_current_patient),
+    language: str | None = Depends(content_language),
+    db: Session = Depends(get_db),
+):
+    rows = (
+        db.scalars(
+            select(Appointment)
+            .join(AppointmentSlot, Appointment.slot_id == AppointmentSlot.id)
+            .where(Appointment.patient_id == patient.id)
+            .order_by(AppointmentSlot.starts_at.desc())
+            .limit(100)
+        )
+        .unique()
+        .all()
+    )
+    loc = Localizer(db, language)
+    loc.prefetch("doctor", {a.doctor_id for a in rows})
+    return [_patient_appt(db, a, loc) for a in rows]
 
 
 @router.post("/patient/appointments/{appointment_id}/cancel", response_model=PatientAppointmentOut)
 def patient_cancel(
     appointment_id: uuid.UUID,
     patient: Patient = Depends(get_current_patient),
+    language: str | None = Depends(content_language),
     db: Session = Depends(get_db),
 ):
+    loc = Localizer(db, language)
     a = db.get(Appointment, appointment_id)
     if a is None or a.patient_id != patient.id:
         raise api_error(404, "not_found", "نوبت پیدا نشد")
-    if not _patient_appt(db, a).can_cancel:
+    if not _patient_appt(db, a, loc).can_cancel:
         hours = get_settings().appointment_cancel_hours
         raise api_error(409, "cannot_cancel", f"لغو نوبت فقط تا {hours} ساعت پیش از آن ممکن است")
     a.status, a.cancelled_at, a.cancelled_by = "cancelled", svc.now(), "patient"
@@ -374,7 +414,7 @@ def patient_cancel(
         link_id=a.id,
     )
     db.commit()
-    return _patient_appt(db, a)
+    return _patient_appt(db, a, loc)
 
 
 # ---------------------------------------------------------------- مدیر پزشکان
@@ -455,6 +495,11 @@ def delete_specialty(
     if db.scalar(select(func.count()).where(Doctor.specialty_id == s.id)):
         raise api_error(409, "in_use", "این گروه پزشک دارد؛ به جای حذف آن را غیرفعال کنید")
     db.delete(s)
+    db.execute(
+        delete(ContentTranslation).where(
+            ContentTranslation.entity_type == "specialty", ContentTranslation.entity_id == s.id
+        )
+    )
     audit(db, "specialty.deleted", cu.id, "specialty", specialty_id, client_ip(request))
     db.commit()
 
@@ -574,6 +619,11 @@ def delete_doctor(
     if db.scalar(select(func.count()).where(Appointment.doctor_id == d.id)):
         raise api_error(409, "in_use", "این پزشک نوبت ثبت‌شده دارد؛ به جای حذف آن را غیرفعال کنید")
     db.delete(d)
+    db.execute(
+        delete(ContentTranslation).where(
+            ContentTranslation.entity_type == "doctor", ContentTranslation.entity_id == d.id
+        )
+    )
     audit(db, "doctor.deleted", cu.id, "doctor", doctor_id, client_ip(request))
     db.commit()
 

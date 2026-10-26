@@ -107,4 +107,55 @@ def test_deleting_faq_removes_its_translations(client, db):
     faq = client.get(f"{API}/public/faqs").json()[0]
     _save(client, h, faq["id"], "Q", field="question", entity_type="faq")
     assert client.delete(f"{API}/admin/faqs/{faq['id']}", headers=h).status_code == 204
-    assert db.scalar(select(func.count()).select_from(ContentTranslation)) == 0
+    assert (
+        db.scalar(
+            select(func.count())
+            .where(ContentTranslation.entity_type == "faq")
+            .select_from(ContentTranslation)
+        )
+        == 0
+    )
+
+
+def test_official_specialties_come_translated(client):
+    """گروه‌های تخصصی رسمی از ابتدا به زبان مراجع نمایش داده می‌شوند (کاشی‌های صفحه اول اپ)."""
+    names = [s["name"] for s in client.get(f"{API}/public/specialties?lang=az").json()]
+    assert "Kardiologiya" in names and "قلب و عروق" not in names
+    by_header = client.get(f"{API}/public/specialties", headers={"Accept-Language": "en"}).json()
+    assert "Cardiology" in [s["name"] for s in by_header]
+    assert "قلب و عروق" in [s["name"] for s in client.get(f"{API}/public/specialties").json()]
+
+
+def test_doctor_card_follows_language(client):
+    h = auth(client, "1012")  # مدیر پزشکان (doctor_admin) هم ترجمه را ثبت و تأیید می‌کند
+    doctor = next(d for d in client.get(f"{API}/public/doctors").json() if d["full_name"] == "دکتر نمونه دوم")
+    assert _save(client, h, doctor["id"], "Orthopedic surgeon", "title", "en", "doctor").status_code == 200
+    assert _approve(client, h, doctor["id"], "title", "en", "doctor").status_code == 200
+
+    en = client.get(f"{API}/public/doctors/{doctor['id']}?lang=en").json()
+    assert en["full_name"] == "Dr. Sample Two"
+    assert en["title"] == "Orthopedic surgeon"
+    assert en["specialty_name"] == "Orthopedics"
+    # معرفی ترجمه نشده؛ همان فارسی
+    assert en["bio"] == doctor["bio"]
+    # جستجو با نام ترجمه‌شده
+    found = client.get(f"{API}/public/doctors", params={"q": "Sample Two", "lang": "en"}).json()
+    assert [d["id"] for d in found] == [doctor["id"]]
+    found = client.get(f"{API}/public/doctors", params={"q": "Kardiologiya", "lang": "az"}).json()
+    assert [d["full_name"] for d in found] == ["Dr. Nümunə Birinci"]
+
+    listed = client.get(f"{API}/admin/translations?entity_type=doctor&language=en", headers=h).json()
+    item = next(i for i in listed if i["entity_id"] == doctor["id"])
+    status = {f["field"]: f["status"] for f in item["fields"]}
+    assert status["full_name"] == "approved" and status["title"] == "approved" and status["bio"] == "missing"
+
+
+def test_patient_appointments_follow_language(client):
+    from tests.test_appointments import book, first_doctor, free_slot, patient_headers
+
+    doctor = first_doctor(client)
+    h = patient_headers(client)
+    appt = book(client, h, free_slot(client, doctor["id"])["id"]).json()
+    assert appt["doctor_name"] == "دکتر نمونه یکم"
+    mine = client.get(f"{API}/patient/appointments", headers={**h, "Accept-Language": "tr"}).json()
+    assert mine[0]["doctor_name"] == "Dr. Örnek Bir" and mine[0]["specialty_name"] == "Kardiyoloji"

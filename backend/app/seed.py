@@ -19,6 +19,7 @@ from app.core.security import hash_password
 from app.models import (
     Announcement,
     AppointmentSlot,
+    ContentTranslation,
     Doctor,
     DoctorSecretary,
     Faq,
@@ -31,6 +32,7 @@ from app.models import (
     User,
     UserRole,
 )
+from app.seed_translations import seed_specialty_translations
 
 INCIDENT_FORM = Path(__file__).parent / "data" / "incident_form.json"
 SHIFT_CODES = Path(__file__).parent / "data" / "shift_codes.json"
@@ -155,6 +157,8 @@ def seed_demo(db: Session) -> None:
         seed_demo_requests(db, password)
         seed_demo_schedules(db, password)
         seed_demo_doctors(db, password)
+        db.flush()
+        seed_demo_doctor_translations(db)
         seed_demo_educator(db, password)
         return
     units = {
@@ -205,6 +209,8 @@ def seed_demo(db: Session) -> None:
     seed_demo_requests(db, password)
     seed_demo_schedules(db, password)
     seed_demo_doctors(db, password)
+    db.flush()
+    seed_demo_doctor_translations(db)
     seed_demo_educator(db, password)
     db.add_all(
         [
@@ -418,6 +424,13 @@ def seed_demo_schedules(db: Session, password: str) -> None:
             u.job_title = DEMO_JOB_TITLES[u.personnel_code]
 
 
+# نام و عنوان پزشکان نمونه به زبان‌های مراجعان (az, en, ar, tr) تا نمایش چندزبانه آزموده شود.
+DEMO_DOCTOR_TRANSLATIONS = {
+    "دکتر نمونه یکم": ("Dr. Nümunə Birinci", "Dr. Sample One", "د. النموذج الأول", "Dr. Örnek Bir"),
+    "دکتر نمونه دوم": ("Dr. Nümunə İkinci", "Dr. Sample Two", "د. النموذج الثاني", "Dr. Örnek İki"),
+    "دکتر نمونه سوم": ("Dr. Nümunə Üçüncü", "Dr. Sample Three", "د. النموذج الثالث", "Dr. Örnek Üç"),
+}
+
 DEMO_DOCTORS = [
     ("دکتر نمونه یکم", "قلب و عروق", "متخصص قلب و عروق (نمونه)", True),
     ("دکتر نمونه دوم", "ارتوپدی", "جراح و متخصص ارتوپدی (نمونه)", True),
@@ -435,6 +448,35 @@ def seed_demo_educator(db: Session, password: str) -> None:
         [("patient_educator", None)],
         password,
     )
+
+
+def seed_demo_doctor_translations(db: Session) -> None:
+    from app.services.translations import source_hash
+
+    langs = ("az", "en", "ar", "tr")
+    for d in db.scalars(select(Doctor).where(Doctor.full_name.in_(DEMO_DOCTOR_TRANSLATIONS))):
+        have = set(
+            db.scalars(
+                select(ContentTranslation.language).where(
+                    ContentTranslation.entity_type == "doctor",
+                    ContentTranslation.entity_id == d.id,
+                    ContentTranslation.field == "full_name",
+                )
+            )
+        )
+        for lang, value in zip(langs, DEMO_DOCTOR_TRANSLATIONS[d.full_name], strict=True):
+            if lang not in have:
+                db.add(
+                    ContentTranslation(
+                        entity_type="doctor",
+                        entity_id=d.id,
+                        language=lang,
+                        field="full_name",
+                        text=value,
+                        source_hash=source_hash(d.full_name),
+                        status="approved",
+                    )
+                )
 
 
 def seed_demo_doctors(db: Session, password: str) -> None:
@@ -483,6 +525,7 @@ def run(demo: bool = False) -> None:
         seed_shift_types(db)
         seed_specialties(db)
         db.flush()
+        seed_specialty_translations(db)
         seed_bootstrap_admin(db)
         if demo:
             seed_demo(db)
