@@ -18,12 +18,13 @@ from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.models import ContentTranslation
 from app.services.translations import FIELDS, MODELS, field_status, source_hash
+from app.services.transliteration import transliterate
 
 log = logging.getLogger(__name__)
 
 SOURCE_LANGUAGE = "fa"
-# نام اشخاص ترجمه ماشینی نمی‌شود: مترجم نام را کلمه به کلمه معنی می‌کند («براتی» ← «for you»).
-SKIP_FIELDS = {("doctor", "full_name")}
+# نام اشخاص ترجمه نمی‌شود (مترجم «براتی» را «for you» معنی می‌کند)؛ با الفبای همان زبان نوشته می‌شود.
+TRANSLITERATE_FIELDS = {("doctor", "full_name")}
 # بیشینه نویسه هر درخواست (توصیه Google برای v2 حدود ۵۰۰۰ نویسه است)
 MAX_REQUEST_CHARS = 4500
 
@@ -131,8 +132,6 @@ def fill(db: Session, entity_type: str, objs: list, language: str) -> int:
     todo: list[tuple[object, str, str, ContentTranslation | None]] = []
     for o in objs:
         for f in FIELDS[entity_type]:
-            if (entity_type, f) in SKIP_FIELDS:
-                continue
             source = getattr(o, f, None)
             if not source or not source.strip():
                 continue
@@ -141,8 +140,12 @@ def fill(db: Session, entity_type: str, objs: list, language: str) -> int:
                 todo.append((o, f, source, tr))
     if not todo:
         return 0
-    texts = translate([t[2] for t in todo], language)
-    for (o, f, source, tr), text in zip(todo, texts, strict=True):
+    names = [t for t in todo if (entity_type, t[1]) in TRANSLITERATE_FIELDS]
+    others = [t for t in todo if (entity_type, t[1]) not in TRANSLITERATE_FIELDS]
+    texts = [transliterate(t[2], language) for t in names]
+    if others:
+        texts += translate([t[2] for t in others], language)
+    for (o, f, source, tr), text in zip(names + others, texts, strict=True):
         if tr is None:
             tr = ContentTranslation(entity_type=entity_type, entity_id=o.id, language=language, field=f)
             db.add(tr)

@@ -217,8 +217,8 @@ def test_missing_translation_is_made_in_background(client, monkeypatch):
     assert first["full_name"] == "دکتر آزمایشی"
     machine_translation.drain()
     again = client.get(f"{API}/public/doctors/{created['id']}?lang=ar").json()
-    # نام ترجمه ماشینی نمی‌شود؛ عنوان و معرفی می‌شوند.
-    assert again["full_name"] == "دکتر آزمایشی" and again["bio"] == "[ar] معرفی"
+    # نام ترجمه نمی‌شود، فقط با الفبای عربی نوشته می‌شود؛ عنوان و معرفی ترجمه می‌شوند.
+    assert again["full_name"] == "د. آزمايشي" and again["bio"] == "[ar] معرفی"
     # ترجمه آماده پزشک نمونه با ماشینی جایگزین نمی‌شود.
     assert client.get(f"{API}/public/doctors/{doctor['id']}?lang=en").json()["full_name"] == "Dr. Sample Two"
     machine_translation.drain()
@@ -242,7 +242,7 @@ def test_long_text_is_split_for_provider(monkeypatch):
     assert all(c <= mt.MAX_REQUEST_CHARS for c in calls) and len(calls) > 1
 
 
-def test_doctor_names_are_not_machine_translated(client, monkeypatch):
+def test_doctor_names_are_written_in_target_alphabet(client, monkeypatch):
     from app.services import machine_translation
 
     _machine_on(monkeypatch)
@@ -251,9 +251,25 @@ def test_doctor_names_are_not_machine_translated(client, monkeypatch):
     created = client.post(
         f"{API}/admin/doctors",
         headers=h,
-        json={"full_name": "دکتر براتی", "specialty_id": spec["id"], "title": "متخصص"},
+        json={"full_name": "دکتر عبدالله براتی", "specialty_id": spec["id"], "title": "متخصص"},
     ).json()
     client.get(f"{API}/public/doctors/{created['id']}?lang=en")
     machine_translation.drain()
     again = client.get(f"{API}/public/doctors/{created['id']}?lang=en").json()
-    assert again["full_name"] == "دکتر براتی" and again["title"] == "[en] متخصص"
+    assert again["full_name"] == "Dr. Abdollah Barati" and again["title"] == "[en] متخصص"
+    client.get(f"{API}/public/doctors/{created['id']}?lang=tr")
+    machine_translation.drain()
+    assert (
+        client.get(f"{API}/public/doctors/{created['id']}?lang=tr").json()["full_name"]
+        == "Dr. Abdollah Barati"
+    )
+
+
+def test_transliteration():
+    from app.services.transliteration import transliterate
+
+    assert transliterate("دکتر سید محمد حسین\u200cزاده", "en") == "Dr. Seyed Mohammad Hosseinzadeh"
+    assert transliterate("نوید خسروشاهی", "az") == "Navid Xosroşahi"
+    assert transliterate("فرزانه شجاعی", "tr") == "Farzaneh Şacai"
+    assert transliterate("کامبیز ژیان", "en") == "Kambiz Zhian"
+    assert transliterate("دکتر علی کریمی", "ar") == "د. علي كريمي"
