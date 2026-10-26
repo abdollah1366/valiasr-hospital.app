@@ -336,9 +336,10 @@ private fun HomeTab(
     onAdmission: () -> Unit,
 ) {
     val repo = container.appointmentRepository
-    val specialties = rememberLoader { repo.specialties() }
-    val featured = rememberLoader { repo.doctors(featured = true) }
-    val mine = rememberLoader(patient?.id) {
+    // با عوض شدن زبان، نام تخصص‌ها و پزشکان دوباره به زبان تازه گرفته می‌شود.
+    val specialties = rememberLoader(language) { repo.specialties() }
+    val featured = rememberLoader(language) { repo.doctors(featured = true) }
+    val mine = rememberLoader(patient?.id, language) {
         if (patient == null) Result.Ok(emptyList<PatientAppointmentDto>()) else repo.myAppointments()
     }
     // مراجع غیرفارسی‌زبان به احتمال زیاد بیمار بین‌الملل است؛ کارت مربوط بالاتر می‌آید.

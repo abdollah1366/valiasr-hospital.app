@@ -43,6 +43,18 @@ class BaseUrlInterceptor(private val origin: () -> String?) : Interceptor {
     }
 }
 
+/**
+ * زبان بخش مراجعان را در سرآیند Accept-Language می‌فرستد تا سرور نام تخصص‌ها، پزشکان و محتوای
+ * ترجمه‌شده را به همان زبان برگرداند. null یعنی فارسی (متن اصلی) و سرآیندی فرستاده نمی‌شود.
+ */
+class AcceptLanguageInterceptor(private val language: () -> String?) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val code = language() ?: return chain.proceed(chain.request())
+        if (chain.request().header("Accept-Language") != null) return chain.proceed(chain.request())
+        return chain.proceed(chain.request().newBuilder().header("Accept-Language", code).build())
+    }
+}
+
 class AuthHeaderInterceptor(private val tokens: TokenStorage) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val token = tokens.accessToken ?: return chain.proceed(chain.request())
@@ -104,8 +116,9 @@ object HttpFactory {
         tokens: TokenStorage,
         originOverride: () -> String?,
         debug: Boolean,
+        language: () -> String? = { null },
         onSessionExpired: () -> Unit,
-    ): ApiService = retrofit(baseUrl, "auth/refresh", tokens, originOverride, debug, onSessionExpired)
+    ): ApiService = retrofit(baseUrl, "auth/refresh", tokens, originOverride, debug, onSessionExpired, language)
         .create(ApiService::class.java)
 
     /** سرویس مراجعان با توکن‌های جداگانه؛ تمدید نشست از مسیر patient/auth/refresh. */
@@ -114,8 +127,9 @@ object HttpFactory {
         tokens: TokenStorage,
         originOverride: () -> String?,
         debug: Boolean,
+        language: () -> String? = { null },
         onSessionExpired: () -> Unit,
-    ): PatientApiService = retrofit(baseUrl, "patient/auth/refresh", tokens, originOverride, debug, onSessionExpired)
+    ): PatientApiService = retrofit(baseUrl, "patient/auth/refresh", tokens, originOverride, debug, onSessionExpired, language)
         .create(PatientApiService::class.java)
 
     private fun retrofit(
@@ -125,6 +139,7 @@ object HttpFactory {
         originOverride: () -> String?,
         debug: Boolean,
         onSessionExpired: () -> Unit,
+        language: () -> String?,
     ): Retrofit {
         val baseInterceptor = BaseUrlInterceptor(originOverride)
         val plain = OkHttpClient.Builder()
@@ -135,6 +150,7 @@ object HttpFactory {
         val refreshUrl = { "$baseUrl$refreshPath".toHttpUrlOrNull()!! }
         val builder = plain.newBuilder()
             .addInterceptor(AuthHeaderInterceptor(tokens))
+            .addInterceptor(AcceptLanguageInterceptor(language))
             .authenticator(TokenRefreshAuthenticator(tokens, refreshUrl, plain, onSessionExpired))
         if (debug) {
             // فقط در debug؛ بدنه درخواست‌ها ممکن است اطلاعات بیمار داشته باشد، پس فقط سرخط‌ها لاگ می‌شوند.

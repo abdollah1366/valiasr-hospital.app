@@ -108,8 +108,9 @@ fun DoctorsTab(
         delay(300)
         debounced = query
     }
-    val specialties = rememberLoader { repo.specialties() }
-    val doctors = rememberLoader(specialtyId, debounced) { repo.doctors(specialtyId, debounced) }
+    val language = LocalAppLanguage.current
+    val specialties = rememberLoader(language) { repo.specialties() }
+    val doctors = rememberLoader(specialtyId, debounced, language) { repo.doctors(specialtyId, debounced) }
     Column(Modifier.fillMaxSize().padding(padding)) {
         OutlinedTextField(
             value = query,
@@ -179,7 +180,7 @@ fun DoctorDetailScreen(
 ) {
     val repo = container.appointmentRepository
     val language = LocalAppLanguage.current
-    val loader = rememberLoader<Pair<DoctorDto, List<SlotDto>>>(doctorId) {
+    val loader = rememberLoader<Pair<DoctorDto, List<SlotDto>>>(doctorId, language) {
         when (val d = repo.doctor(doctorId)) {
             is Result.Err -> d
             is Result.Ok -> when (val s = repo.slots(doctorId)) {
@@ -390,7 +391,8 @@ fun MyAppointmentsTab(
         return
     }
     val repo = container.appointmentRepository
-    val loader = rememberLoader { repo.myAppointments() }
+    val language = LocalAppLanguage.current
+    val loader = rememberLoader(language) { repo.myAppointments() }
     val scope = rememberCoroutineScope()
     val errorText = rememberErrorText()
     var cancelling by remember { mutableStateOf<PatientAppointmentDto?>(null) }

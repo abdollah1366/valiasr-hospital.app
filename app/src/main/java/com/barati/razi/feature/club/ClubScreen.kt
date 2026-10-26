@@ -82,7 +82,8 @@ fun ClubTab(container: AppContainer, padding: PaddingValues, signedIn: Boolean, 
         return
     }
     val repo = container.tokensRepository
-    val loader = rememberLoader { repo.overview() }
+    val language = LocalAppLanguage.current
+    val loader = rememberLoader(language) { repo.overview() }
     LoadContent(loader, Modifier.padding(padding)) { t ->
         ClubContent(container, t, padding, onChanged = { loader.reload() })
     }

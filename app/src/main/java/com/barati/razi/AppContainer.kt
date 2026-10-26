@@ -20,6 +20,7 @@ import com.barati.razi.core.data.PatientAuthRepository
 import com.barati.razi.core.data.ScheduleRepository
 import com.barati.razi.core.data.ServiceRequestRepository
 import com.barati.razi.core.data.TrainingRepository
+import com.barati.razi.core.data.query
 import com.barati.razi.core.network.HttpFactory
 import com.barati.razi.work.AppointmentReminderWorker
 import kotlinx.coroutines.CoroutineScope
@@ -45,12 +46,16 @@ class AppContainer(context: Context) {
 
     private lateinit var authRef: DefaultAuthRepository
 
+    /** زبان مراجع برای سرآیند درخواست‌ها؛ فارسی (پیش‌فرض) یعنی بدون سرآیند. هنگام درخواست خوانده می‌شود. */
+    private fun patientLanguage(): String? = languageRepository.language.value.query
+
     val api = HttpFactory.create(
         baseUrl = BuildConfig.API_BASE_URL,
         tokens = tokens,
         originOverride = { if (BuildConfig.ALLOW_SERVER_OVERRIDE) serverOrigin else null },
         debug = BuildConfig.DEBUG,
         onSessionExpired = { authRef.onSessionExpired() },
+        language = { patientLanguage() },
     )
 
     val authRepository = DefaultAuthRepository(api, tokens, store, "${Build.MANUFACTURER} ${Build.MODEL}").also { authRef = it }
@@ -66,6 +71,7 @@ class AppContainer(context: Context) {
         originOverride = { if (BuildConfig.ALLOW_SERVER_OVERRIDE) serverOrigin else null },
         debug = BuildConfig.DEBUG,
         onSessionExpired = { patientAuthRef.onSessionExpired() },
+        language = { patientLanguage() },
     )
     val patientAuthRepository = PatientAuthRepository(
         api = patientApi,

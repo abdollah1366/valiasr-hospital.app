@@ -9,7 +9,16 @@ from sqlalchemy.orm import Session
 from app.core.audit import audit
 from app.core.db import get_db
 from app.core.deps import CurrentUser, api_error, client_ip, require
-from app.models import Announcement, ContentTranslation, EducationItem, Faq, Unit
+from app.models import (
+    Announcement,
+    ContentTranslation,
+    Doctor,
+    EducationItem,
+    Faq,
+    Specialty,
+    TokenReward,
+    Unit,
+)
 from app.schemas import (
     TranslationEntity,
     TranslationFieldOut,
@@ -29,6 +38,28 @@ def _entities(db: Session, entity_type: str) -> list:
         return list(db.scalars(select(Unit).where(Unit.is_public.is_(True)).order_by(Unit.name)))
     if entity_type == "faq":
         return list(db.scalars(select(Faq).order_by(Faq.sort_order, Faq.question)))
+    if entity_type == "specialty":
+        return list(
+            db.scalars(
+                select(Specialty)
+                .where(Specialty.is_active.is_(True))
+                .order_by(Specialty.sort_order, Specialty.name)
+            )
+        )
+    if entity_type == "doctor":
+        return list(
+            db.scalars(
+                select(Doctor).where(Doctor.is_active.is_(True)).order_by(Doctor.sort_order, Doctor.full_name)
+            ).unique()
+        )
+    if entity_type == "reward":
+        return list(
+            db.scalars(
+                select(TokenReward)
+                .where(TokenReward.is_active.is_(True))
+                .order_by(TokenReward.sort_order, TokenReward.cost)
+            )
+        )
     if entity_type == "education":
         return list(
             db.scalars(
@@ -46,7 +77,15 @@ def _entities(db: Session, entity_type: str) -> list:
     )
 
 
-_LABEL_FIELD = {"unit": "name", "faq": "question", "announcement": "title", "education": "title"}
+_LABEL_FIELD = {
+    "unit": "name",
+    "faq": "question",
+    "announcement": "title",
+    "education": "title",
+    "specialty": "name",
+    "doctor": "full_name",
+    "reward": "title",
+}
 
 
 def _source(db: Session, key: TranslationKey) -> str | None:
