@@ -263,8 +263,16 @@ function layout(pages, current) {
       h("nav", {}, pages.map((p) => h("a", { href: "#/" + p.id, class: p.id === current.id ? "active" : null }, icon(p.icon), h("span", {}, p.title)))),
       h("div", { class: "spacer" }),
       h("div", { class: "logout" }, h("button", { class: "btn secondary", onclick: logout }, icon("logout"), h("span", {}, "خروج"))),
+      developerCredit(),
     ),
   );
+}
+
+/** سربرگ توسعه‌دهنده سامانه، پایین منوی کناری و صفحه ورود. */
+function developerCredit() {
+  return h("div", { class: "dev-credit" },
+    h("div", {}, "توسعه‌دهنده: مهندس عبدالله براتی"),
+    h("div", { class: "brand-sub" }, "کارشناس ارشد انفورماتیک پزشکی"));
 }
 
 function renderNoAccess() {
@@ -315,7 +323,8 @@ function renderLogin(notice) {
       h("div", { class: "card login-box" },
         h("h1", {}, "پنل مدیریت بیمارستان ولیعصر"),
         notice && notice.startsWith("نشست") ? h("p", { class: "muted" }, notice) : null,
-        form)),
+        form,
+        developerCredit())),
   );
   code.focus();
 }

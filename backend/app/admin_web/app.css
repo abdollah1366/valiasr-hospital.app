@@ -98,6 +98,8 @@ a { color: var(--primary); }
 .sidebar nav a.active { background: #fff; color: var(--primary-dark); opacity: 1; font-weight: 700; box-shadow: var(--shadow); }
 .sidebar .spacer { flex: 1; }
 .sidebar .logout { margin-top: 12px; }
+.dev-credit { margin-top: 14px; padding: 10px 8px 0; border-top: 1px solid rgba(255,255,255,.15); font-size: 12px; line-height: 1.7; opacity: .85; }
+.login-page .dev-credit { border-top: none; text-align: center; color: var(--muted); }
 .main { flex: 1; padding: 28px 32px; min-width: 0; max-width: 1400px; }
 
 @media (max-width: 820px) {

@@ -305,4 +305,7 @@
     <string name="edu_attach_toolarge">Dosya %1$d MB sınırından büyük.</string>
     <string name="edu_you">Siz</string>
     <string name="edu_staff">Eğitim sorumlusu</string>
+    <string name="developer_title">Geliştirici</string>
+    <string name="developer_name">Müh. Abdollah Barati</string>
+    <string name="developer_role">Tıp Bilişimi Yüksek Lisans</string>
 </resources>

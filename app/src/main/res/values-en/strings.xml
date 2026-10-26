@@ -305,4 +305,7 @@
     <string name="edu_attach_toolarge">The file is larger than %1$d MB.</string>
     <string name="edu_you">You</string>
     <string name="edu_staff">Patient educator</string>
+    <string name="developer_title">Developer</string>
+    <string name="developer_name">Eng. Abdollah Barati</string>
+    <string name="developer_role">M.Sc. in Medical Informatics</string>
 </resources>

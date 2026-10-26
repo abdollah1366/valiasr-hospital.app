@@ -305,4 +305,7 @@
     <string name="edu_attach_toolarge">Faylın həcmi %1$d MB-dan çoxdur.</string>
     <string name="edu_you">Siz</string>
     <string name="edu_staff">Təlim məsulu</string>
+    <string name="developer_title">Tərtibatçı</string>
+    <string name="developer_name">Mühəndis Abdollah Barati</string>
+    <string name="developer_role">Tibbi informatika üzrə magistr</string>
 </resources>

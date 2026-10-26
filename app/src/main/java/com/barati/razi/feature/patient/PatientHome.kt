@@ -86,6 +86,7 @@ import com.barati.razi.ui.components.RaziScaffold
 import com.barati.razi.ui.components.TileGrid
 import com.barati.razi.ui.components.TileItem
 import com.barati.razi.ui.components.WideCard
+import com.barati.razi.ui.components.DeveloperCredit
 import com.barati.razi.ui.i18n.LanguageAction
 import com.barati.razi.ui.theme.brandColor
 
@@ -291,6 +292,7 @@ fun AboutScreen(onBack: () -> Unit) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            DeveloperCredit()
         }
     }
 }

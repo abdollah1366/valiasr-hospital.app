@@ -109,6 +109,7 @@ import com.barati.razi.ui.components.TileGrid
 import com.barati.razi.ui.components.TileItem
 import com.barati.razi.ui.components.WideCard
 import com.barati.razi.ui.components.rememberLoader
+import com.barati.razi.ui.components.DeveloperCredit
 import com.barati.razi.ui.i18n.LanguageAction
 import com.barati.razi.ui.i18n.LocalAppLanguage
 import com.barati.razi.ui.theme.ValiasrColors
@@ -209,6 +210,7 @@ fun PatientHomeScreen(
                         val themeMode by container.themeRepository.mode.collectAsState()
                         ThemeModePicker(themeMode) { scope.launch { container.themeRepository.set(it) } }
                     }
+                    DeveloperCredit(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
                     Text(
                         stringResource(R.string.drawer_version, BuildConfig.VERSION_NAME),
                         Modifier.padding(horizontal = 28.dp, vertical = 12.dp),
