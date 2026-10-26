@@ -305,4 +305,7 @@
     <string name="edu_attach_toolarge">حجم الملف أكبر من %1$d ميغابايت.</string>
     <string name="edu_you">أنت</string>
     <string name="edu_staff">مسؤول التثقيف</string>
+    <string name="developer_title">المطوّر</string>
+    <string name="developer_name">المهندس عبدالله براتي</string>
+    <string name="developer_role">ماجستير في المعلوماتية الطبية</string>
 </resources>

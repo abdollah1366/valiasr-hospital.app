@@ -309,4 +309,7 @@
     <string name="edu_attach_toolarge">حجم فایل بیشتر از %1$d مگابایت است.</string>
     <string name="edu_you">شما</string>
     <string name="edu_staff">مسئول آموزش</string>
+    <string name="developer_title">توسعه‌دهنده</string>
+    <string name="developer_name">مهندس عبدالله براتی</string>
+    <string name="developer_role">کارشناس ارشد انفورماتیک پزشکی</string>
 </resources>
